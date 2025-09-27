@@ -6,9 +6,13 @@ import { AUTO, Game, Types } from 'phaser';
 const config: Types.Core.GameConfig = {
     type: AUTO,
     width: 1024,
-    height: 768,
+    height: 1024,
     parent: 'game-container',
-    backgroundColor: '#028af8',
+    backgroundColor: '#000000',
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
     scene: [
         MainGame
     ]
