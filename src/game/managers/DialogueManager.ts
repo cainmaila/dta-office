@@ -20,8 +20,6 @@ export class DialogueManager {
         }) => {
             this.showDialogue(data.name, data.message, data.x, data.y);
         });
-        
-        console.log('DialogueManager initialized');
     }
     
     public showDialogue(name: string, message: string, npcX: number, npcY: number): void {
@@ -38,7 +36,6 @@ export class DialogueManager {
         
         // 檢查場景是否有效 - 修正API調用
         if (!this.scene || this.scene.sys.isDestroyed) {
-            console.warn('Scene is destroyed, cannot show dialogue');
             return;
         }
         
@@ -54,8 +51,6 @@ export class DialogueManager {
         
         // 顯示氣泡
         this.currentBubble.show(4000); // 4秒後自動消失
-        
-        console.log(`Showing dialogue for ${name}: "${message}"`);
     }
     
     private hideCurrentBubble(): void {

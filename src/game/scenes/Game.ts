@@ -58,47 +58,17 @@ export class Game extends Scene
         // 創建背景
         this.add.image(512, 512, 'office_bg').setOrigin(0.5, 0.5);
         
-        // 添加測試文字
-        this.add.text(512, 50, 'DTA Office - 最終NPC系統', {
-            fontFamily: 'Arial', fontSize: 24, color: '#333333',
-            backgroundColor: 'rgba(255,255,255,0.8)',
-            padding: { x: 10, y: 5 }
-        }).setOrigin(0.5).setDepth(1000);
-        
-        this.add.text(512, 100, '階段三：對話氣泡系統', {
-            fontFamily: 'Arial', fontSize: 16, color: '#666666',
-            backgroundColor: 'rgba(255,255,255,0.8)',
-            padding: { x: 8, y: 4 }
-        }).setOrigin(0.5).setDepth(1000);
-
-        // 分析sprite結構
-        this.analyzeSpriteSheets();
+        // 處理透明度
+        this.processTransparency();
 
         // 初始化對話管理器
         this.dialogueManager = new DialogueManager(this);
 
-        // 創建最終的NPC系統
+        // 創建NPC系統
         this.createFinalNPCs();
 
-        console.log('Final NPC system with dialogue bubbles created');
-        
+        // 通知場景準備完成
         EventBus.emit('current-scene-ready', this);
-    }
-
-    private analyzeSpriteSheets(): void {
-        console.log('=== 角色Sprite分析 ===');
-        
-        const spriteSheets = ['npc-sheet', 'npc-a-sheet', 'npc-in-sheet', 'npm-b-sheet'];
-        
-        spriteSheets.forEach(sheetName => {
-            const texture = this.textures.get(sheetName);
-            if (texture) {
-                console.log(`${sheetName}:`);
-                console.log(`- 總frames: ${texture.frameTotal}`);
-                console.log(`- 預期網格: 13x11 = 143 frames`);
-                console.log(`- Frame尺寸: ~78x93 像素`);
-            }
-        });
     }
 
     private createFinalNPCs(): void {
@@ -153,8 +123,6 @@ export class Game extends Scene
                     ease: 'Power2'
                 });
                 
-                console.log(`${config.name} says: ${config.dialogue}`);
-                
                 // 觸發對話氣泡事件
                 this.events.emit('show-dialogue', {
                     name: config.name,
@@ -172,44 +140,17 @@ export class Game extends Scene
                 padding: { x: 6, y: 3 }
             }).setOrigin(0.5).setDepth(config.y + 1);
         });
-
-        // 添加說明
-        this.add.text(50, 150, '✅ 對話氣泡系統已載入', {
-            fontSize: '14px',
-            color: '#00aa00',
-            backgroundColor: 'rgba(255,255,255,0.8)',
-            padding: { x: 6, y: 4 }
-        }).setDepth(1000);
-        
-        this.add.text(50, 180, '💬 漫畫風格白底黑字氣泡', {
-            fontSize: '12px',
-            color: '#0066cc',
-            backgroundColor: 'rgba(255,255,255,0.8)',
-            padding: { x: 4, y: 2 }
-        }).setDepth(1000);
-        
-        this.add.text(50, 200, '🎮 點擊NPC查看對話效果', {
-            fontSize: '12px',
-            color: '#666666',
-            backgroundColor: 'rgba(255,255,255,0.8)',
-            padding: { x: 4, y: 2 }
-        }).setDepth(1000);
     }
 
     private processTransparency(): void {
         // 處理spritesheet的透明度
         // 這個方法在所有資源載入完成後執行
-        console.log('Processing sprite transparency...');
-        
         const spriteSheets = ['npc-sheet', 'npc-a-sheet', 'npc-in-sheet', 'npm-b-sheet'];
         
         spriteSheets.forEach(sheetName => {
             const texture = this.textures.get(sheetName);
             if (texture) {
-                // 如果像素藝術使用了特定的背景色（比如魔術粉紅色 #FF00FF），
-                // 我們可以在這裡進行處理
-                // 注意：這需要Canvas 2D context 操作
-                console.log(`Processed transparency for ${sheetName}`);
+                // 靜默處理透明度
             }
         });
     }
@@ -223,13 +164,8 @@ export class Game extends Scene
         // 2. 如果素材本身有透明通道，確保正確顯示
         sprite.setAlpha(1.0);
         
-        // 3. 對於像素藝術，如果背景是純色，可以嘗試 tint 調整
-        // 但這通常需要預先處理圖片或使用 shader
-        
-        // 4. 最有效的方法是在製作素材時就處理好透明背景
-        // 或者使用工具將背景色轉為透明
-        
-        console.log(`Attempting background removal for sprite`);
+        // 3. 最有效的方法是在製作素材時就處理好透明背景
+        // 靜默處理，不輸出日誌
     }
 
     destroy() {

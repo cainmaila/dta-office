@@ -112,7 +112,6 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
     private drawTail(npcX: number, npcY: number): void {
         // 尾巴現在已經整合到主要氣泡中，保留空方法
         this.tail.clear();
-        console.log('Tail integrated into main bubble');
     }
     
     public show(duration: number = 4000): void {
