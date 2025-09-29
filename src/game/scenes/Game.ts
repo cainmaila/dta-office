@@ -66,26 +66,21 @@ export class Game extends Scene
     }
 
     private createFallbackNPCs(): void {
-        console.log('🔄 Creating NPCs with corrected floor positions');
+        console.log('🚨 緊急修正：回到正確的NPC配置');
+        console.log('⚠️ npc-in.png 與 npc.png 是完全不同的規格，不能使用相同網格');
         
-        // 重新規劃NPC位置 - 確保都站在地板上
+        // 緊急修正：回到使用正確的 npc.png 資源
         const npcConfigs = [
-            // 李經理 - 左側辦公區域，站在地板上
+            // 全部使用經過驗證的 npc.png (npc-sheet)
             { name: '李經理', x: 200, y: 750, sheet: 'npc-sheet', frame: 0, dialogue: '歡迎來到我們公司！有什麼可以幫助你的嗎？' },
-            
-            // 王設計師 - 中左區域，辦公桌附近
             { name: '王設計師', x: 350, y: 680, sheet: 'npc-sheet', frame: 1, dialogue: '我正在設計新的用戶介面，你覺得這個顏色搭配怎麼樣？' },
-            
-            // 陳工程師 - 中右區域，工作站附近
             { name: '陳工程師', x: 550, y: 720, sheet: 'npc-sheet', frame: 2, dialogue: '今天的程式碼 review 進行得很順利，新功能快要上線了！' },
-            
-            // 張主管 - 右側區域，靠近辦公桌
             { name: '張主管', x: 750, y: 650, sheet: 'npc-sheet', frame: 3, dialogue: '團隊合作是我們成功的關鍵，大家都辛苦了！' }
         ];
 
         npcConfigs.forEach((config) => {
             const sprite = this.add.sprite(config.x, config.y, config.sheet, config.frame);
-            sprite.setOrigin(0.5, 1); // 底部中心為錨點，確保角色腳部在指定座標
+            sprite.setOrigin(0.5, 1);
             sprite.setScale(1.0);
             sprite.setDepth(config.y);
             
@@ -127,7 +122,9 @@ export class Game extends Scene
             nameText.setOrigin(0.5).setDepth(config.y + 1);
         });
 
-        console.log('✅ All NPCs correctly positioned on office floor areas');
+        console.log('✅ 緊急修正完成：全部NPC現在使用正確的 npc.png 資源');
+        console.log('📚 學習經驗：不同圖片需要不同的網格配置');
+        console.log('🔍 後續任務：重新分析 npc-in.png 的真實結構和用途');
     }
 
     destroy() {
