@@ -3,11 +3,14 @@ import { NPCData } from '../types/NPCTypes';
 
 export class NPC extends Phaser.GameObjects.Sprite {
     public npcData: NPCData;
-    private clickArea: Phaser.Geom.Rectangle;
     private isInteractive: boolean = true;
 
     constructor(scene: Scene, npcData: NPCData) {
-        super(scene, npcData.x, npcData.y, npcData.sprite);
+        // 使用sprite sheet作為備用，因為atlas可能有問題
+        let textureKey = 'npc-sheet';
+        let frameKey = 0;
+        
+        super(scene, npcData.x, npcData.y, textureKey, frameKey);
         
         this.npcData = npcData;
         
@@ -16,13 +19,13 @@ export class NPC extends Phaser.GameObjects.Sprite {
         
         // 設置圖片屬性
         this.setOrigin(0.5, 1); // 底部中心為錨點
-        this.setScale(0.15); // 縮小NPC圖片以適應場景
+        this.setScale(1.0); // 使用原始大小
         this.setDepth(this.y); // 設置深度以實現正確的層級
         
         // 設置點擊區域
         this.setupInteraction();
         
-        // 添加名字標籤（可選）
+        // 添加名字標籤
         this.createNameLabel();
     }
     
@@ -57,10 +60,10 @@ export class NPC extends Phaser.GameObjects.Sprite {
             this.y - this.height * this.scaleY - 10, 
             this.npcData.name,
             {
-                fontSize: '12px',
+                fontSize: '14px',
                 color: '#333333',
-                backgroundColor: '#ffffff',
-                padding: { x: 4, y: 2 }
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                padding: { x: 6, y: 3 }
             }
         );
         nameText.setOrigin(0.5);
@@ -71,6 +74,7 @@ export class NPC extends Phaser.GameObjects.Sprite {
         // 發送事件給對話管理器
         this.scene.events.emit('show-dialogue', {
             npc: this,
+            name: this.npcData.name,
             message: this.npcData.dialogue,
             x: this.x,
             y: this.y - this.height * this.scaleY - 20

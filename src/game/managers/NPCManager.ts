@@ -13,7 +13,7 @@ export class NPCManager {
 
     async loadNPCData(): Promise<void> {
         try {
-            // 載入NPC配置數據
+            // 嘗試載入舊的NPC配置數據 (簡化版)
             const response = await fetch('assets/data/npcs.json');
             const data = await response.json();
             this.npcData = data.npcs;

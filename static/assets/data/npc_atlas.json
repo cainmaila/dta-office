@@ -1,0 +1,2875 @@
+{
+  "textures": [
+    {
+      "image": "npc.png",
+      "format": "RGBA8888",
+      "size": {
+        "w": 1024,
+        "h": 1024
+      },
+      "scale": 1,
+      "frames": {
+        "npc_000": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_001": {
+          "frame": {
+            "x": 78,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_002": {
+          "frame": {
+            "x": 156,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_003": {
+          "frame": {
+            "x": 234,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_004": {
+          "frame": {
+            "x": 312,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_005": {
+          "frame": {
+            "x": 390,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_006": {
+          "frame": {
+            "x": 468,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_007": {
+          "frame": {
+            "x": 546,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_008": {
+          "frame": {
+            "x": 624,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_009": {
+          "frame": {
+            "x": 702,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_010": {
+          "frame": {
+            "x": 780,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_011": {
+          "frame": {
+            "x": 858,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_012": {
+          "frame": {
+            "x": 936,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_013": {
+          "frame": {
+            "x": 0,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_014": {
+          "frame": {
+            "x": 78,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_015": {
+          "frame": {
+            "x": 156,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_016": {
+          "frame": {
+            "x": 234,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_017": {
+          "frame": {
+            "x": 312,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_018": {
+          "frame": {
+            "x": 390,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_019": {
+          "frame": {
+            "x": 468,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_020": {
+          "frame": {
+            "x": 546,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_021": {
+          "frame": {
+            "x": 624,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_022": {
+          "frame": {
+            "x": 702,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_023": {
+          "frame": {
+            "x": 780,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_024": {
+          "frame": {
+            "x": 858,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_025": {
+          "frame": {
+            "x": 936,
+            "y": 93,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_026": {
+          "frame": {
+            "x": 0,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_027": {
+          "frame": {
+            "x": 78,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_028": {
+          "frame": {
+            "x": 156,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_029": {
+          "frame": {
+            "x": 234,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_030": {
+          "frame": {
+            "x": 312,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_031": {
+          "frame": {
+            "x": 390,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_032": {
+          "frame": {
+            "x": 468,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_033": {
+          "frame": {
+            "x": 546,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_034": {
+          "frame": {
+            "x": 624,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_035": {
+          "frame": {
+            "x": 702,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_036": {
+          "frame": {
+            "x": 780,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_037": {
+          "frame": {
+            "x": 858,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_038": {
+          "frame": {
+            "x": 936,
+            "y": 186,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_039": {
+          "frame": {
+            "x": 0,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_040": {
+          "frame": {
+            "x": 78,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_041": {
+          "frame": {
+            "x": 156,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_042": {
+          "frame": {
+            "x": 234,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_043": {
+          "frame": {
+            "x": 312,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_044": {
+          "frame": {
+            "x": 390,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_045": {
+          "frame": {
+            "x": 468,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_046": {
+          "frame": {
+            "x": 546,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_047": {
+          "frame": {
+            "x": 624,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_048": {
+          "frame": {
+            "x": 702,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_049": {
+          "frame": {
+            "x": 780,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_050": {
+          "frame": {
+            "x": 858,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_051": {
+          "frame": {
+            "x": 936,
+            "y": 279,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_052": {
+          "frame": {
+            "x": 0,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_053": {
+          "frame": {
+            "x": 78,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_054": {
+          "frame": {
+            "x": 156,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_055": {
+          "frame": {
+            "x": 234,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_056": {
+          "frame": {
+            "x": 312,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_057": {
+          "frame": {
+            "x": 390,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_058": {
+          "frame": {
+            "x": 468,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_059": {
+          "frame": {
+            "x": 546,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_060": {
+          "frame": {
+            "x": 624,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_061": {
+          "frame": {
+            "x": 702,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_062": {
+          "frame": {
+            "x": 780,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_063": {
+          "frame": {
+            "x": 858,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_064": {
+          "frame": {
+            "x": 936,
+            "y": 372,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_065": {
+          "frame": {
+            "x": 0,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_066": {
+          "frame": {
+            "x": 78,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_067": {
+          "frame": {
+            "x": 156,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_068": {
+          "frame": {
+            "x": 234,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_069": {
+          "frame": {
+            "x": 312,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_070": {
+          "frame": {
+            "x": 390,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_071": {
+          "frame": {
+            "x": 468,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_072": {
+          "frame": {
+            "x": 546,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_073": {
+          "frame": {
+            "x": 624,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_074": {
+          "frame": {
+            "x": 702,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_075": {
+          "frame": {
+            "x": 780,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_076": {
+          "frame": {
+            "x": 858,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_077": {
+          "frame": {
+            "x": 936,
+            "y": 465,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_078": {
+          "frame": {
+            "x": 0,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_079": {
+          "frame": {
+            "x": 78,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_080": {
+          "frame": {
+            "x": 156,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_081": {
+          "frame": {
+            "x": 234,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_082": {
+          "frame": {
+            "x": 312,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_083": {
+          "frame": {
+            "x": 390,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_084": {
+          "frame": {
+            "x": 468,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_085": {
+          "frame": {
+            "x": 546,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_086": {
+          "frame": {
+            "x": 624,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_087": {
+          "frame": {
+            "x": 702,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_088": {
+          "frame": {
+            "x": 780,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_089": {
+          "frame": {
+            "x": 858,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_090": {
+          "frame": {
+            "x": 936,
+            "y": 558,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_091": {
+          "frame": {
+            "x": 0,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_092": {
+          "frame": {
+            "x": 78,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_093": {
+          "frame": {
+            "x": 156,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_094": {
+          "frame": {
+            "x": 234,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_095": {
+          "frame": {
+            "x": 312,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_096": {
+          "frame": {
+            "x": 390,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_097": {
+          "frame": {
+            "x": 468,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_098": {
+          "frame": {
+            "x": 546,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_099": {
+          "frame": {
+            "x": 624,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_100": {
+          "frame": {
+            "x": 702,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_101": {
+          "frame": {
+            "x": 780,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_102": {
+          "frame": {
+            "x": 858,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_103": {
+          "frame": {
+            "x": 936,
+            "y": 651,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_104": {
+          "frame": {
+            "x": 0,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_105": {
+          "frame": {
+            "x": 78,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_106": {
+          "frame": {
+            "x": 156,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_107": {
+          "frame": {
+            "x": 234,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_108": {
+          "frame": {
+            "x": 312,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_109": {
+          "frame": {
+            "x": 390,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_110": {
+          "frame": {
+            "x": 468,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_111": {
+          "frame": {
+            "x": 546,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_112": {
+          "frame": {
+            "x": 624,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_113": {
+          "frame": {
+            "x": 702,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_114": {
+          "frame": {
+            "x": 780,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_115": {
+          "frame": {
+            "x": 858,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_116": {
+          "frame": {
+            "x": 936,
+            "y": 744,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_117": {
+          "frame": {
+            "x": 0,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_118": {
+          "frame": {
+            "x": 78,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_119": {
+          "frame": {
+            "x": 156,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_120": {
+          "frame": {
+            "x": 234,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_121": {
+          "frame": {
+            "x": 312,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_122": {
+          "frame": {
+            "x": 390,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_123": {
+          "frame": {
+            "x": 468,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_124": {
+          "frame": {
+            "x": 546,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_125": {
+          "frame": {
+            "x": 624,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_126": {
+          "frame": {
+            "x": 702,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_127": {
+          "frame": {
+            "x": 780,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_128": {
+          "frame": {
+            "x": 858,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_129": {
+          "frame": {
+            "x": 936,
+            "y": 837,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_130": {
+          "frame": {
+            "x": 0,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_131": {
+          "frame": {
+            "x": 78,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_132": {
+          "frame": {
+            "x": 156,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_133": {
+          "frame": {
+            "x": 234,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_134": {
+          "frame": {
+            "x": 312,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_135": {
+          "frame": {
+            "x": 390,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_136": {
+          "frame": {
+            "x": 468,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_137": {
+          "frame": {
+            "x": 546,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_138": {
+          "frame": {
+            "x": 624,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_139": {
+          "frame": {
+            "x": 702,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_140": {
+          "frame": {
+            "x": 780,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_141": {
+          "frame": {
+            "x": 858,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        },
+        "npc_142": {
+          "frame": {
+            "x": 936,
+            "y": 930,
+            "w": 78,
+            "h": 93
+          },
+          "rotated": false,
+          "trimmed": false,
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 78,
+            "h": 93
+          },
+          "sourceSize": {
+            "w": 78,
+            "h": 93
+          }
+        }
+      }
+    }
+  ]
+}
