@@ -14,44 +14,72 @@ export class DialogueManager {
     private setupEventListeners(): void {
         // 監聽NPC的對話事件
         this.scene.events.on("show-dialogue", (data: DialogueEventPayload) => {
-            this.showDialogue(
-                data.name,
-                data.message,
-                data.x,
-                data.y,
-                data.bubbleOffsetX,
-                data.bubbleOffsetY
-            );
+            this.showDialogue(data);
         });
     }
 
-    public showDialogue(
-        name: string,
-        message: string,
-        anchorX: number,
-        anchorY: number,
-        bubbleOffsetX: number = 0,
-        bubbleOffsetY: number = -150
-    ): void {
+    public showDialogue(payload: DialogueEventPayload): void {
+        const {
+            name,
+            message,
+            x: anchorX,
+            y: anchorY,
+            radius,
+            bubbleOffsetX = 0,
+            bubbleOffsetY,
+            bubbleGap,
+        } = payload;
+
         // 如果已有對話氣泡，先移除
         this.hideCurrentBubble();
 
-        // 計算氣泡位置 - 在指定位置上方
-        const bubbleX = anchorX + bubbleOffsetX;
-        const bubbleY = anchorY + bubbleOffsetY;
-
-        // 確保氣泡不超出螢幕邊界
-        const adjustedX = Math.max(120, Math.min(bubbleX, 904)); // 120到904像素範圍
-        const adjustedY = Math.max(80, bubbleY); // 至少在螢幕上方80像素
-
         // 創建新的對話氣泡
+        const provisionalX = anchorX + bubbleOffsetX;
+        const provisionalY = anchorY;
+
         this.currentBubble = new DialogueBubble(
             this.scene,
-            adjustedX,
-            adjustedY,
+            provisionalX,
+            provisionalY,
             message,
             anchorX,
             anchorY
+        );
+
+        let targetY: number;
+
+        if (typeof radius === "number") {
+            const gap = bubbleGap ?? 12;
+            const bubbleHeight = this.currentBubble.getBubbleHeight();
+            const tailSize = this.currentBubble.getTailSize();
+            const baseY = anchorY - radius - tailSize - bubbleHeight / 2 - gap;
+            targetY = baseY + (bubbleOffsetY ?? 0);
+
+            if ((import.meta as any).env?.DEV) {
+                console.log(
+                    `🧮 Bubble geometry -> height=${bubbleHeight.toFixed(
+                        2
+                    )} tail=${tailSize} calcBase=${baseY.toFixed(
+                        2
+                    )} gap=${gap} offsetY=${bubbleOffsetY ?? 0}`
+                );
+            }
+        } else {
+            const defaultOffset = bubbleOffsetY ?? -150;
+            targetY = anchorY + defaultOffset;
+        }
+
+        const clampedX = Math.max(120, Math.min(anchorX + bubbleOffsetX, 904));
+        const clampedY = Math.max(80, targetY);
+
+        this.currentBubble.setPosition(clampedX, clampedY);
+
+        console.log(
+            `💬 Bubble placement -> ${name} anchor=(${anchorX}, ${anchorY}) radius=${
+                radius ?? "n/a"
+            } gap=${bubbleGap ?? "n/a"} offsets=(${bubbleOffsetX}, ${
+                bubbleOffsetY ?? 0
+            }) final=(${clampedX}, ${clampedY})`
         );
 
         // 顯示氣泡

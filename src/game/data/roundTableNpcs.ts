@@ -8,7 +8,7 @@ export const roundTableNpcs: HotspotNPC[] = [
         x: 488,
         y: 500,
         radius: 40,
-        bubbleOffsetY: -190,
+        bubbleGap: 18,
     },
     {
         id: "round_table_marketing",
@@ -17,7 +17,7 @@ export const roundTableNpcs: HotspotNPC[] = [
         x: 588,
         y: 504,
         radius: 40,
-        bubbleOffsetY: -185,
+        bubbleGap: 18,
     },
     {
         id: "round_table_analyst",
@@ -26,7 +26,7 @@ export const roundTableNpcs: HotspotNPC[] = [
         x: 452,
         y: 585,
         radius: 40,
-        bubbleOffsetY: -185,
+        bubbleGap: 18,
     },
     {
         id: "round_table_tech",
@@ -35,7 +35,7 @@ export const roundTableNpcs: HotspotNPC[] = [
         x: 610,
         y: 610,
         radius: 40,
-        bubbleOffsetY: -210,
+        bubbleGap: 20,
     },
     {
         id: "round_table_coordinator",
@@ -44,6 +44,6 @@ export const roundTableNpcs: HotspotNPC[] = [
         x: 542,
         y: 634,
         radius: 40,
-        bubbleOffsetY: -215,
+        bubbleGap: 22,
     },
 ];

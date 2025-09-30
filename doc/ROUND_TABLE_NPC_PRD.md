@@ -33,7 +33,7 @@
     - 可選擇加入淡入的高亮圈或名稱標籤（可在 MVP 後追加）。
 4. 點擊熱區：
     - 觸發 `scene.events.emit('show-dialogue', ...)`，沿用 `DialogueManager` 機制。
-    - 對話泡泡位置以熱區中心（或微調偏移）作為 anchor。
+    - 對話泡泡會依據 `radius` 與 `bubbleGap` 自動計算位置；必要時可再提供 `bubbleOffsetX`、`bubbleOffsetY` 做微調。
 5. 離開熱區：游標恢復預設狀態。
 
 ### 3.3 非功能性需求

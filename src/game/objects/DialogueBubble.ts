@@ -1,146 +1,195 @@
-import { Scene } from 'phaser';
+import { Scene } from "phaser";
 
 export class DialogueBubble extends Phaser.GameObjects.Container {
-    private background: Phaser.GameObjects.Graphics;
-    private textObject: Phaser.GameObjects.Text;
-    private tail: Phaser.GameObjects.Graphics;
+    private background!: Phaser.GameObjects.Graphics;
+    private textObject!: Phaser.GameObjects.Text;
+    private tail!: Phaser.GameObjects.Graphics;
     private bubbleWidth: number = 0;
     private bubbleHeight: number = 0;
     private padding: number = 12;
     private cornerRadius: number = 8;
     private tailSize: number = 12;
 
-    constructor(scene: Scene, x: number, y: number, message: string, npcX: number, npcY: number) {
+    constructor(
+        scene: Scene,
+        x: number,
+        y: number,
+        message: string,
+        npcX: number,
+        npcY: number
+    ) {
         super(scene, x, y);
-        
+
         // 添加到場景
         scene.add.existing(this);
-        
+
         // 創建對話氣泡
         this.createBubble(message, npcX, npcY);
-        
+
         // 設置深度確保在最上層
         this.setDepth(2000);
     }
-    
+
+    public getBubbleHeight(): number {
+        return this.bubbleHeight;
+    }
+
+    public getTailSize(): number {
+        return this.tailSize;
+    }
+
     private createBubble(message: string, npcX: number, npcY: number): void {
         // 創建文字物件來計算尺寸
         this.textObject = this.scene.add.text(0, 0, message, {
-            fontSize: '14px',
-            color: '#333333',
-            fontFamily: 'Arial',
-            align: 'left',
-            wordWrap: { width: 200, useAdvancedWrap: true }
+            fontSize: "14px",
+            color: "#333333",
+            fontFamily: "Arial",
+            align: "left",
+            wordWrap: { width: 200, useAdvancedWrap: true },
         });
         this.textObject.setOrigin(0.5, 0.5);
-        
+
         // 計算氣泡尺寸
-        this.bubbleWidth = Math.max(this.textObject.width + this.padding * 2, 80);
+        this.bubbleWidth = Math.max(
+            this.textObject.width + this.padding * 2,
+            80
+        );
         this.bubbleHeight = this.textObject.height + this.padding * 2;
-        
+
         // 創建背景圖形
         this.background = this.scene.add.graphics();
         this.drawBubbleBackground();
-        
+
         // 創建指向尾巴
         this.tail = this.scene.add.graphics();
         this.drawTail(npcX, npcY);
-        
+
         // 添加到容器
         this.add([this.background, this.tail, this.textObject]);
-        
+
         console.log(`Created dialogue bubble: "${message}"`);
     }
-    
+
     private drawBubbleBackground(): void {
         this.background.clear();
-        
+
         // 設置填充和邊框
         this.background.fillStyle(0xffffff, 1.0); // 白底
         this.background.lineStyle(2, 0x333333, 1.0); // 黑邊框
-        
+
         // 計算氣泡位置
         const x = -this.bubbleWidth / 2;
         const y = -this.bubbleHeight / 2;
-        
+
         // 創建一個包含尾巴的完整對話框形狀
         this.background.beginPath();
-        
+
         // 繪製圓角矩形主體
         const radius = this.cornerRadius;
-        
+
         // 從左上角開始，順時針繪製圓角矩形
         this.background.moveTo(x + radius, y);
-        
+
         // 上邊 + 右上角
         this.background.lineTo(x + this.bubbleWidth - radius, y);
-        this.background.arc(x + this.bubbleWidth - radius, y + radius, radius, -Math.PI/2, 0);
-        
+        this.background.arc(
+            x + this.bubbleWidth - radius,
+            y + radius,
+            radius,
+            -Math.PI / 2,
+            0
+        );
+
         // 右邊 + 右下角
-        this.background.lineTo(x + this.bubbleWidth, y + this.bubbleHeight - radius);
-        this.background.arc(x + this.bubbleWidth - radius, y + this.bubbleHeight - radius, radius, 0, Math.PI/2);
-        
+        this.background.lineTo(
+            x + this.bubbleWidth,
+            y + this.bubbleHeight - radius
+        );
+        this.background.arc(
+            x + this.bubbleWidth - radius,
+            y + this.bubbleHeight - radius,
+            radius,
+            0,
+            Math.PI / 2
+        );
+
         // 下邊右側到尾巴位置
         const tailCenterX = 0; // 尾巴在中心位置
         const tailWidth = 16; // 尾巴底部寬度
         const tailBaseY = y + this.bubbleHeight;
-        
-        this.background.lineTo(tailCenterX + tailWidth/2, tailBaseY);
-        
+
+        this.background.lineTo(tailCenterX + tailWidth / 2, tailBaseY);
+
         // 繪製尾巴右側到尖端
         this.background.lineTo(tailCenterX, tailBaseY + this.tailSize);
-        
+
         // 繪製尾巴左側
-        this.background.lineTo(tailCenterX - tailWidth/2, tailBaseY);
-        
+        this.background.lineTo(tailCenterX - tailWidth / 2, tailBaseY);
+
         // 下邊左側 + 左下角
         this.background.lineTo(x + radius, tailBaseY);
-        this.background.arc(x + radius, y + this.bubbleHeight - radius, radius, Math.PI/2, Math.PI);
-        
+        this.background.arc(
+            x + radius,
+            y + this.bubbleHeight - radius,
+            radius,
+            Math.PI / 2,
+            Math.PI
+        );
+
         // 左邊 + 左上角
         this.background.lineTo(x, y + radius);
-        this.background.arc(x + radius, y + radius, radius, Math.PI, -Math.PI/2);
-        
+        this.background.arc(
+            x + radius,
+            y + radius,
+            radius,
+            Math.PI,
+            -Math.PI / 2
+        );
+
         // 閉合路徑
         this.background.closePath();
-        
+
         // 填充和描邊
         this.background.fillPath();
         this.background.strokePath();
     }
-    
+
     private drawTail(npcX: number, npcY: number): void {
         // 尾巴現在已經整合到主要氣泡中，保留空方法
         this.tail.clear();
     }
-    
+
     public show(duration: number = 4000): void {
         // 顯示動畫 - 從小到大
         this.setScale(0);
         this.setAlpha(0);
-        
+
         this.scene.tweens.add({
             targets: this,
             scaleX: 1,
             scaleY: 1,
             alpha: 1,
             duration: 200,
-            ease: 'Back.easeOut'
+            ease: "Back.easeOut",
         });
-        
+
         // 自動隱藏 - 使用箭頭函數保持this上下文
-        this.scene.time.delayedCall(duration, () => {
-            this.hide();
-        }, [], this);
+        this.scene.time.delayedCall(
+            duration,
+            () => {
+                this.hide();
+            },
+            [],
+            this
+        );
     }
-    
+
     public hide(): void {
-        // 檢查場景是否還存在 - 修正API調用
-        if (!this.scene || this.scene.sys.isDestroyed) {
+        if (!this.scene || !this.scene.tweens) {
             this.destroy();
             return;
         }
-        
+
         // 隱藏動畫 - 淡出
         this.scene.tweens.add({
             targets: this,
@@ -148,25 +197,17 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
             scaleX: 0.8,
             scaleY: 0.8,
             duration: 150,
-            ease: 'Power2.easeIn',
+            ease: "Power2.easeIn",
             onComplete: () => {
                 this.destroy();
-            }
+            },
         });
     }
-    
+
     destroy(): void {
-        // 確保安全銷毀 - 修正API調用
-        if (this.scene && !this.scene.sys.isDestroyed) {
-            // 清理所有子物件
-            if (this.background && !this.background.destroyed) this.background.destroy();
-            if (this.textObject && !this.textObject.destroyed) this.textObject.destroy();
-            if (this.tail && !this.tail.destroyed) this.tail.destroy();
-        }
-        
-        // 呼叫父類銷毀
-        if (!this.destroyed) {
-            super.destroy();
-        }
+        if (this.background) this.background.destroy();
+        if (this.textObject) this.textObject.destroy();
+        if (this.tail) this.tail.destroy();
+        super.destroy();
     }
 }

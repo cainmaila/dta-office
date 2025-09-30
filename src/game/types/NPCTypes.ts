@@ -20,6 +20,7 @@ export interface HotspotNPC {
     y: number;
     radius: number;
     bubbleOffsetX?: number;
+    bubbleGap?: number;
     bubbleOffsetY?: number;
 }
 
@@ -28,6 +29,8 @@ export interface DialogueEventPayload {
     message: string;
     x: number;
     y: number;
+    radius?: number;
     bubbleOffsetX?: number;
     bubbleOffsetY?: number;
+    bubbleGap?: number;
 }
