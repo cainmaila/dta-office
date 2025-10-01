@@ -49,6 +49,9 @@ export class NPC extends Phaser.GameObjects.Sprite {
         this.setScale(1.0); // 使用原始大小
         this.setDepth(this.y); // 設置深度以實現正確的層級
 
+        // 設置面向方向
+        this.applyFacing(npcData.facing || "left");
+
         // 設置點擊區域
         this.setupInteraction();
 
@@ -83,6 +86,18 @@ export class NPC extends Phaser.GameObjects.Sprite {
                 this.showDialogue();
             }
         });
+    }
+
+    /**
+     * 設置 NPC 面向方向
+     * @param facing "left" (面向左) 或 "right" (面向右)
+     */
+    private applyFacing(facing: "left" | "right"): void {
+        if (facing === "left") {
+            this.setScale(-1, 1); // 水平翻轉 (面向左)
+        } else {
+            this.setScale(1, 1); // 正常 (面向右)
+        }
     }
 
     private createNameLabel(): void {

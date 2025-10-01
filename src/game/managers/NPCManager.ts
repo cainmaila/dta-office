@@ -56,6 +56,7 @@ export class NPCManager {
                 y: config.y,
                 styleId: config.styleId,
                 action: config.action || "idle",
+                facing: config.facing || "left", // 預設面向左
                 npcType: "standing",
             };
 

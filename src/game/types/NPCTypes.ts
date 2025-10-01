@@ -15,6 +15,7 @@ export interface StandingNpcConfig {
     y: number; // 資料座標 Y
     styleId: string; // NPC 樣式 ID (對應 npcStyles.ts)
     action?: "idle" | "walking" | "sitting" | "talking"; // 當前動作狀態
+    facing?: "left" | "right"; // 面向方向 (left: scaleX=-1, right: scaleX=1)
 }
 
 // 熱區 NPC 配置（引用 Character ID）
@@ -48,6 +49,7 @@ export interface NPCData {
     styleId?: string; // NPC 樣式 ID (對應 npcStyles.ts 中的樣式)
     frameIndex?: number; // 手動指定的幀索引（可選）
     action?: "idle" | "walking" | "sitting" | "talking"; // 當前動作狀態
+    facing?: "left" | "right"; // 面向方向 (left: scaleX=-1, right: scaleX=1)
     character_type?: string; // New field for character type mapping (optional for now)
     current_frame?: string; // Current animation frame state (optional for now)
     dialogue: string;

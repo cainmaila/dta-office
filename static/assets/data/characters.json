@@ -108,15 +108,11 @@
     "standingNpcs": [
         {
             "characterId": "Kevin",
-            "x": 700,
-            "y": 500,
-            "styleId": "business_male_1"
-        },
-        {
-            "characterId": "lin_assistant",
-            "x": 333,
-            "y": 579,
-            "styleId": "business_female_1"
+            "x": 355,
+            "y": 575,
+            "styleId": "business_male_3",
+            "action": "sitting",
+            "facing": "left"
         }
     ],
     "hotspotNpcs": [
