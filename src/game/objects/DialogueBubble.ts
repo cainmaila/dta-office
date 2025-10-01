@@ -66,8 +66,6 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
 
         // 添加到容器
         this.add([this.background, this.tail, this.textObject]);
-
-        console.log(`Created dialogue bubble: "${message}"`);
     }
 
     private drawBubbleBackground(): void {

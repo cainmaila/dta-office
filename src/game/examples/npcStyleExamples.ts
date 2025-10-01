@@ -5,7 +5,7 @@
  */
 
 import { NPCManager } from "../managers/NPCManager";
-import { getAllStyles, getRecommendedStyles } from "../data/npcStyles";
+import { getAllStyles, getRecommendedStyles } from "../utils/NPCStyleUtils";
 
 /**
  * 使用範例 1: 在 Game Scene 中切換 NPC 樣式

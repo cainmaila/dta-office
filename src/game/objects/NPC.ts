@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import type { NPCData } from "../types/NPCTypes";
-import { getStyleById, getFrameForAction } from "../data/npcStyles";
+import { getStyleById, getFrameForAction } from "../utils/NPCStyleUtils";
+import { gameConfig } from "../config";
 
 export class NPC extends Phaser.GameObjects.Sprite {
     public npcData: NPCData;
@@ -8,6 +9,7 @@ export class NPC extends Phaser.GameObjects.Sprite {
     private nameLabel?: Phaser.GameObjects.Text;
     private currentStyleId?: string;
     private currentAction: "idle" | "walking" | "sitting" | "talking" = "idle";
+    private animationTimer?: Phaser.Time.TimerEvent;
 
     constructor(scene: Scene, npcData: NPCData) {
         // 決定使用哪個紋理和幀
@@ -100,8 +102,8 @@ export class NPC extends Phaser.GameObjects.Sprite {
             message: this.npcData.dialogue,
             x: this.x,
             y: this.y - this.height * this.scaleY,
-            bubbleOffsetY: 90, // 增加垂直偏移，讓對話框遠離人物
-            bubbleGap: 30, // 增加氣泡間隙
+            bubbleOffsetY: gameConfig.dialogue.standing.extraOffsetY,
+            bubbleGap: gameConfig.dialogue.standing.bubbleGap,
         });
 
         // 添加點擊反饋效果
@@ -142,6 +144,7 @@ export class NPC extends Phaser.GameObjects.Sprite {
             return this;
         }
 
+        this.clearAnimationTimer();
         this.currentStyleId = styleId;
         this.currentAction = action;
 
@@ -170,6 +173,7 @@ export class NPC extends Phaser.GameObjects.Sprite {
             return this;
         }
 
+        this.clearAnimationTimer();
         this.currentAction = action;
         const frame = getFrameForAction(
             this.currentStyleId,
@@ -221,6 +225,7 @@ export class NPC extends Phaser.GameObjects.Sprite {
 
         // 停止現有的動畫
         this.scene.tweens.killTweensOf(this);
+        this.clearAnimationTimer();
 
         this.currentAction = action;
         let currentFrameIndex = 0;
@@ -235,7 +240,7 @@ export class NPC extends Phaser.GameObjects.Sprite {
         updateFrame();
 
         // 創建循環計時器
-        this.scene.time.addEvent({
+        this.animationTimer = this.scene.time.addEvent({
             delay: duration,
             callback: updateFrame,
             loop: true,
@@ -244,12 +249,20 @@ export class NPC extends Phaser.GameObjects.Sprite {
         return this;
     }
 
+    private clearAnimationTimer(): void {
+        if (this.animationTimer) {
+            this.animationTimer.remove(false);
+            this.animationTimer = undefined;
+        }
+    }
+
     public destroy(fromScene?: boolean): void {
         // 清理名字標籤
         if (this.nameLabel) {
             this.nameLabel.destroy();
             this.nameLabel = undefined;
         }
+        this.clearAnimationTimer();
         super.destroy(fromScene);
     }
 }

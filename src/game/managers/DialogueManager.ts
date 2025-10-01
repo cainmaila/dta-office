@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import { DialogueBubble } from "../objects/DialogueBubble";
 import type { DialogueEventPayload } from "../types/NPCTypes";
+import { computeBubblePosition } from "../utils/DialogueUtils";
 
 export class DialogueManager {
     private scene: Scene;
@@ -34,55 +35,24 @@ export class DialogueManager {
         this.hideCurrentBubble();
 
         // 創建新的對話氣泡
-        const provisionalX = anchorX + bubbleOffsetX;
-        const provisionalY = anchorY;
-
         this.currentBubble = new DialogueBubble(
             this.scene,
-            provisionalX,
-            provisionalY,
+            anchorX,
+            anchorY,
             message,
             anchorX,
             anchorY
         );
 
-        let targetY: number;
+        const bubbleHeight = this.currentBubble.getBubbleHeight();
+        const tailSize = this.currentBubble.getTailSize();
 
-        if (typeof radius === "number") {
-            const gap = bubbleGap ?? 12;
-            const bubbleHeight = this.currentBubble.getBubbleHeight();
-            const tailSize = this.currentBubble.getTailSize();
-            const baseY = anchorY - radius - tailSize - bubbleHeight / 2 - gap;
-            targetY = baseY + (bubbleOffsetY ?? 0);
+        const { x: finalX, y: finalY } = computeBubblePosition(payload, {
+            height: bubbleHeight,
+            tailSize,
+        });
 
-            if ((import.meta as any).env?.DEV) {
-                console.log(
-                    `🧮 Bubble geometry -> height=${bubbleHeight.toFixed(
-                        2
-                    )} tail=${tailSize} calcBase=${baseY.toFixed(
-                        2
-                    )} gap=${gap} offsetY=${bubbleOffsetY ?? 0}`
-                );
-            }
-        } else {
-            // 站立 NPC：使用基礎偏移 + 額外偏移
-            const baseOffset = -150; // 基礎偏移量
-            const extraOffset = bubbleOffsetY ?? 0; // 額外偏移量
-            targetY = anchorY + baseOffset + extraOffset;
-        }
-
-        const clampedX = Math.max(120, Math.min(anchorX + bubbleOffsetX, 904));
-        const clampedY = Math.max(80, targetY);
-
-        this.currentBubble.setPosition(clampedX, clampedY);
-
-        console.log(
-            `💬 Bubble placement -> ${name} anchor=(${anchorX}, ${anchorY}) radius=${
-                radius ?? "n/a"
-            } gap=${bubbleGap ?? "n/a"} offsets=(${bubbleOffsetX}, ${
-                bubbleOffsetY ?? 0
-            }) final=(${clampedX}, ${clampedY})`
-        );
+        this.currentBubble.setPosition(finalX, finalY);
 
         // 顯示氣泡
         this.currentBubble.show(4000); // 4秒後自動消失

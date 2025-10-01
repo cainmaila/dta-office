@@ -1,6 +1,7 @@
 import { Scene } from "phaser";
 import { NPC } from "../objects/NPC";
 import type { NPCData } from "../types/NPCTypes";
+import { gameConfig } from "../config";
 
 export class NPCManager {
     private scene: Scene;
@@ -12,10 +13,11 @@ export class NPCManager {
     }
 
     async loadNPCData(): Promise<void> {
-        const response = await fetch("assets/data/npcs.json");
+        const response = await fetch(
+            `${gameConfig.assets.basePath}/${gameConfig.assets.npcData}`
+        );
         const data = await response.json();
         this.npcData = data.npcs;
-        console.log("NPC data loaded:", this.npcData);
     }
 
     createNPCs(): void {
@@ -31,8 +33,6 @@ export class NPCManager {
             const npc = new NPC(this.scene, data);
             this.npcs.set(data.id, npc);
         });
-
-        console.log(`Created ${this.npcs.size} standing NPCs in the scene`);
     }
 
     private clearNPCs(): void {

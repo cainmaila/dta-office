@@ -1,0 +1,28 @@
+{
+    "assets": {
+        "basePath": "assets",
+        "background": {
+            "key": "office_bg",
+            "file": "bg6.png"
+        },
+        "npcSpriteSheet": {
+            "key": "npc-sheet",
+            "file": "tilesets/npc.png",
+            "frameWidth": 78,
+            "frameHeight": 93
+        },
+        "npcData": "data/npcs.json"
+    },
+    "dialogue": {
+        "standing": {
+            "baseOffsetY": -150,
+            "extraOffsetY": 90,
+            "bubbleGap": 30
+        },
+        "bounds": {
+            "minX": 120,
+            "maxX": 904,
+            "minY": 80
+        }
+    }
+}

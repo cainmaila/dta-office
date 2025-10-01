@@ -4,6 +4,7 @@ import { DialogueManager } from "../managers/DialogueManager";
 import { NPCManager } from "../managers/NPCManager";
 import { roundTableNpcs } from "../data/roundTableNpcs";
 import type { HotspotNPC } from "../types/NPCTypes";
+import { gameConfig } from "../config";
 
 export class Game extends Scene {
     private dialogueManager!: DialogueManager;
@@ -46,47 +47,29 @@ export class Game extends Scene {
     }
 
     preload() {
-        this.load.setPath("assets");
-
-        // 載入參考圖片用於比例分析
-        this.load.image("reference_game", "reference_game.png");
+        this.load.setPath(gameConfig.assets.basePath);
 
         // 載入辦公室背景
-        this.load.image("office_bg", "bg6.png");
+        this.load.image(
+            gameConfig.assets.background.key,
+            gameConfig.assets.background.file
+        );
 
-        // 載入NPC Atlas - 使用新的atlas系統
-        this.load.atlas("npc-atlas", "tilesets/npc.png", "data/npc_atlas.json");
-
-        // 保留原始素材以防需要 (作為備用)
-        this.load.spritesheet("npc-sheet", "tilesets/npc.png", {
-            frameWidth: Math.floor(1024 / 13), // 78像素
-            frameHeight: Math.floor(1024 / 11), // 93像素
-        });
-
-        this.load.spritesheet("npc-a-sheet", "tilesets/npc-a.png", {
-            frameWidth: Math.floor(1024 / 13),
-            frameHeight: Math.floor(1024 / 11),
-        });
-
-        this.load.spritesheet("npc-in-sheet", "tilesets/npc-in.png", {
-            frameWidth: Math.floor(1024 / 13),
-            frameHeight: Math.floor(1024 / 11),
-        });
-
-        this.load.spritesheet("npm-b-sheet", "tilesets/npm-b.png", {
-            frameWidth: Math.floor(1024 / 13),
-            frameHeight: Math.floor(1024 / 11),
-        });
-
-        // 載入其他資源
-        this.load.image("star", "star.png");
-        this.load.image("logo", "logo.png");
+        // 載入 NPC sprite sheet
+        this.load.spritesheet(
+            gameConfig.assets.npcSpriteSheet.key,
+            gameConfig.assets.npcSpriteSheet.file,
+            {
+                frameWidth: gameConfig.assets.npcSpriteSheet.frameWidth,
+                frameHeight: gameConfig.assets.npcSpriteSheet.frameHeight,
+            }
+        );
     }
 
     create() {
         // 創建背景
         const background = this.add
-            .image(0, 0, "office_bg")
+            .image(0, 0, gameConfig.assets.background.key)
             .setOrigin(0.5, 0.5);
         const sourceImage = background.texture.getSourceImage() as
             | HTMLImageElement
@@ -180,7 +163,9 @@ export class Game extends Scene {
 
         if (options.log) {
             console.warn(
-                `🖼️ office_bg texture ${naturalWidth}x${naturalHeight} scaled to ${displayWidth.toFixed(
+                `🖼️ ${
+                    gameConfig.assets.background.key
+                } texture ${naturalWidth}x${naturalHeight} scaled to ${displayWidth.toFixed(
                     1
                 )}x${displayHeight.toFixed(1)} (scale=${fitScale.toFixed(
                     4
