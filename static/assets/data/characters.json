@@ -17,16 +17,16 @@
             "introduction": "我是林助理,在公司擔任行政助理已經三年,主要負責協助張主管處理各項行政事務、會議安排和文件管理。我個性親切熱心,總是樂於幫助同事解決各種大小問題。無論是訂會議室、準備簡報資料,還是協調跨部門溝通,我都會細心處理,確保每件事都能順利進行。"
         },
         {
-            "id": "li_manager",
-            "name": "李經理",
+            "id": "Vasiliy",
+            "name": "Vasiliy",
             "position": "產品經理",
             "personality": "嚴謹負責",
             "dialogue": "歡迎來到我們公司！有什麼可以幫助你的嗎？",
             "introduction": "我是李經理,擔任產品經理已經五年,負責規劃和推動公司的核心產品線。我做事嚴謹負責,重視數據分析和使用者回饋,每個產品決策都經過深思熟慮。我習慣從使用者需求出發,與設計和工程團隊緊密合作,確保產品能真正解決使用者的痛點。"
         },
         {
-            "id": "wang_designer",
-            "name": "王設計師",
+            "id": "Charles",
+            "name": "Charles",
             "position": "UI/UX設計師",
             "personality": "創意滿滿",
             "dialogue": "我正在設計新的用戶介面，你覺得這個顏色搭配怎麼樣？",
@@ -158,6 +158,20 @@
             "characterId": "Kexy",
             "x": 258,
             "y": 451,
+            "radius": 40,
+            "bubbleGap": 22
+        },
+        {
+            "characterId": "Vasiliy",
+            "x": 873,
+            "y": 506,
+            "radius": 40,
+            "bubbleGap": 22
+        },
+        {
+            "characterId": "Charles",
+            "x": 786,
+            "y": 463,
             "radius": 40,
             "bubbleGap": 22
         }
