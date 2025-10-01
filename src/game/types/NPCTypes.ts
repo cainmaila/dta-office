@@ -28,6 +28,7 @@ export interface HotspotNPC {
 }
 
 export interface DialogueEventPayload {
+    npcId?: string; // NPC ID for tracking dialogue state
     name: string;
     message: string;
     x: number;

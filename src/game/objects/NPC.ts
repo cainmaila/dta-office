@@ -10,6 +10,8 @@ export class NPC extends Phaser.GameObjects.Sprite {
     private currentStyleId?: string;
     private currentAction: "idle" | "walking" | "sitting" | "talking" = "idle";
     private animationTimer?: Phaser.Time.TimerEvent;
+    private isHovering: boolean = false;
+    private isDialogueActive: boolean = false;
 
     constructor(scene: Scene, npcData: NPCData) {
         // 決定使用哪個紋理和幀
@@ -50,8 +52,9 @@ export class NPC extends Phaser.GameObjects.Sprite {
         // 設置點擊區域
         this.setupInteraction();
 
-        // 添加名字標籤
-        this.createNameLabel();
+        // 監聽對話事件
+        this.scene.events.on("dialogue-shown", this.onDialogueShown, this);
+        this.scene.events.on("dialogue-hidden", this.onDialogueHidden, this);
     }
 
     private setupInteraction(): void {
@@ -63,12 +66,16 @@ export class NPC extends Phaser.GameObjects.Sprite {
             if (this.isInteractive) {
                 this.setTint(0xdddddd); // 滑鼠懸停效果
                 this.scene.input.setDefaultCursor("pointer");
+                this.isHovering = true;
+                this.updateNameLabelVisibility();
             }
         });
 
         this.on("pointerout", () => {
             this.clearTint(); // 清除懸停效果
             this.scene.input.setDefaultCursor("default");
+            this.isHovering = false;
+            this.updateNameLabelVisibility();
         });
 
         this.on("pointerdown", () => {
@@ -79,25 +86,54 @@ export class NPC extends Phaser.GameObjects.Sprite {
     }
 
     private createNameLabel(): void {
-        // 在NPC頭頂顯示名字（小字體）
-        this.nameLabel = this.scene.add.text(
-            this.x,
-            this.y - this.height * this.scaleY - 10,
-            this.npcData.name,
-            {
-                fontSize: "14px",
-                color: "#333333",
-                backgroundColor: "rgba(255, 255, 255, 0.9)",
-                padding: { x: 6, y: 3 },
-            }
-        );
-        this.nameLabel.setOrigin(0.5);
-        this.nameLabel.setDepth(this.depth + 1);
+        if (!this.nameLabel) {
+            this.nameLabel = this.scene.add.text(
+                this.x,
+                this.y - this.height * this.scaleY - 10,
+                this.npcData.name,
+                {
+                    fontSize: "14px",
+                    color: "#333333",
+                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    padding: { x: 6, y: 3 },
+                }
+            );
+            this.nameLabel.setOrigin(0.5);
+            this.nameLabel.setDepth(this.depth + 1);
+            this.nameLabel.setVisible(false); // 初始隱藏
+        }
+    }
+
+    private updateNameLabelVisibility(): void {
+        const shouldShow = this.isHovering || this.isDialogueActive;
+
+        if (shouldShow && !this.nameLabel) {
+            this.createNameLabel();
+        }
+
+        if (this.nameLabel) {
+            this.nameLabel.setVisible(shouldShow);
+        }
+    }
+
+    private onDialogueShown(npcId: string): void {
+        if (npcId === this.npcData.id) {
+            this.isDialogueActive = true;
+            this.updateNameLabelVisibility();
+        }
+    }
+
+    private onDialogueHidden(npcId: string): void {
+        if (npcId === this.npcData.id) {
+            this.isDialogueActive = false;
+            this.updateNameLabelVisibility();
+        }
     }
 
     public showDialogue(): void {
         // 發送事件給對話管理器，增加對話框與人物的距離
         this.scene.events.emit("show-dialogue", {
+            npcId: this.npcData.id,
             name: this.npcData.name,
             message: this.npcData.dialogue,
             x: this.x,
@@ -257,6 +293,10 @@ export class NPC extends Phaser.GameObjects.Sprite {
     }
 
     public destroy(fromScene?: boolean): void {
+        // 清理事件監聽
+        this.scene.events.off("dialogue-shown", this.onDialogueShown, this);
+        this.scene.events.off("dialogue-hidden", this.onDialogueHidden, this);
+
         // 清理名字標籤
         if (this.nameLabel) {
             this.nameLabel.destroy();

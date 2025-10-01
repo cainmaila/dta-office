@@ -6,6 +6,7 @@ import { computeBubblePosition } from "../utils/DialogueUtils";
 export class DialogueManager {
     private scene: Scene;
     private currentBubble: DialogueBubble | null = null;
+    private currentNpcId?: string;
 
     constructor(scene: Scene) {
         this.scene = scene;
@@ -21,6 +22,7 @@ export class DialogueManager {
 
     public showDialogue(payload: DialogueEventPayload): void {
         const {
+            npcId,
             name,
             message,
             x: anchorX,
@@ -33,6 +35,14 @@ export class DialogueManager {
 
         // 如果已有對話氣泡，先移除
         this.hideCurrentBubble();
+
+        // 記錄當前對話的 NPC ID
+        this.currentNpcId = npcId;
+
+        // 通知對話開始
+        if (npcId) {
+            this.scene.events.emit("dialogue-shown", npcId);
+        }
 
         // 創建新的對話氣泡
         this.currentBubble = new DialogueBubble(
@@ -54,14 +64,24 @@ export class DialogueManager {
 
         this.currentBubble.setPosition(finalX, finalY);
 
-        // 顯示氣泡
-        this.currentBubble.show(4000); // 4秒後自動消失
+        // 顯示氣泡，並在隱藏時通知
+        this.currentBubble.show(4000, () => {
+            if (this.currentNpcId) {
+                this.scene.events.emit("dialogue-hidden", this.currentNpcId);
+            }
+            this.currentNpcId = undefined;
+        });
     }
 
     private hideCurrentBubble(): void {
         if (this.currentBubble) {
+            // 通知對話結束
+            if (this.currentNpcId) {
+                this.scene.events.emit("dialogue-hidden", this.currentNpcId);
+            }
             this.currentBubble.hide();
             this.currentBubble = null;
+            this.currentNpcId = undefined;
         }
     }
 

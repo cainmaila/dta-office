@@ -157,7 +157,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.tail.clear();
     }
 
-    public show(duration: number = 4000): void {
+    public show(duration: number = 4000, onHideCallback?: () => void): void {
         // 顯示動畫 - 從小到大
         this.setScale(0);
         this.setAlpha(0);
@@ -175,15 +175,16 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.scene.time.delayedCall(
             duration,
             () => {
-                this.hide();
+                this.hide(onHideCallback);
             },
             [],
             this
         );
     }
 
-    public hide(): void {
+    public hide(onHideCallback?: () => void): void {
         if (!this.scene || !this.scene.tweens) {
+            if (onHideCallback) onHideCallback();
             this.destroy();
             return;
         }
@@ -197,6 +198,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
             duration: 150,
             ease: "Power2.easeIn",
             onComplete: () => {
+                if (onHideCallback) onHideCallback();
                 this.destroy();
             },
         });

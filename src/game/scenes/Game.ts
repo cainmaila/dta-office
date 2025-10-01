@@ -40,6 +40,9 @@ export class Game extends Scene {
         };
         debugVisual: Phaser.GameObjects.Graphics;
         debugLabel: Phaser.GameObjects.Text;
+        nameLabel: Phaser.GameObjects.Text;
+        isHovering: boolean;
+        isDialogueActive: boolean;
     }> = [];
 
     constructor() {
@@ -96,10 +99,11 @@ export class Game extends Scene {
             this.dialogueManager.destroy();
             this.npcManager?.destroy();
             this.roundTableHotspots.forEach(
-                ({ zone, debugVisual, debugLabel }) => {
+                ({ zone, debugVisual, debugLabel, nameLabel }) => {
                     zone.destroy();
                     debugVisual.destroy();
                     debugLabel.destroy();
+                    nameLabel.destroy();
                 }
             );
             this.roundTableHotspots = [];
@@ -107,6 +111,32 @@ export class Game extends Scene {
 
         // 建立圓桌 NPC 熱區
         this.createRoundTableHotspots();
+
+        // 監聽對話框事件以更新熱區名字標籤
+        this.events.on("dialogue-shown", (payload: { npcId?: string }) => {
+            if (payload.npcId) {
+                const entry = this.roundTableHotspots.find(
+                    (e) => e.npc.id === payload.npcId
+                );
+                if (entry) {
+                    entry.isDialogueActive = true;
+                    this.updateHotspotNameLabelVisibility(entry);
+                }
+            }
+        });
+
+        this.events.on("dialogue-hidden", (payload: { npcId?: string }) => {
+            if (payload.npcId) {
+                const entry = this.roundTableHotspots.find(
+                    (e) => e.npc.id === payload.npcId
+                );
+                if (entry) {
+                    entry.isDialogueActive = false;
+                    this.updateHotspotNameLabelVisibility(entry);
+                }
+            }
+        });
+
         this.exposeDebugHelpers();
 
         this.setupHotspotDebugger();
@@ -400,6 +430,18 @@ export class Game extends Scene {
                 .setDepth(2500)
                 .setVisible(false);
 
+            // 創建名字標籤（初始隱藏）
+            const nameLabel = this.add
+                .text(0, 0, npc.name, {
+                    fontSize: "14px",
+                    color: "#333333",
+                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    padding: { x: 6, y: 3 },
+                })
+                .setOrigin(0.5)
+                .setDepth(2501)
+                .setVisible(false);
+
             const entry = {
                 zone,
                 npc,
@@ -413,12 +455,17 @@ export class Game extends Scene {
                 },
                 debugVisual,
                 debugLabel,
+                nameLabel,
+                isHovering: false,
+                isDialogueActive: false,
             };
 
             this.applyWorldTransformToHotspot(entry);
 
             zone.on("pointerover", () => {
                 this.input.setDefaultCursor("pointer");
+                entry.isHovering = true;
+                this.updateHotspotNameLabelVisibility(entry);
                 if (this.hotspotDebugEnabled) {
                     debugVisual.setVisible(true);
                     debugLabel.setVisible(true);
@@ -427,6 +474,8 @@ export class Game extends Scene {
 
             zone.on("pointerout", () => {
                 this.input.setDefaultCursor("default");
+                entry.isHovering = false;
+                this.updateHotspotNameLabelVisibility(entry);
                 if (this.hotspotDebugEnabled) {
                     debugVisual.setVisible(true);
                     debugLabel.setVisible(true);
@@ -439,6 +488,7 @@ export class Game extends Scene {
             zone.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
                 const { world } = entry;
                 this.events.emit("show-dialogue", {
+                    npcId: npc.id,
                     name: npc.name,
                     message: npc.dialogue,
                     x: world.x,
@@ -457,7 +507,7 @@ export class Game extends Scene {
     private applyWorldTransformToHotspot(
         entry: (typeof this.roundTableHotspots)[number]
     ): void {
-        const { npc, zone, debugVisual, debugLabel, world } = entry;
+        const { npc, zone, debugVisual, debugLabel, nameLabel, world } = entry;
         const transformed = this.transformNpcCoordinates(npc);
 
         world.x = transformed.x;
@@ -467,26 +517,26 @@ export class Game extends Scene {
         world.bubbleOffsetY = transformed.bubbleOffsetY;
         world.bubbleGap = transformed.bubbleGap;
 
-        zone.setPosition(world.x + world.radius, world.y + world.radius);
-        zone.setSize(world.radius * 2, world.radius * 2);
-
-        if (zone.input?.hitArea instanceof Phaser.Geom.Circle) {
-            zone.input.hitArea.setTo(0, 0, world.radius);
-        } else {
-            zone.setInteractive(
-                new Phaser.Geom.Circle(0, 0, world.radius),
-                Phaser.Geom.Circle.Contains
-            );
-        }
+        zone.setPosition(world.x, world.y);
+        (zone.input!.hitArea as Phaser.Geom.Circle).setTo(0, 0, world.radius);
 
         debugVisual.clear();
         debugVisual.lineStyle(2, 0xffcc00, 0.9);
+        debugVisual.strokeCircle(world.x, world.y, world.radius);
         debugVisual.fillStyle(0xffcc00, 0.15);
-        debugVisual.fillCircle(0, 0, world.radius);
-        debugVisual.strokeCircle(0, 0, world.radius);
-        debugVisual.setPosition(world.x, world.y);
+        debugVisual.fillCircle(world.x, world.y, world.radius);
 
-        debugLabel.setPosition(world.x, world.y - world.radius - 20);
+        debugLabel.setPosition(world.x, world.y - world.radius - 12);
+
+        // 名字標籤位置：圓心正上方
+        nameLabel.setPosition(world.x, world.y - world.radius - 30);
+    }
+
+    private updateHotspotNameLabelVisibility(
+        entry: (typeof this.roundTableHotspots)[number]
+    ): void {
+        const shouldShow = entry.isHovering || entry.isDialogueActive;
+        entry.nameLabel.setVisible(shouldShow);
     }
 
     private simulateHotspotInteraction(
