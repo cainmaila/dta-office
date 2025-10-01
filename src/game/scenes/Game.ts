@@ -382,10 +382,6 @@ export class Game extends Scene {
                 Phaser.Geom.Circle.Contains
             );
 
-            console.log(
-                `🛰️ Hotspot created -> ${npc.id} data=(${npc.x}, ${npc.y})`
-            );
-
             const debugVisual = this.add.graphics();
             debugVisual.lineStyle(2, 0xffcc00, 0.9);
             debugVisual.fillStyle(0xffcc00, 0.15);
@@ -420,14 +416,6 @@ export class Game extends Scene {
 
             this.applyWorldTransformToHotspot(entry);
 
-            console.log(
-                `🛰️ Hotspot created -> ${npc.id} data=(${npc.x}, ${
-                    npc.y
-                }) world=(${entry.world.x.toFixed(1)}, ${entry.world.y.toFixed(
-                    1
-                )}) radius=${entry.world.radius.toFixed(1)}`
-            );
-
             zone.on("pointerover", () => {
                 this.input.setDefaultCursor("pointer");
                 if (this.hotspotDebugEnabled) {
@@ -449,19 +437,6 @@ export class Game extends Scene {
 
             zone.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
                 const { world } = entry;
-                console.log(
-                    `🎯 Hotspot pointer @ world(${pointer.worldX.toFixed(
-                        1
-                    )}, ${pointer.worldY.toFixed(
-                        1
-                    )}) | data(${this.worldToDataX(pointer.worldX).toFixed(
-                        1
-                    )}, ${this.worldToDataY(pointer.worldY).toFixed(
-                        1
-                    )}) | zone ${npc.id} center world(${world.x.toFixed(
-                        1
-                    )}, ${world.y.toFixed(1)})`
-                );
                 this.events.emit("show-dialogue", {
                     name: npc.name,
                     message: npc.dialogue,
@@ -553,11 +528,6 @@ export class Game extends Scene {
         // 切換熱區偵測模式
         this.input.keyboard?.on("keydown-H", () => {
             this.hotspotDebugEnabled = !this.hotspotDebugEnabled;
-            console.log(
-                `📍 Hotspot debug ${
-                    this.hotspotDebugEnabled ? "enabled" : "disabled"
-                }`
-            );
             this.hotspotDebugText?.setVisible(this.hotspotDebugEnabled);
             this.roundTableHotspots.forEach(
                 ({ debugVisual, debugLabel, world }) => {
@@ -609,14 +579,6 @@ export class Game extends Scene {
             if (!this.hotspotDebugEnabled) {
                 return;
             }
-
-            const worldX = Number(pointer.worldX.toFixed(1));
-            const worldY = Number(pointer.worldY.toFixed(1));
-            const dataX = Number(this.worldToDataX(pointer.worldX).toFixed(1));
-            const dataY = Number(this.worldToDataY(pointer.worldY).toFixed(1));
-            console.log(
-                `🎯 Hotspot candidate -> world(${worldX}, ${worldY}) | data(${dataX}, ${dataY})`
-            );
         });
     }
 }
