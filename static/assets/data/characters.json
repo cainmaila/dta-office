@@ -9,8 +9,8 @@
             "introduction": "我是張主管,在公司擔任技術主管已經八年,負責帶領整個技術團隊推動各項產品開發。我相信團隊合作的力量,重視每位成員的意見與成長,致力於打造一個開放溝通、互相支持的工作環境。在技術決策上我講求務實與創新的平衡,期許團隊能夠持續進步。"
         },
         {
-            "id": "lin_assistant",
-            "name": "林助理",
+            "id": "Johnny",
+            "name": "Johnny",
             "position": "行政助理",
             "personality": "親切熱心",
             "dialogue": "需要什麼協助嗎？我可以幫你安排會議室或準備資料。",
@@ -33,8 +33,8 @@
             "introduction": "我是王設計師,專注於UI/UX設計已經四年,對於使用者體驗和視覺設計充滿熱情。我相信好的設計不只是美觀,更要讓使用者感到直覺好用。我喜歡嘗試新的設計趨勢,但也重視可用性測試的回饋,在創意與實用性之間找到最佳平衡點。"
         },
         {
-            "id": "chen_engineer",
-            "name": "陳工程師",
+            "id": "Edward",
+            "name": "阿隆",
             "position": "前端工程師",
             "personality": "技術專精",
             "dialogue": "今天的程式碼 review 進行得很順利，新功能快要上線了！",
@@ -91,6 +91,14 @@
         {
             "id": "Kexy",
             "name": "Kexy",
+            "position": "資深專員",
+            "personality": "經驗豐富",
+            "dialogue": "好的!全部都好!",
+            "introduction": "我是資深專員,在公司服務已經十年,累積了豐富的實務經驗。我見證了公司的成長和變化,熟悉各種業務流程和問題處理。年輕同事有任何疑問,我都很樂意分享經驗,幫助他們更快上手。我相信經驗的傳承對組織發展很重要。"
+        },
+        {
+            "id": "Dennis",
+            "name": "Dennis",
             "position": "資深專員",
             "personality": "經驗豐富",
             "dialogue": "好的!全部都好!",
@@ -172,6 +180,27 @@
             "characterId": "Charles",
             "x": 786,
             "y": 463,
+            "radius": 40,
+            "bubbleGap": 22
+        },
+        {
+            "characterId": "Johnny",
+            "x": 452,
+            "y": 862,
+            "radius": 40,
+            "bubbleGap": 22
+        },
+        {
+            "characterId": "Edward",
+            "x": 688,
+            "y": 737,
+            "radius": 40,
+            "bubbleGap": 22
+        },
+        {
+            "characterId": "Dennis",
+            "x": 387,
+            "y": 379,
             "radius": 40,
             "bubbleGap": 22
         }
