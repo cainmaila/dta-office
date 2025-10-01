@@ -349,12 +349,11 @@ export class Game extends Scene {
     }
 
     private transformNpcCoordinates(npc: HotspotNPC) {
+        const x = this.dataToWorldX(npc.x);
+        const y = this.dataToWorldY(npc.y);
         const scaleX = this.backgroundScaleX || 1;
         const scaleY = this.backgroundScaleY || 1;
-        const rawRadius = typeof npc.radius === "number" ? npc.radius : 0;
-        const radius = rawRadius * Math.max(scaleX, scaleY);
-        const x = this.dataToWorldX(npc.x) + radius / 2;
-        const y = this.dataToWorldY(npc.y);
+        const radius = npc.radius * Math.max(scaleX, scaleY);
         const bubbleOffsetX =
             typeof npc.bubbleOffsetX === "number"
                 ? npc.bubbleOffsetX * scaleX
@@ -492,7 +491,7 @@ export class Game extends Scene {
         world.bubbleOffsetY = transformed.bubbleOffsetY;
         world.bubbleGap = transformed.bubbleGap;
 
-        zone.setPosition(world.x, world.y);
+        zone.setPosition(world.x + world.radius, world.y + world.radius);
         zone.setSize(world.radius * 2, world.radius * 2);
 
         if (zone.input?.hitArea instanceof Phaser.Geom.Circle) {
@@ -566,10 +565,8 @@ export class Game extends Scene {
                     debugLabel.setVisible(this.hotspotDebugEnabled);
                     if (this.hotspotDebugEnabled) {
                         debugVisual.setPosition(world.x, world.y);
-                        debugLabel.setPosition(
-                            world.x,
-                            world.y - world.radius - 20
-                        );
+                        // debugLabel.setPosition(world.x, world.y - world.radius);
+                        debugLabel.setPosition(world.x, world.y - world.radius);
                     }
                 }
             );
