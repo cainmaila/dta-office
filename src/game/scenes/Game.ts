@@ -520,11 +520,13 @@ export class Game extends Scene {
         zone.setPosition(world.x, world.y);
         (zone.input!.hitArea as Phaser.Geom.Circle).setTo(0, 0, world.radius);
 
+        // 將 debugVisual 移動到世界座標位置，然後在 (0, 0) 繪製圓形
+        debugVisual.setPosition(world.x, world.y);
         debugVisual.clear();
         debugVisual.lineStyle(2, 0xffcc00, 0.9);
-        debugVisual.strokeCircle(world.x, world.y, world.radius);
+        debugVisual.strokeCircle(0, 0, world.radius);
         debugVisual.fillStyle(0xffcc00, 0.15);
-        debugVisual.fillCircle(world.x, world.y, world.radius);
+        debugVisual.fillCircle(0, 0, world.radius);
 
         debugLabel.setPosition(world.x, world.y - world.radius - 12);
 
