@@ -66,6 +66,47 @@ export class NPCManager {
         }
     }
 
+    /**
+     * 切換 NPC 樣式
+     */
+    setNPCStyle(
+        id: string,
+        styleId: string,
+        action: "idle" | "walking" | "sitting" | "talking" = "idle"
+    ): void {
+        const npc = this.npcs.get(id);
+        if (npc) {
+            npc.setStyle(styleId, action);
+        }
+    }
+
+    /**
+     * 切換 NPC 動作
+     */
+    setNPCAction(
+        id: string,
+        action: "idle" | "walking" | "sitting" | "talking"
+    ): void {
+        const npc = this.npcs.get(id);
+        if (npc) {
+            npc.setAction(action);
+        }
+    }
+
+    /**
+     * 播放 NPC 動作動畫
+     */
+    playNPCAnimation(
+        id: string,
+        action: "idle" | "walking" | "sitting" | "talking",
+        duration: number = 200
+    ): void {
+        const npc = this.npcs.get(id);
+        if (npc) {
+            npc.playActionAnimation(action, duration);
+        }
+    }
+
     destroy(): void {
         this.clearNPCs();
     }
