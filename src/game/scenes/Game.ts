@@ -528,8 +528,8 @@ export class Game extends Scene {
 
         debugLabel.setPosition(world.x, world.y - world.radius - 12);
 
-        // 名字標籤位置：圓心正上方
-        nameLabel.setPosition(world.x, world.y - world.radius - 30);
+        // 名字標籤位置：圓心正上方（下移 10 像素）
+        nameLabel.setPosition(world.x, world.y - world.radius - 10);
     }
 
     private updateHotspotNameLabelVisibility(
