@@ -1,11 +1,13 @@
 import Phaser, { Scene, Scenes } from "phaser";
 import { EventBus } from "../EventBus";
 import { DialogueManager } from "../managers/DialogueManager";
+import { NPCManager } from "../managers/NPCManager";
 import { roundTableNpcs } from "../data/roundTableNpcs";
 import type { HotspotNPC } from "../types/NPCTypes";
 
 export class Game extends Scene {
     private dialogueManager!: DialogueManager;
+    private npcManager!: NPCManager;
     private hotspotDebugEnabled = false;
     private hotspotDebugText?: Phaser.GameObjects.Text;
     private backgroundImage?: Phaser.GameObjects.Image;
@@ -103,8 +105,13 @@ export class Game extends Scene {
         // 初始化對話管理器
         this.dialogueManager = new DialogueManager(this);
 
+        // 初始化 NPC 管理器並載入站立的 NPC
+        this.npcManager = new NPCManager(this);
+        this.loadStandingNPCs();
+
         this.events.once(Scenes.Events.SHUTDOWN, () => {
             this.dialogueManager.destroy();
+            this.npcManager?.destroy();
             this.roundTableHotspots.forEach(
                 ({ zone, debugVisual, debugLabel }) => {
                     zone.destroy();
@@ -123,6 +130,15 @@ export class Game extends Scene {
 
         // 通知場景準備完成
         EventBus.emit("current-scene-ready", this);
+    }
+
+    private async loadStandingNPCs(): Promise<void> {
+        try {
+            await this.npcManager.loadNPCData();
+            this.npcManager.createNPCs();
+        } catch (error) {
+            console.error("Failed to load standing NPCs:", error);
+        }
     }
 
     private recalculateWorldBounds(): void {

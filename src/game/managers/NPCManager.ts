@@ -1,6 +1,6 @@
-import { Scene } from 'phaser';
-import { NPC } from '../objects/NPC';
-import { NPCData } from '../types/NPCTypes';
+import { Scene } from "phaser";
+import { NPC } from "../objects/NPC";
+import type { NPCData } from "../types/NPCTypes";
 
 export class NPCManager {
     private scene: Scene;
@@ -14,12 +14,12 @@ export class NPCManager {
     async loadNPCData(): Promise<void> {
         try {
             // 嘗試載入舊的NPC配置數據 (簡化版)
-            const response = await fetch('assets/data/npcs.json');
+            const response = await fetch("assets/data/npcs.json");
             const data = await response.json();
             this.npcData = data.npcs;
-            console.log('NPC data loaded:', this.npcData);
+            console.log("NPC data loaded:", this.npcData);
         } catch (error) {
-            console.error('Failed to load NPC data:', error);
+            console.error("Failed to load NPC data:", error);
             // 使用預設數據作為備案
             this.npcData = this.getDefaultNPCData();
         }
@@ -36,19 +36,19 @@ export class NPCManager {
                 y: 400,
                 sprite: "npc-a",
                 dialogue: "歡迎來到我們公司！有什麼可以幫助你的嗎？",
-                npcType: "desk"
+                npcType: "desk",
             },
             {
                 id: "npc_002",
                 name: "王設計師",
-                position: "UI/UX設計師", 
+                position: "UI/UX設計師",
                 personality: "創意滿滿",
                 x: 500,
                 y: 350,
                 sprite: "npc-in",
                 dialogue: "我正在設計新的用戶介面，你覺得這個顏色搭配怎麼樣？",
-                npcType: "desk"
-            }
+                npcType: "desk",
+            },
         ];
     }
 
@@ -56,17 +56,21 @@ export class NPCManager {
         // 清理現有的NPCs
         this.clearNPCs();
 
-        // 創建所有NPCs
-        this.npcData.forEach(data => {
+        // 只創建站立類型的NPCs (desk 和 meeting 類型已由其他系統處理)
+        const standingNPCs = this.npcData.filter(
+            (data) => data.npcType === "standing"
+        );
+
+        standingNPCs.forEach((data) => {
             const npc = new NPC(this.scene, data);
             this.npcs.set(data.id, npc);
         });
 
-        console.log(`Created ${this.npcs.size} NPCs in the scene`);
+        console.log(`Created ${this.npcs.size} standing NPCs in the scene`);
     }
 
     private clearNPCs(): void {
-        this.npcs.forEach(npc => {
+        this.npcs.forEach((npc) => {
             npc.destroy();
         });
         this.npcs.clear();
@@ -92,7 +96,7 @@ export class NPCManager {
     setNPCInteractive(id: string, interactive: boolean): void {
         const npc = this.npcs.get(id);
         if (npc) {
-            npc.setInteractive(interactive);
+            npc.setNPCInteractive(interactive);
         }
     }
 
