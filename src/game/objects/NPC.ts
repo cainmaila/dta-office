@@ -94,13 +94,14 @@ export class NPC extends Phaser.GameObjects.Sprite {
     }
 
     public showDialogue(): void {
-        // 發送事件給對話管理器，使用預設的對話氣泡位置
+        // 發送事件給對話管理器，增加對話框與人物的距離
         this.scene.events.emit("show-dialogue", {
             name: this.npcData.name,
             message: this.npcData.dialogue,
             x: this.x,
             y: this.y - this.height * this.scaleY,
-            bubbleOffsetY: -20,
+            bubbleOffsetY: 90, // 增加垂直偏移，讓對話框遠離人物
+            bubbleGap: 30, // 增加氣泡間隙
         });
 
         // 添加點擊反饋效果

@@ -65,8 +65,10 @@ export class DialogueManager {
                 );
             }
         } else {
-            const defaultOffset = bubbleOffsetY ?? -150;
-            targetY = anchorY + defaultOffset;
+            // 站立 NPC：使用基礎偏移 + 額外偏移
+            const baseOffset = -150; // 基礎偏移量
+            const extraOffset = bubbleOffsetY ?? 0; // 額外偏移量
+            targetY = anchorY + baseOffset + extraOffset;
         }
 
         const clampedX = Math.max(120, Math.min(anchorX + bubbleOffsetX, 904));
