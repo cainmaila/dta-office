@@ -1,12 +1,17 @@
 import { Scene } from "phaser";
 import { NPC } from "../objects/NPC";
-import type { NPCData } from "../types/NPCTypes";
+import type {
+    NPCData,
+    CharactersData,
+    Character,
+    StandingNpcConfig,
+} from "../types/NPCTypes";
 import { gameConfig } from "../config";
 
 export class NPCManager {
     private scene: Scene;
     private npcs: Map<string, NPC> = new Map();
-    private npcData: NPCData[] = [];
+    private characters: Map<string, Character> = new Map(); // 人物資料庫
 
     constructor(scene: Scene) {
         this.scene = scene;
@@ -14,25 +19,53 @@ export class NPCManager {
 
     async loadNPCData(): Promise<void> {
         const response = await fetch(
-            `${gameConfig.assets.basePath}/${gameConfig.assets.npcData}`
+            `${gameConfig.assets.basePath}/data/characters.json`
         );
-        const data = await response.json();
-        this.npcData = data.npcs;
+        const data: CharactersData = await response.json();
+
+        // 建立人物資料庫
+        data.characters.forEach((character) => {
+            this.characters.set(character.id, character);
+        });
+
+        // 創建站立 NPC
+        this.createStandingNPCs(data.standingNpcs);
     }
 
-    createNPCs(): void {
+    private createStandingNPCs(configs: StandingNpcConfig[]): void {
         // 清理現有的NPCs
         this.clearNPCs();
 
-        // 只創建站立類型的NPCs (desk 和 meeting 類型已由其他系統處理)
-        const standingNPCs = this.npcData.filter(
-            (data) => data.npcType === "standing"
-        );
+        configs.forEach((config) => {
+            const character = this.characters.get(config.characterId);
+            if (!character) {
+                console.warn(
+                    `Character not found for standing NPC: ${config.characterId}`
+                );
+                return;
+            }
 
-        standingNPCs.forEach((data) => {
-            const npc = new NPC(this.scene, data);
-            this.npcs.set(data.id, npc);
+            // 將新格式轉換為 NPC 物件所需的格式
+            const npcData: NPCData = {
+                id: character.id,
+                name: character.name,
+                position: character.position,
+                personality: character.personality,
+                dialogue: character.dialogue,
+                x: config.x,
+                y: config.y,
+                styleId: config.styleId,
+                action: config.action || "idle",
+                npcType: "standing",
+            };
+
+            const npc = new NPC(this.scene, npcData);
+            this.npcs.set(character.id, npc);
         });
+    }
+
+    createNPCs(): void {
+        // 這個方法保留作為向後相容，實際創建在 loadNPCData 中完成
     }
 
     private clearNPCs(): void {
@@ -48,6 +81,14 @@ export class NPCManager {
 
     getAllNPCs(): NPC[] {
         return Array.from(this.npcs.values());
+    }
+
+    getCharacter(id: string): Character | undefined {
+        return this.characters.get(id);
+    }
+
+    getAllCharacters(): Character[] {
+        return Array.from(this.characters.values());
     }
 
     updateNPCPosition(id: string, x: number, y: number): void {

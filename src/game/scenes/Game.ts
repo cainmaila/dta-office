@@ -2,13 +2,18 @@ import Phaser, { Scene, Scenes } from "phaser";
 import { EventBus } from "../EventBus";
 import { DialogueManager } from "../managers/DialogueManager";
 import { NPCManager } from "../managers/NPCManager";
-import { roundTableNpcs } from "../data/roundTableNpcs";
-import type { HotspotNPC } from "../types/NPCTypes";
+import type {
+    HotspotNPC,
+    CharactersData,
+    Character,
+    HotspotNpcConfig,
+} from "../types/NPCTypes";
 import { gameConfig } from "../config";
 
 export class Game extends Scene {
     private dialogueManager!: DialogueManager;
     private npcManager!: NPCManager;
+    private characters: Map<string, Character> = new Map(); // 人物資料庫
     private hotspotDebugEnabled = false;
     private hotspotDebugText?: Phaser.GameObjects.Text;
     private backgroundImage?: Phaser.GameObjects.Image;
@@ -91,9 +96,9 @@ export class Game extends Scene {
         // 初始化對話管理器
         this.dialogueManager = new DialogueManager(this);
 
-        // 初始化 NPC 管理器並載入站立的 NPC
+        // 初始化 NPC 管理器並載入所有人物資料
         this.npcManager = new NPCManager(this);
-        this.loadStandingNPCs();
+        this.loadCharactersAndNPCs();
 
         this.events.once(Scenes.Events.SHUTDOWN, () => {
             this.dialogueManager.destroy();
@@ -108,9 +113,6 @@ export class Game extends Scene {
             );
             this.roundTableHotspots = [];
         });
-
-        // 建立圓桌 NPC 熱區
-        this.createRoundTableHotspots();
 
         // 監聽對話框事件以更新熱區名字標籤
         this.events.on("dialogue-shown", (payload: { npcId?: string }) => {
@@ -145,12 +147,27 @@ export class Game extends Scene {
         EventBus.emit("current-scene-ready", this);
     }
 
-    private async loadStandingNPCs(): Promise<void> {
+    private async loadCharactersAndNPCs(): Promise<void> {
         try {
+            // 載入人物資料
+            const response = await fetch(
+                `${gameConfig.assets.basePath}/data/characters.json`
+            );
+            const data: CharactersData = await response.json();
+
+            // 建立人物資料庫
+            data.characters.forEach((character) => {
+                this.characters.set(character.id, character);
+            });
+
+            // 載入站立 NPC（透過 NPCManager）
             await this.npcManager.loadNPCData();
             this.npcManager.createNPCs();
+
+            // 建立熱區 NPC
+            this.createRoundTableHotspots(data.hotspotNpcs);
         } catch (error) {
-            console.error("Failed to load standing NPCs:", error);
+            console.error("Failed to load characters and NPCs:", error);
         }
     }
 
@@ -401,107 +418,132 @@ export class Game extends Scene {
         return { x, y, radius, bubbleOffsetX, bubbleOffsetY, bubbleGap };
     }
 
-    private createRoundTableHotspots(): void {
-        this.roundTableHotspots = roundTableNpcs.map((npc) => {
-            const zone = this.add
-                .zone(0, 0, 0, 0)
-                .setOrigin(0.5, 0.5)
-                .setDepth(1000);
-
-            zone.setInteractive(
-                new Phaser.Geom.Circle(0, 0, 1),
-                Phaser.Geom.Circle.Contains
-            );
-
-            const debugVisual = this.add.graphics();
-            debugVisual.lineStyle(2, 0xffcc00, 0.9);
-            debugVisual.fillStyle(0xffcc00, 0.15);
-            debugVisual.setDepth(2499);
-            debugVisual.setVisible(false);
-
-            const debugLabel = this.add
-                .text(0, 0, npc.name, {
-                    fontSize: "14px",
-                    color: "#ffcc00",
-                    backgroundColor: "rgba(0, 0, 0, 0.65)",
-                    padding: { x: 6, y: 4 },
-                })
-                .setOrigin(0.5)
-                .setDepth(2500)
-                .setVisible(false);
-
-            // 創建名字標籤（初始隱藏）
-            const nameLabel = this.add
-                .text(0, 0, npc.name, {
-                    fontSize: "14px",
-                    color: "#333333",
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    padding: { x: 6, y: 3 },
-                })
-                .setOrigin(0.5)
-                .setDepth(2501)
-                .setVisible(false);
-
-            const entry = {
-                zone,
-                npc,
-                world: {
-                    x: 0,
-                    y: 0,
-                    radius: 0,
-                    bubbleOffsetX: undefined as number | undefined,
-                    bubbleOffsetY: undefined as number | undefined,
-                    bubbleGap: undefined as number | undefined,
-                },
-                debugVisual,
-                debugLabel,
-                nameLabel,
-                isHovering: false,
-                isDialogueActive: false,
-            };
-
-            this.applyWorldTransformToHotspot(entry);
-
-            zone.on("pointerover", () => {
-                this.input.setDefaultCursor("pointer");
-                entry.isHovering = true;
-                this.updateHotspotNameLabelVisibility(entry);
-                if (this.hotspotDebugEnabled) {
-                    debugVisual.setVisible(true);
-                    debugLabel.setVisible(true);
+    private createRoundTableHotspots(configs: HotspotNpcConfig[]): void {
+        this.roundTableHotspots = configs
+            .map((config) => {
+                const character = this.characters.get(config.characterId);
+                if (!character) {
+                    console.warn(
+                        `Character not found for hotspot NPC: ${config.characterId}`
+                    );
+                    return null;
                 }
-            });
 
-            zone.on("pointerout", () => {
-                this.input.setDefaultCursor("default");
-                entry.isHovering = false;
-                this.updateHotspotNameLabelVisibility(entry);
-                if (this.hotspotDebugEnabled) {
-                    debugVisual.setVisible(true);
-                    debugLabel.setVisible(true);
-                } else {
-                    debugVisual.setVisible(false);
-                    debugLabel.setVisible(false);
-                }
-            });
+                // 構建 HotspotNPC 資料
+                const npcData: HotspotNPC = {
+                    id: character.id,
+                    name: character.name,
+                    dialogue: character.dialogue,
+                    x: config.x,
+                    y: config.y,
+                    radius: config.radius,
+                    bubbleOffsetX: config.bubbleOffsetX,
+                    bubbleOffsetY: config.bubbleOffsetY,
+                    bubbleGap: config.bubbleGap,
+                };
 
-            zone.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
-                const { world } = entry;
-                this.events.emit("show-dialogue", {
-                    npcId: npc.id,
-                    name: npc.name,
-                    message: npc.dialogue,
-                    x: world.x,
-                    y: world.y,
-                    radius: world.radius,
-                    bubbleOffsetX: world.bubbleOffsetX,
-                    bubbleOffsetY: world.bubbleOffsetY,
-                    bubbleGap: world.bubbleGap,
+                const zone = this.add
+                    .zone(0, 0, 0, 0)
+                    .setOrigin(0.5, 0.5)
+                    .setDepth(1000);
+
+                zone.setInteractive(
+                    new Phaser.Geom.Circle(0, 0, 1),
+                    Phaser.Geom.Circle.Contains
+                );
+
+                const debugVisual = this.add.graphics();
+                debugVisual.lineStyle(2, 0xffcc00, 0.9);
+                debugVisual.fillStyle(0xffcc00, 0.15);
+                debugVisual.setDepth(2499);
+                debugVisual.setVisible(false);
+
+                const debugLabel = this.add
+                    .text(0, 0, character.name, {
+                        fontSize: "14px",
+                        color: "#ffcc00",
+                        backgroundColor: "rgba(0, 0, 0, 0.65)",
+                        padding: { x: 6, y: 4 },
+                    })
+                    .setOrigin(0.5)
+                    .setDepth(2500)
+                    .setVisible(false);
+
+                // 創建名字標籤（初始隱藏）
+                const nameLabel = this.add
+                    .text(0, 0, character.name, {
+                        fontSize: "14px",
+                        color: "#333333",
+                        backgroundColor: "rgba(255, 255, 255, 0.9)",
+                        padding: { x: 6, y: 3 },
+                    })
+                    .setOrigin(0.5)
+                    .setDepth(2501)
+                    .setVisible(false);
+
+                const entry = {
+                    zone,
+                    npc: npcData,
+                    world: {
+                        x: 0,
+                        y: 0,
+                        radius: 0,
+                        bubbleOffsetX: undefined as number | undefined,
+                        bubbleOffsetY: undefined as number | undefined,
+                        bubbleGap: undefined as number | undefined,
+                    },
+                    debugVisual,
+                    debugLabel,
+                    nameLabel,
+                    isHovering: false,
+                    isDialogueActive: false,
+                };
+
+                this.applyWorldTransformToHotspot(entry);
+
+                zone.on("pointerover", () => {
+                    this.input.setDefaultCursor("pointer");
+                    entry.isHovering = true;
+                    this.updateHotspotNameLabelVisibility(entry);
+                    if (this.hotspotDebugEnabled) {
+                        debugVisual.setVisible(true);
+                        debugLabel.setVisible(true);
+                    }
                 });
-            });
 
-            return entry;
-        });
+                zone.on("pointerout", () => {
+                    this.input.setDefaultCursor("default");
+                    entry.isHovering = false;
+                    this.updateHotspotNameLabelVisibility(entry);
+                    if (this.hotspotDebugEnabled) {
+                        debugVisual.setVisible(true);
+                        debugLabel.setVisible(true);
+                    } else {
+                        debugVisual.setVisible(false);
+                        debugLabel.setVisible(false);
+                    }
+                });
+
+                zone.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+                    const { world } = entry;
+                    this.events.emit("show-dialogue", {
+                        npcId: npcData.id,
+                        name: character.name,
+                        message: character.dialogue,
+                        x: world.x,
+                        y: world.y,
+                        radius: world.radius,
+                        bubbleOffsetX: world.bubbleOffsetX,
+                        bubbleOffsetY: world.bubbleOffsetY,
+                        bubbleGap: world.bubbleGap,
+                    });
+                });
+
+                return entry;
+            })
+            .filter(
+                (entry): entry is NonNullable<typeof entry> => entry !== null
+            );
     }
 
     private applyWorldTransformToHotspot(
