@@ -12,44 +12,10 @@ export class NPCManager {
     }
 
     async loadNPCData(): Promise<void> {
-        try {
-            // 嘗試載入舊的NPC配置數據 (簡化版)
-            const response = await fetch("assets/data/npcs.json");
-            const data = await response.json();
-            this.npcData = data.npcs;
-            console.log("NPC data loaded:", this.npcData);
-        } catch (error) {
-            console.error("Failed to load NPC data:", error);
-            // 使用預設數據作為備案
-            this.npcData = this.getDefaultNPCData();
-        }
-    }
-
-    private getDefaultNPCData(): NPCData[] {
-        return [
-            {
-                id: "npc_001",
-                name: "李經理",
-                position: "產品經理",
-                personality: "嚴謹負責",
-                x: 300,
-                y: 400,
-                sprite: "npc-a",
-                dialogue: "歡迎來到我們公司！有什麼可以幫助你的嗎？",
-                npcType: "desk",
-            },
-            {
-                id: "npc_002",
-                name: "王設計師",
-                position: "UI/UX設計師",
-                personality: "創意滿滿",
-                x: 500,
-                y: 350,
-                sprite: "npc-in",
-                dialogue: "我正在設計新的用戶介面，你覺得這個顏色搭配怎麼樣？",
-                npcType: "desk",
-            },
-        ];
+        const response = await fetch("assets/data/npcs.json");
+        const data = await response.json();
+        this.npcData = data.npcs;
+        console.log("NPC data loaded:", this.npcData);
     }
 
     createNPCs(): void {
