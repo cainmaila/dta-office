@@ -1,9 +1,9 @@
 {
     "characters": [
         {
-            "id": "zhang_manager",
-            "name": "張主管",
-            "position": "技術主管",
+            "id": "Kevin",
+            "name": "Kevin",
+            "position": "協理",
             "personality": "領導風範",
             "dialogue": "團隊合作是我們成功的關鍵，大家都辛苦了！",
             "introduction": "我是張主管,在公司擔任技術主管已經八年,負責帶領整個技術團隊推動各項產品開發。我相信團隊合作的力量,重視每位成員的意見與成長,致力於打造一個開放溝通、互相支持的工作環境。在技術決策上我講求務實與創新的平衡,期許團隊能夠持續進步。"
@@ -41,48 +41,56 @@
             "introduction": "我是陳工程師,擔任前端工程師已經六年,專精於現代化的前端技術棧。我熱愛寫出乾淨、可維護的程式碼,重視程式碼品質和團隊協作。在開發新功能的同時,我也很注重效能優化和使用者體驗,相信技術應該為產品和使用者服務。"
         },
         {
-            "id": "ada_host",
-            "name": "主持人艾達",
-            "position": "會議主持人",
+            "id": "Denny",
+            "name": "Denny",
+            "position": "後端工程師Leader",
             "personality": "條理清晰",
             "dialogue": "我們開始今天的策略討論吧。",
             "introduction": "我是艾達,在公司擔任資深專案經理,經常主持各種策略會議和跨部門討論。我擅長引導團隊聚焦議題、促進有效溝通,確保會議能產出具體結論。我相信好的會議主持能大幅提升團隊效率,讓每個人的時間都花在刀口上。"
         },
         {
-            "id": "hui_marketing",
-            "name": "行銷專員小惠",
-            "position": "行銷專員",
+            "id": "Cain",
+            "name": "Cain",
+            "position": "前端工程師Leader",
             "personality": "活潑積極",
             "dialogue": "本季活動的曝光數據已經整理好了！",
             "introduction": "我是小惠,擔任行銷專員已經兩年,負責規劃和執行各種行銷活動。我對市場趨勢很敏感,喜歡用創意的方式吸引目標受眾。從社群經營到活動企劃,我都充滿熱情,並且會仔細追蹤數據成效,持續優化行銷策略。"
         },
         {
-            "id": "keyun_analyst",
-            "name": "資料分析師可芸",
-            "position": "資料分析師",
+            "id": "Jacky",
+            "name": "Jacky",
+            "position": "PM Leader",
             "personality": "邏輯縝密",
             "dialogue": "使用者黏著度提高了 12%，值得分享。",
             "introduction": "我是可芸,擔任資料分析師已經三年,專注於挖掘數據背後的洞察。我擅長用數據說故事,將複雜的分析結果轉化為易懂的視覺化圖表和可行動的建議。我相信數據驅動的決策能幫助公司做出更明智的選擇,持續優化產品和服務。"
         },
         {
-            "id": "azhe_tech",
-            "name": "技術顧問阿哲",
+            "id": "Steven",
+            "name": "Steven",
             "position": "技術顧問",
             "personality": "務實創新",
             "dialogue": "新工具的 PoC 已經準備好，等你們試用。",
             "introduction": "我是阿哲,擔任技術顧問已經七年,專門協助團隊評估和導入新技術工具。我喜歡研究最新的技術趨勢,但也很務實,會先做 PoC 驗證可行性再推薦。我的目標是幫助團隊提升開發效率和產品品質,而不是盲目追求新技術。"
         },
         {
-            "id": "yijun_coordinator",
-            "name": "專案協調師怡君",
+            "id": "Max",
+            "name": "Max",
             "position": "專案協調師",
             "personality": "細心周到",
             "dialogue": "下午的跨部門同步別忘了，我已經寄出會議邀請。",
             "introduction": "我是怡君,擔任專案協調師已經四年,負責協調各個專案的進度和跨部門溝通。我個性細心周到,擅長預先發現潛在問題並及時提醒相關人員。從會議安排到資源協調,我都會確保每個細節都照顧到,讓專案能順利推進。"
         },
         {
-            "id": "senior_specialist",
-            "name": "資深專員",
+            "id": "Sylvia",
+            "name": "Sylvia",
+            "position": "資深專員",
+            "personality": "經驗豐富",
+            "dialogue": "好的!全部都好!",
+            "introduction": "我是資深專員,在公司服務已經十年,累積了豐富的實務經驗。我見證了公司的成長和變化,熟悉各種業務流程和問題處理。年輕同事有任何疑問,我都很樂意分享經驗,幫助他們更快上手。我相信經驗的傳承對組織發展很重要。"
+        },
+        {
+            "id": "Kexy",
+            "name": "Kexy",
             "position": "資深專員",
             "personality": "經驗豐富",
             "dialogue": "好的!全部都好!",
@@ -91,7 +99,7 @@
     ],
     "standingNpcs": [
         {
-            "characterId": "zhang_manager",
+            "characterId": "Kevin",
             "x": 700,
             "y": 500,
             "styleId": "business_male_1"
@@ -105,44 +113,51 @@
     ],
     "hotspotNpcs": [
         {
-            "characterId": "ada_host",
+            "characterId": "Denny",
             "x": 488,
             "y": 500,
             "radius": 40,
             "bubbleGap": 18
         },
         {
-            "characterId": "hui_marketing",
+            "characterId": "Cain",
             "x": 588,
             "y": 504,
             "radius": 40,
             "bubbleGap": 18
         },
         {
-            "characterId": "keyun_analyst",
+            "characterId": "Jacky",
             "x": 452,
             "y": 585,
             "radius": 40,
             "bubbleGap": 18
         },
         {
-            "characterId": "azhe_tech",
+            "characterId": "Steven",
             "x": 610,
             "y": 610,
             "radius": 40,
             "bubbleGap": 20
         },
         {
-            "characterId": "yijun_coordinator",
+            "characterId": "Max",
             "x": 542,
             "y": 634,
             "radius": 40,
             "bubbleGap": 22
         },
         {
-            "characterId": "senior_specialist",
+            "characterId": "Sylvia",
             "x": 164,
             "y": 511,
+            "radius": 40,
+            "bubbleGap": 22
+        },
+        {
+            "characterId": "Kexy",
+            "x": 258,
+            "y": 451,
             "radius": 40,
             "bubbleGap": 22
         }
