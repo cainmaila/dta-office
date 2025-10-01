@@ -46,4 +46,13 @@ export const roundTableNpcs: HotspotNPC[] = [
         radius: 40,
         bubbleGap: 22,
     },
+    {
+        id: "up_table_01",
+        name: "資深專員",
+        dialogue: "好的!全部都好!",
+        x: 164,
+        y: 511,
+        radius: 40,
+        bubbleGap: 22,
+    },
 ];
