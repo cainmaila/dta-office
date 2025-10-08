@@ -140,8 +140,8 @@
         },
         {
             "characterId": "Max",
-            "x": 539,
-            "y": 460,
+            "x": 382,
+            "y": 773,
             "styleId": "business_suit_female_1",
             "action": "sitting",
             "facing": "right"
