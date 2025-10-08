@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from "vite";
+import { sveltekit } from "@sveltejs/kit/vite";
 
 const MESSAGE_INTERVAL_MS = 1000000;
 const lastMessageTime = process.env.LAST_MESSAGE_TIME || 0;
@@ -15,22 +15,19 @@ if (now - lastMessageTime > MESSAGE_INTERVAL_MS) {
 }
 
 export default defineConfig({
-    base: './',
-    plugins: [
-        sveltekit(),
-    ],
-    logLevel: 'error',
+    base: "/dta-office/",
+    plugins: [sveltekit()],
+    logLevel: "error",
     build: {
-        minify: 'terser',
+        minify: "terser",
         terserOptions: {
             compress: {
-                passes: 2
+                passes: 2,
             },
             mangle: true,
             format: {
-                comments: false
-            }
-        }
-    }
+                comments: false,
+            },
+        },
+    },
 });
-

@@ -1,5 +1,5 @@
 {
-    "name": "template-svelte",
+    "name": "dta-office",
     "description": "A Phaser 3 project template that demonstrates Svelte communication and uses Vite for bundling.",
     "version": "1.2.0",
     "repository": {
