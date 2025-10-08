@@ -1,0 +1,64 @@
+{
+    "npcs": [
+        {
+            "id": "npc_001",
+            "name": "李經理",
+            "position": "產品經理",
+            "personality": "嚴謹負責",
+            "x": 389,
+            "y": 491,
+            "styleId": "business_male_1",
+            "action": "idle",
+            "dialogue": "歡迎來到我們公司！有什麼可以幫助你的嗎？",
+            "npcType": "standing"
+        },
+        {
+            "id": "npc_002",
+            "name": "王設計師",
+            "position": "UI/UX設計師",
+            "personality": "創意滿滿",
+            "x": 522,
+            "y": 402,
+            "styleId": "business_female_1",
+            "action": "idle",
+            "dialogue": "我正在設計新的用戶介面，你覺得這個顏色搭配怎麼樣？",
+            "npcType": "standing"
+        },
+        {
+            "id": "npc_003",
+            "name": "陳工程師",
+            "position": "前端工程師",
+            "personality": "技術專精",
+            "x": 595,
+            "y": 419,
+            "styleId": "casual_male_1",
+            "action": "idle",
+            "dialogue": "今天的程式碼 review 進行得很順利，新功能快要上線了！",
+            "npcType": "standing"
+        },
+        {
+            "id": "npc_004",
+            "name": "張主管",
+            "position": "技術主管",
+            "personality": "領導風範",
+            "x": 700,
+            "y": 500,
+            "styleId": "business_male_1",
+            "action": "talking",
+            "dialogue": "團隊合作是我們成功的關鍵，大家都辛苦了！",
+            "npcType": "standing"
+        },
+        {
+            "id": "npc_005",
+            "name": "林助理",
+            "position": "行政助理",
+            "personality": "親切熱心",
+            "x": 325,
+            "y": 567,
+            "styleId": "casual_female_1",
+            "action": "idle",
+            "dialogue": "需要什麼協助嗎？我可以幫你安排會議室或準備資料。",
+            "npcType": "standing"
+        }
+    ]
+}

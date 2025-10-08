@@ -1,0 +1,122 @@
+{
+  "business_suit_male_1": {
+    "description": "男性商務套裝角色 1",
+    "frames": {
+      "idle": [
+        0,
+        1,
+        2
+      ],
+      "walking": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "sitting": [
+        26,
+        27
+      ],
+      "talking": [
+        39,
+        40,
+        41
+      ]
+    },
+    "recommended_for": [
+      "經理",
+      "主管",
+      "客戶"
+    ]
+  },
+  "business_suit_female_1": {
+    "description": "女性商務套裝角色 1",
+    "frames": {
+      "idle": [
+        3,
+        4,
+        5
+      ],
+      "walking": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "sitting": [
+        28,
+        29
+      ],
+      "talking": [
+        42,
+        43,
+        44
+      ]
+    },
+    "recommended_for": [
+      "經理",
+      "設計師",
+      "專員"
+    ]
+  },
+  "casual_male_1": {
+    "description": "男性休閒服裝角色 1",
+    "frames": {
+      "idle": [
+        6,
+        7,
+        8
+      ],
+      "walking": [
+        21,
+        22,
+        23,
+        24
+      ],
+      "sitting": [
+        30,
+        31
+      ],
+      "talking": [
+        45,
+        46,
+        47
+      ]
+    },
+    "recommended_for": [
+      "工程師",
+      "實習生",
+      "技術員"
+    ]
+  },
+  "casual_female_1": {
+    "description": "女性休閒服裝角色 1",
+    "frames": {
+      "idle": [
+        9,
+        10,
+        11
+      ],
+      "walking": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "sitting": [
+        32,
+        33
+      ],
+      "talking": [
+        48,
+        49,
+        50
+      ]
+    },
+    "recommended_for": [
+      "設計師",
+      "助理",
+      "專員"
+    ]
+  }
+}
