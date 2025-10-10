@@ -1,4 +1,4 @@
-import { Scene } from 'phaser';
+import { Scene } from "phaser";
 
 /**
  * Loading 覆蓋層
@@ -15,49 +15,48 @@ export class LoadingOverlay {
     constructor(scene: Scene) {
         this.scene = scene;
 
+        // 建立容器（先創建，這樣可以把所有元素放進去）
+        this.container = scene.add
+            .container(0, 0)
+            .setDepth(99999) // 提高深度確保在最上層
+            .setScrollFactor(0)
+            .setVisible(false);
+
         // 建立半透明黑色背景
-        this.background = scene.add.rectangle(
-            0, 0,
-            scene.scale.width,
-            scene.scale.height,
-            0x000000,
-            0.7
-        )
-        .setOrigin(0, 0)
-        .setScrollFactor(0);
+        this.background = scene.add
+            .rectangle(
+                scene.scale.width / 2,
+                scene.scale.height / 2,
+                scene.scale.width,
+                scene.scale.height,
+                0x000000,
+                0.8
+            )
+            .setOrigin(0.5);
 
         // 建立訊息文字
-        this.messageText = scene.add.text(
-            scene.scale.width / 2,
-            scene.scale.height / 2,
-            '',
-            {
-                fontSize: '24px',
-                color: '#ffffff',
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        this.messageText = scene.add
+            .text(scene.scale.width / 2, scene.scale.height / 2, "", {
+                fontSize: "24px",
+                color: "#ffffff",
+                backgroundColor: "rgba(0, 0, 0, 0.9)",
                 padding: { x: 24, y: 16 },
-                align: 'center'
-            }
-        )
-        .setOrigin(0.5)
-        .setScrollFactor(0);
+                align: "center",
+                fontFamily: "Arial, sans-serif",
+            })
+            .setOrigin(0.5);
 
-        // 建立容器
-        this.container = scene.add.container(0, 0, [
-            this.background,
-            this.messageText
-        ])
-        .setDepth(10000)
-        .setVisible(false);
+        // 將元素加入容器
+        this.container.add([this.background, this.messageText]);
 
         // 監聽視窗大小改變
-        scene.scale.on('resize', this.handleResize, this);
+        scene.scale.on("resize", this.handleResize, this);
     }
 
     /**
      * 顯示載入中訊息（帶旋轉動畫）
      */
-    showLoading(message: string = '需求討論中..'): void {
+    showLoading(message: string = "需求討論中.."): void {
         this.messageText.setText(message);
         this.container.setVisible(true);
 
@@ -68,7 +67,7 @@ export class LoadingOverlay {
     /**
      * 顯示錯誤訊息（無動畫）
      */
-    showError(message: string = '提案失敗', duration: number = 2000): void {
+    showError(message: string = "提案失敗", duration: number = 2000): void {
         this.removeSpinner();
         this.messageText.setText(message);
         this.container.setVisible(true);
@@ -96,15 +95,17 @@ export class LoadingOverlay {
         const centerX = this.scene.scale.width / 2;
         const centerY = this.scene.scale.height / 2 - 60;
 
-        this.spinner = this.scene.add.graphics()
-            .setScrollFactor(0);
+        // 創建 spinner，繪製在相對於自身的座標 (0, 0)
+        this.spinner = this.scene.add.graphics();
 
-        // 繪製圓形進度條
-        this.spinner.lineStyle(4, 0xffffff, 1);
+        // 繪製圓形進度條（使用相對座標，圓心在 0,0）
+        this.spinner.lineStyle(4, 0x4caf50, 1);
         this.spinner.beginPath();
-        this.spinner.arc(centerX, centerY, 30, 0, Math.PI * 1.5, false);
+        this.spinner.arc(0, 0, 30, 0, Math.PI * 1.5, false);
         this.spinner.strokePath();
 
+        // 設置位置並加入容器
+        this.spinner.setPosition(centerX, centerY);
         this.container.add(this.spinner);
 
         // 旋轉動畫
@@ -113,7 +114,7 @@ export class LoadingOverlay {
             angle: 360,
             duration: 1000,
             repeat: -1,
-            ease: 'Linear'
+            ease: "Linear",
         });
     }
 
@@ -136,11 +137,19 @@ export class LoadingOverlay {
      * 處理視窗大小改變
      */
     private handleResize(gameSize: Phaser.Structs.Size): void {
+        // 更新背景大小和位置
         this.background.setSize(gameSize.width, gameSize.height);
+        this.background.setPosition(gameSize.width / 2, gameSize.height / 2);
+
+        // 更新訊息文字位置
         this.messageText.setPosition(gameSize.width / 2, gameSize.height / 2);
 
+        // 更新 spinner 位置
         if (this.spinner) {
-            this.spinner.setPosition(gameSize.width / 2, gameSize.height / 2 - 60);
+            this.spinner.setPosition(
+                gameSize.width / 2,
+                gameSize.height / 2 - 60
+            );
         }
     }
 
@@ -148,7 +157,7 @@ export class LoadingOverlay {
      * 銷毀
      */
     destroy(): void {
-        this.scene.scale.off('resize', this.handleResize, this);
+        this.scene.scale.off("resize", this.handleResize, this);
         this.removeSpinner();
         this.container.destroy();
     }
