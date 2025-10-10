@@ -17,6 +17,26 @@ export class SoundManager {
     }
 
     /**
+     * 解析音效路徑（處理 base path）
+     */
+    private static resolveSoundPath(path: string): string {
+        // 如果路徑已經是完整的 URL，直接返回
+        if (path.startsWith('http://') || path.startsWith('https://')) {
+            return path;
+        }
+
+        // 取得 base path（從 <base> 標籤或使用預設值）
+        const baseElement = document.querySelector('base');
+        const basePath = baseElement?.getAttribute('href') || '';
+
+        // 移除路徑開頭的斜線（如果有的話）
+        const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+
+        // 組合完整路徑
+        return `${basePath}${cleanPath}`;
+    }
+
+    /**
      * 載入音效檔案
      */
     private static async loadSound(url: string): Promise<AudioBuffer> {
@@ -54,8 +74,11 @@ export class SoundManager {
                 await audioContext.resume();
             }
 
+            // 解析完整路徑
+            const resolvedUrl = this.resolveSoundPath(url);
+
             // 載入音效
-            const audioBuffer = await this.loadSound(url);
+            const audioBuffer = await this.loadSound(resolvedUrl);
 
             // 建立音源
             const source = audioContext.createBufferSource();
@@ -72,7 +95,7 @@ export class SoundManager {
             // 播放
             source.start(0);
 
-            console.log(`🔊 Playing sound: ${url}`);
+            console.log(`🔊 Playing sound: ${resolvedUrl}`);
         } catch (error) {
             console.error(`Failed to play sound: ${url}`, error);
         }
@@ -83,8 +106,9 @@ export class SoundManager {
      */
     static async preloadSound(url: string): Promise<void> {
         try {
-            await this.loadSound(url);
-            console.log(`✅ Preloaded sound: ${url}`);
+            const resolvedUrl = this.resolveSoundPath(url);
+            await this.loadSound(resolvedUrl);
+            console.log(`✅ Preloaded sound: ${resolvedUrl}`);
         } catch (error) {
             console.error(`Failed to preload sound: ${url}`, error);
         }
