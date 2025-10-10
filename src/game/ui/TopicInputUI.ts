@@ -47,7 +47,7 @@ export class TopicInputUI {
                         font-weight: bold;
                         letter-spacing: 1px;
                         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-                    ">靠背 DTA</h2>
+                    ">靠杯DTA</h2>
                 </div>
 
                 <input

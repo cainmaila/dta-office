@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>Phaser Svelte Template</title>
+    <title>靠杯DTA</title>
 </svelte:head>
 
 <slot />
