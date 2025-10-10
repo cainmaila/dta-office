@@ -70,14 +70,19 @@ export class DialogueManagerV2 {
             return;
         }
 
-        // 如果點擊的是不同的 NPC，重置當前 NPC 的計數（因為不是連續點擊）
-        if (this.currentNpcId && this.currentNpcId !== npcId) {
-            // 重置新點擊的 NPC 的計數（因為不是連續點擊）
-            this.clickCounts.set(npcId, 0);
-            console.log(`🔄 點擊了不同的 NPC，重置 ${npcId} 的點擊計數為 0`);
+        // 檢查是否切換了不同的 NPC
+        const isSwitchingNPC = this.currentNpcId && this.currentNpcId !== npcId;
+
+        // 如果切換了 NPC，重置所有 NPC 的計數為 0（只有連續點擊同一人才能累積）
+        if (isSwitchingNPC) {
+            // 重置所有 NPC 的計數
+            this.clickCounts.forEach((count, id) => {
+                this.clickCounts.set(id, 0);
+            });
+            console.log(`🔄 切換 NPC：${this.currentNpcId} → ${npcId}，重置所有 NPC 的計數為 0`);
         }
 
-        // 獲取當前 NPC 的點擊次數
+        // 獲取當前 NPC 的點擊次數（在重置之後才取得）
         const currentCount = this.clickCounts.get(npcId) || 0;
 
         // 根據點擊次數決定顯示哪則對話
@@ -91,16 +96,16 @@ export class DialogueManagerV2 {
         const displayDuration = dialogueIndex === 2 ? 6000 : 4000;
 
         console.log(
-            `💬 ${npcId} 點擊次數: ${currentCount} → 顯示對話 ${dialogueIndex} (${dialogueType}): "${message.substring(
-                0,
-                20
-            )}..."`
+            `💬 ${npcId} 當前計數: ${currentCount} → 顯示對話 ${dialogueIndex} (${dialogueType})`
         );
 
         // 增加點擊次數（下次點擊會顯示下一則）
         // 但在達到第 3 則對話後，計數不再增加（保持在 2）
         if (currentCount < 2) {
             this.clickCounts.set(npcId, currentCount + 1);
+            console.log(`📈 ${npcId} 計數增加：${currentCount} → ${currentCount + 1}`);
+        } else {
+            console.log(`⏸️ ${npcId} 計數已達上限，保持在 ${currentCount}`);
         }
 
         // 如果已有對話氣泡，先移除

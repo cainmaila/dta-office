@@ -50,6 +50,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
             fontFamily: "Arial",
             align: "left",
             wordWrap: { width: 200, useAdvancedWrap: true },
+            lineSpacing: 6, // 增加行距
         });
         this.textObject.setOrigin(0.5, 0.5);
 
@@ -276,12 +277,20 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
 
         // 思考對話框的動畫速度較慢，使用更柔和的緩動函數
         if (this.bubbleType === 'thought') {
-            // 想法框：慢速淡入（800ms），使用柔和的緩動
+            // 記錄初始 Y 位置
+            const originalY = this.y;
+            const floatDistance = 30; // 往上飄的距離（像素）
+
+            // 設置起始位置（在最終位置下方）
+            this.y = originalY + floatDistance;
+
+            // 想法框：慢速淡入 + 由下往上飄（800ms），使用柔和的緩動
             this.scene.tweens.add({
                 targets: this,
                 scaleX: 1,
                 scaleY: 1,
                 alpha: 1,
+                y: originalY, // 飄到最終位置
                 duration: 800,
                 ease: "Sine.easeOut", // 更柔和的緩動曲線
             });
