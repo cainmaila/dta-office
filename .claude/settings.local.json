@@ -3,7 +3,8 @@
     "allow": [
       "Bash(pnpm run:*)",
       "Read(//var/folders/q_/k92qhycx0dn1mxjc138pgn400000gn/T/chrome-devtools-mcp-CoRWpB/**)",
-      "Read(//var/folders/q_/k92qhycx0dn1mxjc138pgn400000gn/T/chrome-devtools-mcp-5IJiCd/**)"
+      "Read(//var/folders/q_/k92qhycx0dn1mxjc138pgn400000gn/T/chrome-devtools-mcp-5IJiCd/**)",
+      "Bash(pnpm dev:*)"
     ],
     "deny": [],
     "ask": []

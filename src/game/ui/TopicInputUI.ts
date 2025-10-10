@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import { SoundManager } from "../utils/SoundManager";
 
 /**
  * 主題輸入框 UI (Phaser DOM 元素)
@@ -173,6 +174,9 @@ export class TopicInputUI {
             alert("請輸入主題");
             return;
         }
+
+        // 播放送出音效
+        SoundManager.playSound("/sound/timer-start.mp3", 0.5);
 
         if (this.onSubmitCallback) {
             this.onSubmitCallback(topic);

@@ -7,6 +7,7 @@
         fetchTeamDialogueV2,
         type CharacterV2,
     } from "../../lib/api/teamDialogueV2";
+    import { SoundManager } from "../../game/utils/SoundManager";
 
     //  References to the PhaserGame component (game and scene are exposed)
     let phaserRef: TPhaserRef = { game: null, scene: null };
@@ -35,6 +36,9 @@
                     "✅ V2 每個角色對話數:",
                     response.characters[0]?.dialogues.length,
                 );
+
+                // 播放 API 回應音效
+                SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
 
                 initialDialogueData = {
                     characters: response.characters,

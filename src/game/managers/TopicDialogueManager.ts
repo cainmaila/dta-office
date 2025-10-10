@@ -5,6 +5,7 @@ import { TopicInputUI } from "../ui/TopicInputUI";
 import { TopicTitleUI } from "../ui/TopicTitleUI";
 import { ControlButtons } from "../ui/ControlButtons";
 import type { CharactersData } from "../types/NPCTypes";
+import { SoundManager } from "../utils/SoundManager";
 
 /**
  * 主題對話管理器
@@ -56,6 +57,9 @@ export class TopicDialogueManager {
 
         try {
             const response = await fetchTeamDialogue(topic, 60000);
+
+            // 播放 API 回應音效
+            SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
 
             // 更新對話
             this.updateCharactersDialogue(response.characters);
@@ -120,6 +124,9 @@ export class TopicDialogueManager {
 
         try {
             const response = await fetchTeamDialogue(topic, 60000);
+
+            // 播放 API 回應音效
+            SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
 
             this.currentTopic = topic;
             this.controlButtons.setCurrentTopic(topic);
