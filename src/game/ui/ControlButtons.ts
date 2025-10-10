@@ -14,18 +14,33 @@ export class ControlButtons {
     constructor(scene: Scene) {
         this.scene = scene;
 
-        // 建立分享按鈕
-        this.shareButton = this.createButton("分享", 16, 16, () => {
-            this.handleShare();
-        });
+        // 建立分享按鈕（右上角）
+        this.shareButton = this.createButton(
+            "分享議題",
+            scene.scale.width - 16,
+            16,
+            () => {
+                this.handleShare();
+            },
+            true
+        );
 
-        // 建立重新輸入按鈕（初始隱藏）- 增加間隔到 140px
-        this.retryButton = this.createButton("重新討論", 140, 16, () => {
-            if (this.onRetryCallback) {
-                this.onRetryCallback();
-            }
-        });
+        // 建立重新輸入按鈕（左上角，初始隱藏）
+        this.retryButton = this.createButton(
+            "重新討論",
+            16,
+            16,
+            () => {
+                if (this.onRetryCallback) {
+                    this.onRetryCallback();
+                }
+            },
+            false
+        );
         this.retryButton.setVisible(false);
+
+        // 監聽視窗大小改變
+        this.scene.scale.on("resize", this.handleResize, this);
     }
 
     /**
@@ -35,9 +50,10 @@ export class ControlButtons {
         text: string,
         x: number,
         y: number,
-        onClick: () => void
+        onClick: () => void,
+        rightAlign: boolean = false
     ): Phaser.GameObjects.DOMElement {
-        const isShare = text === "分享";
+        const isShare = text.includes("分享");
         const icon = isShare ? "📤" : "🔄";
         const bgColor = isShare ? "#2196F3" : "#4CAF50";
         const hoverColor = isShare ? "#1976D2" : "#45a049";
@@ -76,7 +92,7 @@ export class ControlButtons {
         const button = this.scene.add
             .dom(x, y, "div")
             .createFromHTML(buttonHtml)
-            .setOrigin(0, 0)
+            .setOrigin(rightAlign ? 1 : 0, 0)
             .setDepth(9998)
             .setScrollFactor(0);
 
@@ -89,6 +105,15 @@ export class ControlButtons {
         }
 
         return button;
+    }
+
+    /**
+     * 處理視窗大小改變
+     */
+    private handleResize(gameSize: Phaser.Structs.Size): void {
+        // 更新分享按鈕位置（右上角）
+        this.shareButton.setPosition(gameSize.width - 16, 16);
+        // 重新輸入按鈕保持在左上角，不需要更新
     }
 
     /**
@@ -134,11 +159,11 @@ export class ControlButtons {
         const originalText = btnElement.textContent;
         const originalColor = btnElement.style.backgroundColor;
 
-        btnElement.textContent = "已複製！";
+        btnElement.textContent = "✓ 已複製！";
         btnElement.style.backgroundColor = "#4CAF50";
 
         this.scene.time.delayedCall(1500, () => {
-            btnElement.textContent = originalText || "分享";
+            btnElement.textContent = originalText || "📤 分享議題";
             btnElement.style.backgroundColor = originalColor || "#2196F3";
         });
     }
@@ -168,6 +193,7 @@ export class ControlButtons {
      * 銷毀
      */
     destroy(): void {
+        this.scene.scale.off("resize", this.handleResize, this);
         this.shareButton.destroy();
         this.retryButton.destroy();
     }
