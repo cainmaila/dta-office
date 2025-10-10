@@ -25,35 +25,10 @@ export class TopicInputUI {
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(76, 175, 80, 0.3);
                 backdrop-filter: blur(10px);
             ">
-                <div style="
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    margin-bottom: 4px;
-                ">
-                    <div style="
-                        width: 8px;
-                        height: 8px;
-                        background-color: #4CAF50;
-                        border-radius: 50%;
-                        box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
-                        animation: pulse 2s infinite;
-                    "></div>
-                    <h2 style="
-                        color: #ffffff;
-                        font-size: 24px;
-                        margin: 0;
-                        font-family: 'Arial', sans-serif;
-                        font-weight: bold;
-                        letter-spacing: 1px;
-                        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-                    ">靠杯DTA</h2>
-                </div>
-
                 <input
                     id="topic-input"
                     type="text"
-                    placeholder="今天要討論什麼？"
+                    placeholder="今天要靠北什麼？"
                     style="
                         width: 380px;
                         padding: 14px 18px;
