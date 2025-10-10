@@ -89,6 +89,12 @@
             "name": "Jeff",
             "position": "MIS",
             "dialogue": "又是我嗎？好吧，我來處理這個麻煩事。"
+        },
+        {
+            "id": "Anson",
+            "name": "Anson",
+            "position": "副總",
+            "dialogue": "Steven，你這個想法很有創意，但我們還是來談談實際的執行方案吧。"
         }
     ],
     "standingNpcs": [
@@ -112,7 +118,15 @@
             "characterId": "Max",
             "x": 382,
             "y": 773,
-            "styleId": "business_suit_female_1",
+            "styleId": "casual_male_1",
+            "action": "sitting",
+            "facing": "right"
+        },
+        {
+            "characterId": "Anson",
+            "x": 950,
+            "y": 650,
+            "styleId": "business_suit_male_1",
             "action": "sitting",
             "facing": "right"
         }
