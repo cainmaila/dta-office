@@ -27,12 +27,12 @@ export class TopicTitleUI {
         // 創建標題文字
         this.titleText = scene.add
             .text(0, 0, "", {
-                fontSize: "20px",
+                fontSize: "28px",
                 color: "#ffffff",
                 fontFamily: "Arial, sans-serif",
                 fontStyle: "bold",
                 align: "center",
-                wordWrap: { width: 600 },
+                wordWrap: { width: 800 },
             })
             .setOrigin(0.5);
         this.container.add(this.titleText);
@@ -65,28 +65,29 @@ export class TopicTitleUI {
      * 更新背景
      */
     private updateBackground(): void {
-        const padding = 20;
-        const width = this.titleText.width + padding * 2;
-        const height = this.titleText.height + padding;
+        const paddingX = 32;
+        const paddingY = 16;
+        const width = this.titleText.width + paddingX * 2;
+        const height = this.titleText.height + paddingY * 2;
 
         this.background.clear();
-        this.background.fillStyle(0x000000, 0.8);
+        this.background.fillStyle(0x000000, 0.85);
         this.background.fillRoundedRect(
             -width / 2,
             -height / 2,
             width,
             height,
-            8
+            12
         );
 
         // 添加邊框
-        this.background.lineStyle(2, 0x4caf50, 1);
+        this.background.lineStyle(3, 0x4caf50, 1);
         this.background.strokeRoundedRect(
             -width / 2,
             -height / 2,
             width,
             height,
-            8
+            12
         );
     }
 
