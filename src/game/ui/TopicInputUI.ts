@@ -1,4 +1,4 @@
-import { Scene } from 'phaser';
+import { Scene } from "phaser";
 
 /**
  * 主題輸入框 UI (Phaser DOM 元素)
@@ -68,50 +68,56 @@ export class TopicInputUI {
         const x = scene.scale.width / 2;
         const y = scene.scale.height - 120;
 
-        this.domElement = scene.add.dom(x, y)
+        this.domElement = scene.add
+            .dom(x, y)
             .createFromHTML(htmlContent)
             .setOrigin(0.5)
             .setDepth(9999)
-            .setScrollFactor(0);
+            .setScrollFactor(0)
+            .setVisible(false); // 初始為隱藏
 
         // 綁定事件
         this.setupEvents();
 
         // 監聽視窗大小改變
-        scene.scale.on('resize', this.handleResize, this);
+        scene.scale.on("resize", this.handleResize, this);
     }
 
     /**
      * 設定事件監聽
      */
     private setupEvents(): void {
-        const button = this.domElement.getChildByID('topic-submit') as HTMLButtonElement;
-        const input = this.domElement.getChildByID('topic-input') as HTMLInputElement;
+        const button = this.domElement.getChildByID(
+            "topic-submit"
+        ) as HTMLButtonElement;
+        const input = this.domElement.getChildByID(
+            "topic-input"
+        ) as HTMLInputElement;
 
         if (!button || !input) {
-            console.error('TopicInputUI: 找不到 input 或 button 元素');
+            console.error("TopicInputUI: 找不到 input 或 button 元素");
             return;
         }
 
         // 按鈕點擊
-        button.addEventListener('click', () => {
+        button.addEventListener("click", () => {
             this.handleSubmit(input.value.trim());
         });
 
         // Enter 鍵送出
-        input.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
+        input.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
                 this.handleSubmit(input.value.trim());
             }
         });
 
         // Hover 效果
-        button.addEventListener('mouseenter', () => {
-            button.style.backgroundColor = '#45a049';
+        button.addEventListener("mouseenter", () => {
+            button.style.backgroundColor = "#45a049";
         });
 
-        button.addEventListener('mouseleave', () => {
-            button.style.backgroundColor = '#4CAF50';
+        button.addEventListener("mouseleave", () => {
+            button.style.backgroundColor = "#4CAF50";
         });
     }
 
@@ -120,7 +126,7 @@ export class TopicInputUI {
      */
     private handleSubmit(topic: string): void {
         if (!topic) {
-            alert('請輸入主題');
+            alert("請輸入主題");
             return;
         }
 
@@ -140,9 +146,11 @@ export class TopicInputUI {
      * 清空輸入框
      */
     clearInput(): void {
-        const input = this.domElement.getChildByID('topic-input') as HTMLInputElement;
+        const input = this.domElement.getChildByID(
+            "topic-input"
+        ) as HTMLInputElement;
         if (input) {
-            input.value = '';
+            input.value = "";
         }
     }
 
@@ -154,7 +162,9 @@ export class TopicInputUI {
 
         // 自動 focus
         this.scene.time.delayedCall(100, () => {
-            const input = this.domElement.getChildByID('topic-input') as HTMLInputElement;
+            const input = this.domElement.getChildByID(
+                "topic-input"
+            ) as HTMLInputElement;
             input?.focus();
         });
     }
@@ -171,17 +181,14 @@ export class TopicInputUI {
      * 處理視窗大小改變
      */
     private handleResize(gameSize: Phaser.Structs.Size): void {
-        this.domElement.setPosition(
-            gameSize.width / 2,
-            gameSize.height - 120
-        );
+        this.domElement.setPosition(gameSize.width / 2, gameSize.height - 120);
     }
 
     /**
      * 銷毀
      */
     destroy(): void {
-        this.scene.scale.off('resize', this.handleResize, this);
+        this.scene.scale.off("resize", this.handleResize, this);
         this.domElement.destroy();
     }
 }

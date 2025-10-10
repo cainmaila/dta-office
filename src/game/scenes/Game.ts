@@ -169,12 +169,16 @@ export class Game extends Scene {
             (data: { characters: ApiCharacter[] | null; topic?: string }) => {
                 this.customCharacters = data.characters;
                 if (data.characters) {
+                    // 有主題對話，更新對話並確保輸入框隱藏
+                    console.log("📝 有主題對話，隱藏輸入框");
                     this.updateCharactersDialogue(data.characters);
+                    this.topicDialogueManager.hideTopicInput();
                     if (data.topic) {
                         this.topicDialogueManager.setCurrentTopic(data.topic);
                     }
                 } else {
                     // 沒有自訂對話，顯示輸入框
+                    console.log("📝 沒有主題對話，顯示輸入框");
                     this.topicDialogueManager.showTopicInput();
                 }
             }
