@@ -98,26 +98,40 @@ export class LoadingOverlay {
         // 創建 spinner，繪製在相對於自身的座標 (0, 0)
         this.spinner = this.scene.add.graphics();
 
-        // 繪製圓形進度條（使用相對座標，圓心在 0,0）
-        this.spinner.lineStyle(4, 0x4caf50, 1);
+        // 繪製多層圓環效果
+        // 外層圓環（裝飾）
+        this.spinner.lineStyle(2, 0x4caf50, 0.3);
+        this.spinner.beginPath();
+        this.spinner.arc(0, 0, 38, 0, Math.PI * 2, false);
+        this.spinner.strokePath();
+
+        // 主圓環
+        this.spinner.lineStyle(5, 0x4caf50, 1);
         this.spinner.beginPath();
         this.spinner.arc(0, 0, 30, 0, Math.PI * 1.5, false);
         this.spinner.strokePath();
+
+        // 內層裝飾點
+        this.spinner.fillStyle(0x4caf50, 0.8);
+        this.spinner.fillCircle(0, -30, 6);
+
+        // 添加發光效果的小點
+        this.spinner.fillStyle(0xffffff, 0.9);
+        this.spinner.fillCircle(0, -30, 3);
 
         // 設置位置並加入容器
         this.spinner.setPosition(centerX, centerY);
         this.container.add(this.spinner);
 
-        // 旋轉動畫
+        // 旋轉動畫 - 更平滑
         this.spinnerTween = this.scene.tweens.add({
             targets: this.spinner,
             angle: 360,
-            duration: 1000,
+            duration: 1200,
             repeat: -1,
             ease: "Linear",
         });
     }
-
     /**
      * 移除旋轉動畫
      */

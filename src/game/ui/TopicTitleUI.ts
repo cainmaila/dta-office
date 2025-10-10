@@ -65,30 +65,72 @@ export class TopicTitleUI {
      * 更新背景
      */
     private updateBackground(): void {
-        const paddingX = 32;
-        const paddingY = 16;
+        const paddingX = 40;
+        const paddingY = 20;
         const width = this.titleText.width + paddingX * 2;
         const height = this.titleText.height + paddingY * 2;
 
         this.background.clear();
-        this.background.fillStyle(0x000000, 0.85);
+
+        // 添加陰影效果（多層漸層）
+        this.background.fillStyle(0x000000, 0.3);
+        this.background.fillRoundedRect(
+            -width / 2 + 4,
+            -height / 2 + 4,
+            width,
+            height,
+            16
+        );
+
+        // 主背景 - 漸層效果
+        this.background.fillGradientStyle(
+            0x1a1a1a,
+            0x1a1a1a,
+            0x0d0d0d,
+            0x0d0d0d,
+            1
+        );
         this.background.fillRoundedRect(
             -width / 2,
             -height / 2,
             width,
             height,
-            12
+            16
         );
 
-        // 添加邊框
-        this.background.lineStyle(3, 0x4caf50, 1);
+        // 頂部高光
+        this.background.fillStyle(0xffffff, 0.1);
+        this.background.fillRoundedRect(
+            -width / 2,
+            -height / 2,
+            width,
+            height * 0.4,
+            16
+        );
+
+        // 添加雙層邊框 - 外層
+        this.background.lineStyle(1, 0x4caf50, 0.3);
+        this.background.strokeRoundedRect(
+            -width / 2 - 1,
+            -height / 2 - 1,
+            width + 2,
+            height + 2,
+            16
+        );
+
+        // 添加邊框 - 內層（主邊框）
+        this.background.lineStyle(2, 0x4caf50, 0.8);
         this.background.strokeRoundedRect(
             -width / 2,
             -height / 2,
             width,
             height,
-            12
+            16
         );
+
+        // 左上角裝飾光點
+        this.background.fillStyle(0x4caf50, 0.6);
+        this.background.fillCircle(-width / 2 + 16, -height / 2 + 16, 3);
     }
 
     /**
@@ -96,7 +138,7 @@ export class TopicTitleUI {
      */
     private updatePosition(): void {
         const x = this.scene.scale.width / 2;
-        const y = 40;
+        const y = 100; // 調整到 100，避免標題過長時擋到上方按鈕
         this.container.setPosition(x, y);
     }
 

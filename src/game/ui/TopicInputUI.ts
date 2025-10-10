@@ -17,50 +17,94 @@ export class TopicInputUI {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 12px;
-                background-color: rgba(0, 0, 0, 0.85);
-                padding: 24px 32px;
-                border-radius: 8px;
-                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+                gap: 16px;
+                background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(13, 13, 13, 0.95) 100%);
+                padding: 32px 40px;
+                border-radius: 16px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(76, 175, 80, 0.3);
+                backdrop-filter: blur(10px);
             ">
-                <h2 style="
-                    color: #ffffff;
-                    font-size: 20px;
-                    margin: 0 0 8px 0;
-                    font-family: Arial, sans-serif;
-                ">靠背DTA</h2>
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 4px;
+                ">
+                    <div style="
+                        width: 8px;
+                        height: 8px;
+                        background-color: #4CAF50;
+                        border-radius: 50%;
+                        box-shadow: 0 0 10px rgba(76, 175, 80, 0.8);
+                        animation: pulse 2s infinite;
+                    "></div>
+                    <h2 style="
+                        color: #ffffff;
+                        font-size: 24px;
+                        margin: 0;
+                        font-family: 'Arial', sans-serif;
+                        font-weight: bold;
+                        letter-spacing: 1px;
+                        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                    ">靠背 DTA</h2>
+                </div>
 
                 <input
                     id="topic-input"
                     type="text"
-                    placeholder="DTA今日事項?"
+                    placeholder="今天要討論什麼？"
                     style="
-                        width: 340px;
-                        padding: 12px 16px;
+                        width: 380px;
+                        padding: 14px 18px;
                         font-size: 16px;
-                        border: 2px solid #666;
-                        border-radius: 4px;
-                        background-color: #fff;
+                        border: 2px solid rgba(76, 175, 80, 0.3);
+                        border-radius: 8px;
+                        background-color: rgba(255, 255, 255, 0.95);
                         color: #333;
                         outline: none;
-                        font-family: Arial, sans-serif;
+                        font-family: 'Arial', sans-serif;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
                     "
                 />
 
                 <button
                     id="topic-submit"
                     style="
-                        padding: 10px 32px;
+                        padding: 12px 40px;
                         font-size: 16px;
-                        background-color: #4CAF50;
+                        font-weight: bold;
+                        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
                         color: white;
                         border: none;
-                        border-radius: 4px;
+                        border-radius: 8px;
                         cursor: pointer;
-                        font-family: Arial, sans-serif;
-                        transition: background-color 0.2s;
+                        font-family: 'Arial', sans-serif;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+                        letter-spacing: 0.5px;
                     "
-                >開始討論</button>
+                >🚀 開始討論</button>
+
+                <style>
+                    @keyframes pulse {
+                        0%, 100% { opacity: 1; transform: scale(1); }
+                        50% { opacity: 0.6; transform: scale(0.9); }
+                    }
+                    #topic-input:focus {
+                        border-color: #4CAF50;
+                        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3);
+                    }
+                    #topic-submit:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 6px 16px rgba(76, 175, 80, 0.5);
+                        background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+                    }
+                    #topic-submit:active {
+                        transform: translateY(0);
+                        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+                    }
+                </style>
             </div>
         `;
 
