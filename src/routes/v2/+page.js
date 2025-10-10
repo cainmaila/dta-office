@@ -1,2 +1,2 @@
-// 確保此頁面被預渲染為靜態 HTML
-export const prerender = true;
+// 關閉預渲染以支援動態 query 參數和 API 呼叫
+export const prerender = false;
