@@ -70,10 +70,11 @@ export class DialogueManagerV2 {
             return;
         }
 
-        // 如果點擊的是不同的 NPC，重置前一個 NPC 的計數
+        // 如果點擊的是不同的 NPC，重置當前 NPC 的計數（因為不是連續點擊）
         if (this.currentNpcId && this.currentNpcId !== npcId) {
-            this.clickCounts.set(this.currentNpcId, 0);
-            console.log(`🔄 重置 ${this.currentNpcId} 的點擊計數`);
+            // 重置新點擊的 NPC 的計數（因為不是連續點擊）
+            this.clickCounts.set(npcId, 0);
+            console.log(`🔄 點擊了不同的 NPC，重置 ${npcId} 的點擊計數為 0`);
         }
 
         // 獲取當前 NPC 的點擊次數
@@ -84,15 +85,23 @@ export class DialogueManagerV2 {
         const dialogueIndex = Math.min(currentCount, 2);
         const message = dialogues[dialogueIndex];
 
+        // 決定對話類型和顯示時間
+        // 第 3 則對話（index 2）使用內心想法形式，顯示時間更長
+        const dialogueType: 'normal' | 'thought' = dialogueIndex === 2 ? 'thought' : 'normal';
+        const displayDuration = dialogueIndex === 2 ? 6000 : 4000;
+
         console.log(
-            `💬 ${npcId} 點擊次數: ${currentCount} → 顯示對話 ${dialogueIndex}: "${message.substring(
+            `💬 ${npcId} 點擊次數: ${currentCount} → 顯示對話 ${dialogueIndex} (${dialogueType}): "${message.substring(
                 0,
                 20
             )}..."`
         );
 
         // 增加點擊次數（下次點擊會顯示下一則）
-        this.clickCounts.set(npcId, currentCount + 1);
+        // 但在達到第 3 則對話後，計數不再增加（保持在 2）
+        if (currentCount < 2) {
+            this.clickCounts.set(npcId, currentCount + 1);
+        }
 
         // 如果已有對話氣泡，先移除
         this.hideCurrentBubble();
@@ -112,7 +121,8 @@ export class DialogueManagerV2 {
             anchorY,
             message, // 顯示根據點擊次數選擇的對話
             anchorX,
-            anchorY
+            anchorY,
+            dialogueType // 傳遞對話類型（normal 或 thought）
         );
 
         const bubbleHeight = this.currentBubble.getBubbleHeight();
@@ -126,7 +136,8 @@ export class DialogueManagerV2 {
         this.currentBubble.setPosition(finalX, finalY);
 
         // 顯示氣泡，並在隱藏時通知
-        this.currentBubble.show(4000, () => {
+        // 使用根據對話類型決定的顯示時間（normal: 4000ms, thought: 6000ms）
+        this.currentBubble.show(displayDuration, () => {
             if (this.currentNpcId) {
                 this.scene.events.emit("dialogue-hidden", this.currentNpcId);
             }
