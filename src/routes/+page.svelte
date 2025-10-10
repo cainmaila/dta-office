@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import type { Scene } from "phaser";
     import PhaserGame, { type TPhaserRef } from "../PhaserGame.svelte";
+    import SplashScreen from "../components/SplashScreen.svelte";
     import { EventBus } from "../game/EventBus";
     import {
         fetchTeamDialogue,
@@ -15,6 +16,13 @@
         characters: DialogueCharacter[] | null;
         topic?: string;
     } | null = null;
+    let showSplash = true;
+    let gameReady = false;
+
+    function handleSplashComplete() {
+        showSplash = false;
+        gameReady = true;
+    }
 
     onMount(async () => {
         // 直接檢查 URL query 參數並載入
@@ -51,9 +59,15 @@
     });
 </script>
 
-<div id="app">
-    <PhaserGame bind:phaserRef />
-</div>
+{#if showSplash}
+    <SplashScreen onComplete={handleSplashComplete} />
+{/if}
+
+{#if gameReady}
+    <div id="app">
+        <PhaserGame bind:phaserRef />
+    </div>
+{/if}
 
 <style>
     #app {
