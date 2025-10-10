@@ -1,5 +1,4 @@
 import { Game as MainGame } from "./scenes/Game";
-import { GameV2 } from "./scenes/GameV2";
 import { AUTO, Game } from "phaser";
 import type { Types } from "phaser";
 
@@ -21,9 +20,8 @@ const config: Types.Core.GameConfig = {
     scene: [MainGame],
 };
 
-const StartGame = (parent: string, sceneVersion: "v1" | "v2" = "v1") => {
-    const selectedScene = sceneVersion === "v2" ? GameV2 : MainGame;
-    return new Game({ ...config, parent, scene: [selectedScene] });
+const StartGame = (parent: string) => {
+    return new Game({ ...config, parent, scene: [MainGame] });
 };
 
 export default StartGame;

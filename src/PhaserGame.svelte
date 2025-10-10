@@ -20,11 +20,8 @@
     export let currentActiveScene: ((scene: Scene) => void) | undefined =
         undefined;
 
-    // 新增：允許指定要使用的 scene（"v1" 或 "v2"）
-    export let sceneVersion: "v1" | "v2" = "v1";
-
     onMount(() => {
-        phaserRef.game = StartGame("game-container", sceneVersion);
+        phaserRef.game = StartGame("game-container");
 
         EventBus.on("current-scene-ready", (scene_instance: Scene) => {
             phaserRef.scene = scene_instance;

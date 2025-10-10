@@ -1,17 +1,17 @@
 /**
  * Team Dialogue API Client
- * 呼叫後端 API 生成主題對話
+ * 呼叫後端 API 生成主題對話（每個角色 3 則對話）
  */
 
-export interface Character {
+export interface DialogueCharacter {
     id: string;
     name: string;
     position: string;
-    dialogue: string;
+    dialogues: [string, string, string]; // 固定 3 則對話
 }
 
 export interface TeamDialogueResponse {
-    characters: Character[];
+    characters: DialogueCharacter[];
 }
 
 export interface TeamDialogueError {
@@ -19,7 +19,7 @@ export interface TeamDialogueError {
 }
 
 // 統一使用生產環境 API（已部署）
-const API_ENDPOINT = "https://line-boot.vercel.app/api/team-dialogue";
+const API_ENDPOINT = "https://line-boot.vercel.app/api/team-dialogue-v2";
 
 /**
  * 取得當前環境的 API endpoint

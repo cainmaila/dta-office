@@ -3,12 +3,16 @@
     import type { Scene } from "phaser";
     import PhaserGame, { type TPhaserRef } from "../PhaserGame.svelte";
     import { EventBus } from "../game/EventBus";
-    import { fetchTeamDialogue, type Character } from "../lib/api/teamDialogue";
+    import {
+        fetchTeamDialogue,
+        type DialogueCharacter,
+    } from "../lib/api/teamDialogue";
+    import { SoundManager } from "../game/utils/SoundManager";
 
     //  References to the PhaserGame component (game and scene are exposed)
     let phaserRef: TPhaserRef = { game: null, scene: null };
     let initialDialogueData: {
-        characters: Character[] | null;
+        characters: DialogueCharacter[] | null;
         topic?: string;
     } | null = null;
 
@@ -21,6 +25,9 @@
             // 有主題，立即載入對話
             try {
                 const response = await fetchTeamDialogue(topic, 60000);
+
+                // 播放 API 回應音效
+                SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
 
                 initialDialogueData = {
                     characters: response.characters,

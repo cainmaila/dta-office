@@ -7,7 +7,12 @@ import type {
     StandingNpcConfig,
 } from "../types/NPCTypes";
 import { gameConfig } from "../config";
+import type { DialogueCharacter } from "../../lib/api/teamDialogue";
 
+/**
+ * NPC 管理器
+ * 負責創建和管理 NPC 物件
+ */
 export class NPCManager {
     private scene: Scene;
     private npcs: Map<string, NPC> = new Map();
@@ -17,7 +22,10 @@ export class NPCManager {
         this.scene = scene;
     }
 
-    async loadNPCData(): Promise<void> {
+    /**
+     * 載入 NPC 資料並創建站立 NPC
+     */
+    async loadNPCData(): Promise<CharactersData> {
         const response = await fetch(
             `${gameConfig.assets.basePath}/data/characters.json`
         );
@@ -30,6 +38,23 @@ export class NPCManager {
 
         // 創建站立 NPC
         this.createStandingNPCs(data.standingNpcs);
+
+        // 返回完整資料供 Scene 使用（包含 hotspotNpcs）
+        return data;
+    }
+
+    /**
+     * 使用 API 的對話資料更新 NPC
+     * 這個方法會將 API 返回的對話資料合併到角色資料中
+     */
+    public updateDialoguesFromAPI(apiCharacters: DialogueCharacter[]): void {
+        apiCharacters.forEach((apiChar) => {
+            const character = this.characters.get(apiChar.id);
+            if (character) {
+                // 將 的 dialogues 存儲到角色資料中（作為擴展屬性）
+                (character as any).dialogues = apiChar.dialogues;
+            }
+        });
     }
 
     private createStandingNPCs(configs: StandingNpcConfig[]): void {
@@ -39,9 +64,6 @@ export class NPCManager {
         configs.forEach((config) => {
             const character = this.characters.get(config.characterId);
             if (!character) {
-                console.warn(
-                    `Character not found for standing NPC: ${config.characterId}`
-                );
                 return;
             }
 
@@ -50,22 +72,18 @@ export class NPCManager {
                 id: character.id,
                 name: character.name,
                 position: character.position,
-                dialogue: character.dialogue,
+                dialogue: character.dialogue, // V1 的單一對話（不使用這個欄位）
                 x: config.x,
                 y: config.y,
                 styleId: config.styleId,
                 action: config.action || "idle",
-                facing: config.facing || "left", // 預設面向左
+                facing: config.facing || "left",
                 npcType: "standing",
             };
 
             const npc = new NPC(this.scene, npcData);
             this.npcs.set(character.id, npc);
         });
-    }
-
-    createNPCs(): void {
-        // 這個方法保留作為向後相容，實際創建在 loadNPCData 中完成
     }
 
     private clearNPCs(): void {
@@ -94,9 +112,7 @@ export class NPCManager {
     updateNPCPosition(id: string, x: number, y: number): void {
         const npc = this.npcs.get(id);
         if (npc) {
-            npc.x = x;
-            npc.y = y;
-            npc.setDepth(y); // 更新深度
+            npc.updatePosition(x, y);
         }
     }
 
@@ -107,48 +123,8 @@ export class NPCManager {
         }
     }
 
-    /**
-     * 切換 NPC 樣式
-     */
-    setNPCStyle(
-        id: string,
-        styleId: string,
-        action: "idle" | "walking" | "sitting" | "talking" = "idle"
-    ): void {
-        const npc = this.npcs.get(id);
-        if (npc) {
-            npc.setStyle(styleId, action);
-        }
-    }
-
-    /**
-     * 切換 NPC 動作
-     */
-    setNPCAction(
-        id: string,
-        action: "idle" | "walking" | "sitting" | "talking"
-    ): void {
-        const npc = this.npcs.get(id);
-        if (npc) {
-            npc.setAction(action);
-        }
-    }
-
-    /**
-     * 播放 NPC 動作動畫
-     */
-    playNPCAnimation(
-        id: string,
-        action: "idle" | "walking" | "sitting" | "talking",
-        duration: number = 200
-    ): void {
-        const npc = this.npcs.get(id);
-        if (npc) {
-            npc.playActionAnimation(action, duration);
-        }
-    }
-
     destroy(): void {
         this.clearNPCs();
+        this.characters.clear();
     }
 }

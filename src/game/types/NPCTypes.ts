@@ -76,5 +76,5 @@ export interface DialogueEventPayload {
     bubbleOffsetX?: number;
     bubbleOffsetY?: number;
     bubbleGap?: number;
-    type?: 'normal' | 'thought'; // Dialogue type: normal speech or inner thought
+    type?: "normal" | "thought"; // Dialogue type: normal speech or inner thought
 }

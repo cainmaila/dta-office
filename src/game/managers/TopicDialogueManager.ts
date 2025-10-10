@@ -18,7 +18,7 @@ export class TopicDialogueManager {
     private topicTitleUI: TopicTitleUI;
     private controlButtons: ControlButtons;
     private currentTopic: string = "";
-    private originalCharacters: Character[] = [];
+    private originalCharacters: DialogueCharacter[] = [];
 
     constructor(scene: Scene) {
         this.scene = scene;
@@ -87,7 +87,7 @@ export class TopicDialogueManager {
     /**
      * 更新角色對話
      */
-    private updateCharactersDialogue(newCharacters: Character[]): void {
+    private updateCharactersDialogue(newCharacters: DialogueCharacter[]): void {
         // 發送事件通知場景更新對話
         this.scene.events.emit("update-characters-dialogue", newCharacters);
     }
@@ -159,7 +159,7 @@ export class TopicDialogueManager {
     /**
      * 儲存原始角色資料
      */
-    setOriginalCharacters(characters: Character[]): void {
+    setOriginalCharacters(characters: DialogueCharacter[]): void {
         this.originalCharacters = characters;
     }
 
