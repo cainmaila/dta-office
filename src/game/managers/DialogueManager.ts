@@ -31,6 +31,7 @@ export class DialogueManager {
             bubbleOffsetX = 0,
             bubbleOffsetY,
             bubbleGap,
+            type = 'normal',
         } = payload;
 
         // 如果已有對話氣泡，先移除
@@ -51,7 +52,8 @@ export class DialogueManager {
             anchorY,
             message,
             anchorX,
-            anchorY
+            anchorY,
+            type
         );
 
         const bubbleHeight = this.currentBubble.getBubbleHeight();

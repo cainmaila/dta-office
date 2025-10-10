@@ -9,6 +9,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
     private padding: number = 12;
     private cornerRadius: number = 8;
     private tailSize: number = 12;
+    private bubbleType: 'normal' | 'thought';
 
     constructor(
         scene: Scene,
@@ -16,9 +17,12 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         y: number,
         message: string,
         npcX: number,
-        npcY: number
+        npcY: number,
+        type: 'normal' | 'thought' = 'normal'
     ) {
         super(scene, x, y);
+
+        this.bubbleType = type;
 
         // 添加到場景
         scene.add.existing(this);
@@ -58,11 +62,21 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
 
         // 創建背景圖形
         this.background = this.scene.add.graphics();
-        this.drawBubbleBackground();
 
-        // 創建指向尾巴
+        // 根據類型選擇背景繪製方式
+        if (this.bubbleType === 'thought') {
+            this.drawCloudBackground();
+        } else {
+            this.drawBubbleBackground();
+        }
+
+        // 創建指向尾巴或思考圓圈
         this.tail = this.scene.add.graphics();
-        this.drawTail(npcX, npcY);
+        if (this.bubbleType === 'thought') {
+            this.drawThoughtBubbles();
+        } else {
+            this.drawTail(npcX, npcY);
+        }
 
         // 添加到容器
         this.add([this.background, this.tail, this.textObject]);
@@ -152,9 +166,113 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.background.strokePath();
     }
 
+    private drawCloudBackground(): void {
+        this.background.clear();
+
+        // 設置填充和邊框
+        this.background.fillStyle(0xffffff, 1.0); // 白底
+        this.background.lineStyle(2, 0x333333, 1.0); // 黑邊框
+
+        // 計算氣泡位置
+        const x = -this.bubbleWidth / 2;
+        const y = -this.bubbleHeight / 2;
+
+        // 雲朵圓圈的基本半徑（依據氣泡大小調整）
+        const cloudRadius = Math.min(this.bubbleWidth, this.bubbleHeight) * 0.15;
+
+        // 使用多個圓形組成雲朵邊緣
+        const circles: { x: number; y: number; r: number }[] = [];
+
+        // 上邊的圓圈 (3個)
+        for (let i = 0; i < 3; i++) {
+            const t = (i + 1) / 4;
+            circles.push({
+                x: x + this.bubbleWidth * t,
+                y: y,
+                r: cloudRadius * (0.9 + Math.random() * 0.2)
+            });
+        }
+
+        // 右邊的圓圈 (2個)
+        for (let i = 0; i < 2; i++) {
+            const t = (i + 1) / 3;
+            circles.push({
+                x: x + this.bubbleWidth,
+                y: y + this.bubbleHeight * t,
+                r: cloudRadius * (0.9 + Math.random() * 0.2)
+            });
+        }
+
+        // 下邊的圓圈 (3個)
+        for (let i = 0; i < 3; i++) {
+            const t = (i + 1) / 4;
+            circles.push({
+                x: x + this.bubbleWidth * (1 - t),
+                y: y + this.bubbleHeight,
+                r: cloudRadius * (0.9 + Math.random() * 0.2)
+            });
+        }
+
+        // 左邊的圓圈 (2個)
+        for (let i = 0; i < 2; i++) {
+            const t = (i + 1) / 3;
+            circles.push({
+                x: x,
+                y: y + this.bubbleHeight * (1 - t),
+                r: cloudRadius * (0.9 + Math.random() * 0.2)
+            });
+        }
+
+        // 四個角落的圓圈（較大）
+        const cornerRadius = cloudRadius * 1.2;
+        circles.push({ x: x, y: y, r: cornerRadius });
+        circles.push({ x: x + this.bubbleWidth, y: y, r: cornerRadius });
+        circles.push({ x: x + this.bubbleWidth, y: y + this.bubbleHeight, r: cornerRadius });
+        circles.push({ x: x, y: y + this.bubbleHeight, r: cornerRadius });
+
+        // 繪製所有圓圈
+        this.background.beginPath();
+        circles.forEach(circle => {
+            this.background.moveTo(circle.x + circle.r, circle.y);
+            this.background.arc(circle.x, circle.y, circle.r, 0, Math.PI * 2);
+        });
+
+        // 填充和描邊
+        this.background.fillPath();
+        this.background.strokePath();
+    }
+
     private drawTail(npcX: number, npcY: number): void {
         // 尾巴現在已經整合到主要氣泡中，保留空方法
         this.tail.clear();
+    }
+
+    private drawThoughtBubbles(): void {
+        this.tail.clear();
+
+        // 設置填充和邊框（與主氣泡一致）
+        this.tail.fillStyle(0xffffff, 1.0); // 白底
+        this.tail.lineStyle(2, 0x333333, 1.0); // 黑邊框
+
+        // 計算起始位置（從氣泡底部中心開始）
+        const startX = 0;
+        const startY = this.bubbleHeight / 2;
+
+        // 三個思考圓圈：由大到小
+        const bubbles = [
+            { radius: 12, offsetY: 18 },  // 最大的圓圈（靠近對話框）
+            { radius: 8, offsetY: 32 },   // 中等圓圈
+            { radius: 5, offsetY: 44 }    // 最小的圓圈（最遠）
+        ];
+
+        // 繪製每個思考圓圈
+        bubbles.forEach(bubble => {
+            this.tail.beginPath();
+            this.tail.arc(startX, startY + bubble.offsetY, bubble.radius, 0, Math.PI * 2);
+            this.tail.closePath();
+            this.tail.fillPath();
+            this.tail.strokePath();
+        });
     }
 
     public show(duration: number = 4000, onHideCallback?: () => void): void {
@@ -162,12 +280,15 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.setScale(0);
         this.setAlpha(0);
 
+        // 思考對話框的動畫速度較慢
+        const animationDuration = this.bubbleType === 'thought' ? 400 : 200;
+
         this.scene.tweens.add({
             targets: this,
             scaleX: 1,
             scaleY: 1,
             alpha: 1,
-            duration: 200,
+            duration: animationDuration,
             ease: "Back.easeOut",
         });
 
