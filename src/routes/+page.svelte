@@ -3,60 +3,54 @@
     import type { Scene } from "phaser";
     import PhaserGame, { type TPhaserRef } from "../PhaserGame.svelte";
     import { EventBus } from "../game/EventBus";
-    import { fetchTeamDialogue } from "../lib/api/teamDialogue";
+    import { fetchTeamDialogue, type Character } from "../lib/api/teamDialogue";
 
     //  References to the PhaserGame component (game and scene are exposed)
     let phaserRef: TPhaserRef = { game: null, scene: null };
-    let isLoadingTopic = false;
+    let initialDialogueData: {
+        characters: Character[] | null;
+        topic?: string;
+    } | null = null;
 
-    onMount(() => {
-        // 檢查 URL query 參數
+    onMount(async () => {
+        // 直接檢查 URL query 參數並載入
         const urlParams = new URLSearchParams(window.location.search);
         const topic = urlParams.get("topic");
 
+        console.log("🔍 URL 參數 topic:", topic);
+
         if (topic) {
-            loadTopicDialogue(topic);
-        } else {
-            // 沒有主題參數，等待場景準備好後顯示輸入框
-            EventBus.once("current-scene-ready", () => {
-                EventBus.emit("set-custom-dialogue", {
-                    characters: null,
-                });
-            });
-        }
-    });
+            // 有主題，立即載入對話
+            console.log("✅ 開始載入主題對話:", topic);
+            try {
+                const response = await fetchTeamDialogue(topic, 60000);
+                console.log(
+                    "✅ API 成功，角色數量:",
+                    response.characters.length,
+                );
 
-    /**
-     * 載入主題對話
-     */
-    async function loadTopicDialogue(topic: string): Promise<void> {
-        if (isLoadingTopic) return;
-
-        isLoadingTopic = true;
-
-        try {
-            const response = await fetchTeamDialogue(topic, 60000);
-
-            // 等待場景準備好
-            EventBus.once("current-scene-ready", () => {
-                EventBus.emit("set-custom-dialogue", {
+                initialDialogueData = {
                     characters: response.characters,
                     topic: topic,
-                });
-            });
-        } catch (error) {
-            console.error("載入主題對話失敗:", error);
-
-            // 失敗時顯示輸入框
-            EventBus.once("current-scene-ready", () => {
-                EventBus.emit("set-custom-dialogue", {
-                    characters: null,
-                });
-            });
-        } finally {
-            isLoadingTopic = false;
+                };
+            } catch (error) {
+                console.error("❌ 載入主題對話失敗:", error);
+                initialDialogueData = { characters: null };
+            }
+        } else {
+            // 沒有主題，顯示輸入框
+            console.log("❌ 沒有主題參數");
+            initialDialogueData = { characters: null };
         }
-    }
+
+        // 等待場景準備好後發送資料
+        EventBus.once("current-scene-ready", () => {
+            if (initialDialogueData) {
+                console.log("📢 場景準備好，發送對話資料");
+                EventBus.emit("set-custom-dialogue", initialDialogueData);
+            }
+        });
+    });
 </script>
 
 <div id="app">

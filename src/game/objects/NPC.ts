@@ -145,6 +145,13 @@ export class NPC extends Phaser.GameObjects.Sprite {
         }
     }
 
+    /**
+     * 檢查此 NPC 的對話是否正在顯示
+     */
+    public isShowingDialogue(): boolean {
+        return this.isDialogueActive;
+    }
+
     public showDialogue(): void {
         // 發送事件給對話管理器，增加對話框與人物的距離
         this.scene.events.emit("show-dialogue", {

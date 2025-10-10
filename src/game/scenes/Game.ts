@@ -103,9 +103,13 @@ export class Game extends Scene {
         // 初始化主題對話管理器
         this.topicDialogueManager = new TopicDialogueManager(this);
 
-        // 初始化 NPC 管理器並載入所有人物資料
+        // 初始化 NPC 管理器並載入所有人物資料（等待完成）
         this.npcManager = new NPCManager(this);
-        this.loadCharactersAndNPCs();
+        this.loadCharactersAndNPCs().then(() => {
+            console.log("🎮 NPC 載入完成，場景準備就緒");
+            // 通知場景準備完成（移到這裡，確保 NPC 已載入）
+            EventBus.emit("current-scene-ready", this);
+        });
 
         this.events.once(Scenes.Events.SHUTDOWN, () => {
             this.dialogueManager.destroy();
@@ -152,41 +156,120 @@ export class Game extends Scene {
         this.setupHotspotDebugger();
 
         // 監聽對話更新事件
-        this.events.on('update-characters-dialogue', (newCharacters: ApiCharacter[]) => {
-            this.updateCharactersDialogue(newCharacters);
-        });
+        this.events.on(
+            "update-characters-dialogue",
+            (newCharacters: ApiCharacter[]) => {
+                this.updateCharactersDialogue(newCharacters);
+            }
+        );
 
         // 監聽來自 Svelte 的自訂對話資料
-        EventBus.on('set-custom-dialogue', (data: { characters: ApiCharacter[] | null; topic?: string }) => {
-            this.customCharacters = data.characters;
-            if (data.characters) {
-                this.updateCharactersDialogue(data.characters);
-                if (data.topic) {
-                    this.topicDialogueManager.setCurrentTopic(data.topic);
+        EventBus.on(
+            "set-custom-dialogue",
+            (data: { characters: ApiCharacter[] | null; topic?: string }) => {
+                this.customCharacters = data.characters;
+                if (data.characters) {
+                    this.updateCharactersDialogue(data.characters);
+                    if (data.topic) {
+                        this.topicDialogueManager.setCurrentTopic(data.topic);
+                    }
+                } else {
+                    // 沒有自訂對話，顯示輸入框
+                    this.topicDialogueManager.showTopicInput();
                 }
-            } else {
-                // 沒有自訂對話，顯示輸入框
-                this.topicDialogueManager.showTopicInput();
             }
-        });
-
-        // 通知場景準備完成
-        EventBus.emit("current-scene-ready", this);
+        );
     }
 
     /**
      * 更新角色對話（從 API 取得的新對話）
      */
     private updateCharactersDialogue(newCharacters: ApiCharacter[]): void {
-        // 更新 characters Map
+        console.log("🔄 開始更新對話，角色數量:", newCharacters.length);
+        console.log("📊 熱區數量:", this.roundTableHotspots.length);
+        console.log(
+            "📊 站立 NPC 數量:",
+            this.npcManager?.getAllNPCs().length ?? 0
+        );
+
+        // 1. 更新 customCharacters
+        this.customCharacters = newCharacters;
+
+        // 2. 更新 characters Map
+        let updatedCount = 0;
         newCharacters.forEach((apiChar) => {
             const existing = this.characters.get(apiChar.id);
             if (existing) {
                 existing.dialogue = apiChar.dialogue;
+                updatedCount++;
+            }
+        });
+        console.log("✅ characters Map 更新:", updatedCount, "個");
+
+        // 3. 更新熱區 NPC 的對話
+        let hotspotUpdated = 0;
+        this.roundTableHotspots.forEach((hotspot) => {
+            const newChar = newCharacters.find((c) => c.id === hotspot.npc.id);
+            if (newChar) {
+                hotspot.npc.dialogue = newChar.dialogue;
+                hotspotUpdated++;
+            }
+        });
+        console.log("✅ 熱區 NPC 更新:", hotspotUpdated, "個");
+
+        // 4. 更新站立 NPC 的對話
+        let standingNpcUpdated = 0;
+        this.npcManager?.getAllNPCs().forEach((npc) => {
+            const newChar = newCharacters.find((c) => c.id === npc.npcData.id);
+            if (newChar) {
+                npc.npcData.dialogue = newChar.dialogue;
+                standingNpcUpdated++;
+            }
+        });
+        console.log("✅ 站立 NPC 更新:", standingNpcUpdated, "個");
+
+        // 5. 如果有對話氣泡正在顯示，立即刷新它
+        this.refreshActiveDialogueBubbles(newCharacters);
+
+        console.log("✅ 對話更新完成，共", newCharacters.length, "個角色");
+    }
+
+    /**
+     * 刷新正在顯示的對話氣泡
+     */
+    private refreshActiveDialogueBubbles(newCharacters: ApiCharacter[]): void {
+        // 1. 遍歷所有熱區，找到對話氣泡正在顯示的
+        this.roundTableHotspots.forEach((hotspot) => {
+            if (hotspot.isDialogueActive) {
+                const newChar = newCharacters.find(
+                    (c) => c.id === hotspot.npc.id
+                );
+                if (newChar) {
+                    // 重新觸發對話顯示事件，使用新的對話內容
+                    const { world } = hotspot;
+                    this.events.emit("show-dialogue", {
+                        npcId: hotspot.npc.id,
+                        name: newChar.name,
+                        message: newChar.dialogue,
+                        x: world.x,
+                        y: world.y,
+                        radius: world.radius,
+                        bubbleOffsetX: world.bubbleOffsetX,
+                        bubbleOffsetY: world.bubbleOffsetY,
+                        bubbleGap: world.bubbleGap,
+                    });
+                }
             }
         });
 
-        console.log('✅ 對話已更新，共', newCharacters.length, '個角色');
+        // 2. 遍歷所有站立 NPC，找到對話氣泡正在顯示的
+        this.npcManager?.getAllNPCs().forEach((npc) => {
+            const newChar = newCharacters.find((c) => c.id === npc.npcData.id);
+            if (newChar && npc.isShowingDialogue()) {
+                // NPC 的對話正在顯示，重新觸發顯示以更新內容
+                npc.showDialogue();
+            }
+        });
     }
 
     private async loadCharactersAndNPCs(): Promise<void> {
