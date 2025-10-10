@@ -235,7 +235,45 @@ export class Game extends Scene {
         // 5. 如果有對話氣泡正在顯示，立即刷新它
         this.refreshActiveDialogueBubbles(newCharacters);
 
+        // 6. 自動打開 Steven 的對話框 3 秒鐘
+        this.autoShowStevenDialogue();
+
         console.log("✅ 對話更新完成，共", newCharacters.length, "個角色");
+    }
+
+    /**
+     * 自動顯示 Steven 的對話框 3 秒鐘
+     */
+    private autoShowStevenDialogue(): void {
+        const stevenHotspot = this.roundTableHotspots.find(
+            (hotspot) => hotspot.npc.id === "Steven"
+        );
+
+        if (stevenHotspot) {
+            console.log("🎭 自動顯示 Steven 的對話");
+            const { world } = stevenHotspot;
+
+            // 顯示對話
+            this.events.emit("show-dialogue", {
+                npcId: stevenHotspot.npc.id,
+                name: stevenHotspot.npc.name,
+                message: stevenHotspot.npc.dialogue,
+                x: world.x,
+                y: world.y,
+                radius: world.radius,
+                bubbleOffsetX: world.bubbleOffsetX,
+                bubbleOffsetY: world.bubbleOffsetY,
+                bubbleGap: world.bubbleGap,
+            });
+
+            // 3 秒後自動關閉
+            this.time.delayedCall(3000, () => {
+                console.log("🎭 自動關閉 Steven 的對話");
+                this.events.emit("hide-dialogue");
+            });
+        } else {
+            console.warn("⚠️ 找不到 Steven 的熱區");
+        }
     }
 
     /**
