@@ -53,9 +53,6 @@ export class NPCManagerV2 {
             if (character) {
                 // 將 V2 的 dialogues 存儲到角色資料中（作為擴展屬性）
                 (character as any).dialogues = apiChar.dialogues;
-                console.log(`✅ 已更新 ${apiChar.id} 的對話資料`);
-            } else {
-                console.warn(`⚠️ 找不到角色 ${apiChar.id}`);
             }
         });
     }
@@ -64,14 +61,9 @@ export class NPCManagerV2 {
         // 清理現有的NPCs
         this.clearNPCs();
 
-        console.log(`🔧 V2: 準備創建 ${configs.length} 個站立 NPC`);
-
         configs.forEach((config) => {
             const character = this.characters.get(config.characterId);
             if (!character) {
-                console.warn(
-                    `Character not found for standing NPC: ${config.characterId}`
-                );
                 return;
             }
 
@@ -91,12 +83,7 @@ export class NPCManagerV2 {
 
             const npc = new NPCV2(this.scene, npcData);
             this.npcs.set(character.id, npc);
-            console.log(
-                `✅ V2: 已創建 NPC ${character.id} at (${config.x}, ${config.y})`
-            );
         });
-
-        console.log(`✅ V2: 共創建 ${this.npcs.size} 個 NPC`);
     }
 
     private clearNPCs(): void {

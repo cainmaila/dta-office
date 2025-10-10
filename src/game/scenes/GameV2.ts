@@ -100,7 +100,6 @@ export class GameV2 extends Scene {
         // 初始化 V2 NPC 管理器並載入所有人物資料
         this.npcManagerV2 = new NPCManagerV2(this);
         this.loadCharactersAndNPCs().then(() => {
-            console.log("🎮 V2 NPC 載入完成，場景準備就緒");
             // 通知場景準備完成
             EventBus.emit("current-scene-ready", this);
         });
@@ -118,7 +117,6 @@ export class GameV2 extends Scene {
                 this.customCharactersV2 = data.characters;
                 if (data.characters) {
                     // 有主題對話，更新對話並確保輸入框隱藏
-                    console.log("📝 V2: 有主題對話，隱藏輸入框");
                     this.updateCharactersDialogueV2(data.characters);
                     this.topicDialogueManager.hideTopicInput();
                     if (data.topic) {
@@ -126,7 +124,6 @@ export class GameV2 extends Scene {
                     }
                 } else {
                     // 沒有自訂對話，顯示輸入框
-                    console.log("📝 V2: 沒有主題對話，顯示輸入框");
                     this.topicDialogueManager.showTopicInput();
                 }
             }
@@ -156,18 +153,6 @@ export class GameV2 extends Scene {
         const displayHeight = naturalHeight * fitScale;
         const offsetX = (gameWidth - displayWidth) / 2;
         const offsetY = (gameHeight - displayHeight) / 2;
-
-        console.log(
-            `🖼️ V2: ${
-                gameConfig.assets.background.key
-            } texture ${naturalWidth}x${naturalHeight} scaled to ${displayWidth.toFixed(
-                1
-            )}x${displayHeight.toFixed(1)} (scale=${fitScale.toFixed(
-                4
-            )}) with offset (${offsetX.toFixed(1)}, ${offsetY.toFixed(
-                1
-            )}) to fit canvas ${gameWidth}x${gameHeight}`
-        );
 
         background
             .setDisplaySize(displayWidth, displayHeight)
@@ -250,10 +235,8 @@ export class GameV2 extends Scene {
 
             // 創建圓桌 hotspot NPC
             this.createRoundTableHotspots(data.hotspotNpcs);
-
-            console.log("✅ V2 NPC 資料載入完成");
         } catch (error) {
-            console.error("❌ 載入 V2 NPC 資料失敗:", error);
+            console.error("載入 V2 NPC 資料失敗:", error);
         }
     }
 
@@ -261,8 +244,6 @@ export class GameV2 extends Scene {
      * V2 版本：更新角色對話（從 API 取得的新對話）
      */
     private updateCharactersDialogueV2(newCharacters: CharacterV2[]): void {
-        console.log("🔄 V2: 開始更新對話，角色數量:", newCharacters.length);
-
         // 1. 更新 customCharactersV2
         this.customCharactersV2 = newCharacters;
 
@@ -272,8 +253,6 @@ export class GameV2 extends Scene {
         // 3. 更新 NPCManagerV2 的對話資料（供顯示用）
         this.npcManagerV2.updateDialoguesFromAPI(newCharacters);
 
-        console.log("✅ V2 對話更新完成，共", newCharacters.length, "個角色");
-
         // 4. 可選：自動顯示某個角色的第一則對話
         this.autoShowFirstDialogue();
     }
@@ -282,13 +261,6 @@ export class GameV2 extends Scene {
      * 自動顯示 Steven 的第一則對話（可選）
      */
     private autoShowFirstDialogue(): void {
-        const allNPCs = this.npcManagerV2.getAllNPCs();
-        console.log("🔍 V2: 站立 NPC 數量:", allNPCs.length);
-        console.log(
-            "🔍 V2: 圓桌 hotspot 數量:",
-            this.roundTableHotspots.length
-        );
-
         // 先嘗試從站立 NPC 中找 Steven
         let stevenNPC = this.npcManagerV2.getNPC("Steven");
 
@@ -299,8 +271,6 @@ export class GameV2 extends Scene {
             );
 
             if (stevenHotspot) {
-                console.log("🎭 V2: 找到 Steven hotspot，自動顯示對話");
-
                 // 延遲一點時間以確保場景完全準備好
                 this.time.delayedCall(500, () => {
                     const { world } = stevenHotspot;
@@ -318,22 +288,17 @@ export class GameV2 extends Scene {
                 return;
             }
         } else {
-            console.log("🎭 V2: 找到 Steven 站立 NPC，自動顯示對話");
             this.time.delayedCall(500, () => {
                 stevenNPC!.showDialogue();
             });
             return;
         }
-
-        console.warn("⚠️ V2: 找不到 Steven NPC");
     }
 
     /**
      * 創建圓桌 hotspot NPC（V2 版本）
      */
     private createRoundTableHotspots(configs: HotspotNpcConfig[]): void {
-        console.log(`🔧 V2: 準備創建 ${configs.length} 個圓桌 hotspot NPC`);
-
         this.roundTableHotspots = configs
             .map((config) => {
                 const character = this.characters.get(config.characterId);
@@ -443,19 +408,11 @@ export class GameV2 extends Scene {
                     });
                 });
 
-                console.log(
-                    `✅ V2: 已創建 hotspot ${character.id} at (${config.x}, ${config.y})`
-                );
-
                 return entry;
             })
             .filter(
                 (entry) => entry !== null
             ) as typeof this.roundTableHotspots;
-
-        console.log(
-            `✅ V2: 共創建 ${this.roundTableHotspots.length} 個 hotspot NPC`
-        );
 
         // 應用世界座標轉換到所有 hotspots
         this.roundTableHotspots.forEach((entry) => {
@@ -532,13 +489,6 @@ export class GameV2 extends Scene {
         (window as any).resetClickCounts = () => {
             this.dialogueManagerV2.resetAllClickCounts();
         };
-
-        console.log("🔧 V2 除錯工具已啟用:");
-        console.log("  - window.gameV2Scene");
-        console.log("  - window.getDialogueManagerV2()");
-        console.log("  - window.getNPCManagerV2()");
-        console.log("  - window.getClickCount('NPC_ID')");
-        console.log("  - window.resetClickCounts()");
     }
 
     update() {

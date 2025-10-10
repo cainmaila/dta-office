@@ -21,21 +21,10 @@
         const urlParams = new URLSearchParams(window.location.search);
         const topic = urlParams.get("topic");
 
-        console.log("🔍 V2: URL 參數 topic:", topic);
-
         if (topic) {
             // 有主題，立即載入對話
-            console.log("✅ V2: 開始載入主題對話:", topic);
             try {
                 const response = await fetchTeamDialogueV2(topic, 60000);
-                console.log(
-                    "✅ V2 API 成功，角色數量:",
-                    response.characters.length,
-                );
-                console.log(
-                    "✅ V2 每個角色對話數:",
-                    response.characters[0]?.dialogues.length,
-                );
 
                 // 播放 API 回應音效
                 SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
@@ -45,19 +34,17 @@
                     topic: topic,
                 };
             } catch (error) {
-                console.error("❌ V2: 載入主題對話失敗:", error);
+                console.error("V2: 載入主題對話失敗:", error);
                 initialDialogueData = { characters: null };
             }
         } else {
             // 沒有主題，顯示輸入框
-            console.log("❌ V2: 沒有主題參數");
             initialDialogueData = { characters: null };
         }
 
         // 等待場景準備好後發送資料
         EventBus.once("current-scene-ready", () => {
             if (initialDialogueData) {
-                console.log("📢 V2: 場景準備好，發送對話資料");
                 EventBus.emit("set-custom-dialogue-v2", initialDialogueData);
             }
         });

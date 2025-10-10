@@ -46,10 +46,6 @@ export class DialogueManagerV2 {
             this.characterDialogues.set(char.id, char.dialogues);
             this.clickCounts.set(char.id, 0); // 初始化點擊次數為 0
         });
-
-        console.log(
-            `📚 DialogueManagerV2: 已載入 ${characters.length} 個角色的對話`
-        );
     }
 
     /**
@@ -59,14 +55,12 @@ export class DialogueManagerV2 {
         const { npcId } = payload;
 
         if (!npcId) {
-            console.warn("⚠️ DialogueManagerV2: 沒有提供 npcId");
             return;
         }
 
         // 檢查是否有這個角色的對話資料
         const dialogues = this.characterDialogues.get(npcId);
         if (!dialogues) {
-            console.warn(`⚠️ DialogueManagerV2: 找不到 ${npcId} 的對話資料`);
             return;
         }
 
@@ -79,7 +73,6 @@ export class DialogueManagerV2 {
             this.clickCounts.forEach((count, id) => {
                 this.clickCounts.set(id, 0);
             });
-            console.log(`🔄 切換 NPC：${this.currentNpcId} → ${npcId}，重置所有 NPC 的計數為 0`);
         }
 
         // 獲取當前 NPC 的點擊次數（在重置之後才取得）
@@ -92,20 +85,14 @@ export class DialogueManagerV2 {
 
         // 決定對話類型和顯示時間
         // 第 3 則對話（index 2）使用內心想法形式，顯示時間更長
-        const dialogueType: 'normal' | 'thought' = dialogueIndex === 2 ? 'thought' : 'normal';
+        const dialogueType: "normal" | "thought" =
+            dialogueIndex === 2 ? "thought" : "normal";
         const displayDuration = dialogueIndex === 2 ? 6000 : 4000;
-
-        console.log(
-            `💬 ${npcId} 當前計數: ${currentCount} → 顯示對話 ${dialogueIndex} (${dialogueType})`
-        );
 
         // 增加點擊次數（下次點擊會顯示下一則）
         // 但在達到第 3 則對話後，計數不再增加（保持在 2）
         if (currentCount < 2) {
             this.clickCounts.set(npcId, currentCount + 1);
-            console.log(`📈 ${npcId} 計數增加：${currentCount} → ${currentCount + 1}`);
-        } else {
-            console.log(`⏸️ ${npcId} 計數已達上限，保持在 ${currentCount}`);
         }
 
         // 如果已有對話氣泡，先移除
@@ -169,7 +156,6 @@ export class DialogueManagerV2 {
         this.clickCounts.forEach((_, npcId) => {
             this.clickCounts.set(npcId, 0);
         });
-        console.log("🔄 已重置所有 NPC 的點擊計數");
     }
 
     /**
