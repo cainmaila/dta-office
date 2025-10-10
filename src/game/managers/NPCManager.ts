@@ -50,7 +50,6 @@ export class NPCManager {
                 id: character.id,
                 name: character.name,
                 position: character.position,
-                personality: character.personality,
                 dialogue: character.dialogue,
                 x: config.x,
                 y: config.y,

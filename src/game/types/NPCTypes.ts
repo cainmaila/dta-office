@@ -3,9 +3,8 @@ export interface Character {
     id: string; // 唯一識別碼
     name: string; // 姓名
     position: string; // 職稱
-    personality: string; // 個性標籤
     dialogue: string; // 當前對話內容
-    introduction: string; // 自我介紹（用於 LLM）
+    // personality 和 introduction 已移除，避免在前端暴露角色性格設定
 }
 
 // 站立 NPC 配置（引用 Character ID）
@@ -42,7 +41,6 @@ export interface NPCData {
     id: string;
     name: string;
     position: string;
-    personality: string;
     x: number;
     y: number;
     sprite?: string; // Legacy field, optional

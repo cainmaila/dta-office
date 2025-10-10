@@ -4,91 +4,121 @@
             "id": "Kevin",
             "name": "Kevin",
             "position": "軟體開發PM",
-            "dialogue": "來吧，團隊！我們要讓這個專案火起來！"
+            "personality": "年輕氣盛",
+            "dialogue": "來吧，團隊！我們要讓這個專案火起來！",
+            "introduction": "我是Kevin，作為軟體開發PM，我充滿活力和野心，總是推動團隊向前進。我相信年輕的能量能帶來創新，雖然有時會太衝動，但我的熱情能激勵大家。"
         },
         {
             "id": "Johnny",
             "name": "Johnny",
             "position": "3D模型設計師",
-            "dialogue": "你的3D模型需要調整嗎？我很樂意幫忙！"
+            "personality": "專業熱心",
+            "dialogue": "你的3D模型需要調整嗎？我很樂意幫忙！",
+            "introduction": "我是Johnny，專業的3D模型設計師，熱心助人。我的設計精準且富有創意，總是樂於分享知識和幫助同事。"
         },
         {
             "id": "Vasiliy",
             "name": "Vasiliy",
             "position": "後端開發工程師",
-            "dialogue": "又要加班了嗎？唉，這個後端架構真麻煩。"
+            "personality": "任性愛抱怨",
+            "dialogue": "又要加班了嗎？唉，這個後端架構真麻煩。",
+            "introduction": "我是Vasiliy，後端開發工程師，任性且愛抱怨。我的程式碼很強，但有時會因為不滿而拖延。不過，我的技術能力是團隊的支柱。"
         },
         {
             "id": "Charles",
             "name": "Charles",
             "position": "後端開發工程師",
-            "dialogue": "讓我們按照規範來寫這個API吧。"
+            "personality": "循規蹈矩的溫和個性",
+            "dialogue": "讓我們按照規範來寫這個API吧。",
+            "introduction": "我是Charles，後端開發工程師，溫和且循規蹈矩。我重視標準和最佳實務，總是確保程式碼的品質和一致性。"
         },
         {
             "id": "Edward",
             "name": "阿隆",
             "position": "3D模型設計師",
-            "dialogue": "我獨自完成了這個模型，不需要干擾。"
+            "personality": "不苟言的獨行俠",
+            "dialogue": "我獨自完成了這個模型，不需要干擾。",
+            "introduction": "我是Edward，3D模型設計師，不苟言笑的獨行俠。我專注於自己的工作，創造出高品質的模型，但不喜歡團隊干涉。"
         },
         {
             "id": "Denny",
             "name": "Denny",
             "position": "後端工程師Leader",
-            "dialogue": "團隊，請遵循這個規範文件。"
+            "personality": "條理清晰規範大師",
+            "dialogue": "團隊，請遵循這個規範文件。",
+            "introduction": "我是Denny，後端工程師Leader，條理清晰的規範大師。我確保團隊遵守所有標準，帶來高效和一致的開發。"
         },
         {
             "id": "Cain",
             "name": "Cain",
             "position": "前端工程師Leader",
-            "dialogue": "馬的！又要救火了！"
+            "personality": "技術逆天專案救火王",
+            "dialogue": "馬的！又要救火了！",
+            "introduction": "我是Cain，前端工程師Leader，技術高超的救火王。我總是在關鍵時刻解決問題，雖然有時會顯得傲慢，但我的技能無人能及。"
         },
         {
             "id": "Jacky",
             "name": "Jacky",
             "position": "PM Leader",
-            "dialogue": "大家好，我們來開個會討論進度吧。"
+            "personality": "人際良好",
+            "dialogue": "大家好，我們來開個會討論進度吧。",
+            "introduction": "我是Jacky，PM Leader，人際關係良好。我擅長溝通和協調，確保專案順利進行。"
         },
         {
             "id": "Steven",
             "name": "Steven",
             "position": "協理",
-            "dialogue": "我有個偉大的想法，能改變世界！"
+            "personality": "愛說夢的吹牛王",
+            "dialogue": "我有個偉大的想法，能改變世界！",
+            "introduction": "我是Steven，協理，愛說夢的吹牛王。我總是分享宏大的願景，雖然有時不切實際，但能激勵團隊。"
         },
         {
             "id": "Max",
             "name": "Max",
             "position": "軟體開發PM",
-            "dialogue": "我已經準備好所有細節，讓我們開始吧。"
+            "personality": "細心周到",
+            "dialogue": "我已經準備好所有細節，讓我們開始吧。",
+            "introduction": "我是Max，軟體開發PM，細心周到。我關注每個細節，確保專案無縫進行。"
         },
         {
             "id": "Sylvia",
             "name": "Sylvia",
             "position": "UIUX設計師",
-            "dialogue": "嗯，這個設計...還行吧。"
+            "personality": "能力不足油條大王",
+            "dialogue": "嗯，這個設計...還行吧。",
+            "introduction": "我是Sylvia，UIUX設計師，能力不足但油條。我總是找藉口逃避責任，但還是勉強完成工作。"
         },
         {
             "id": "Kexy",
             "name": "Kexy",
             "position": "前端開發工程師",
-            "dialogue": "呃...你好，需要什麼嗎？"
+            "personality": "害羞內向",
+            "dialogue": "呃...你好，需要什麼嗎？",
+            "introduction": "我是Kexy，前端開發工程師，害羞內向。我的程式碼很好，但我不善於表達自己。"
         },
         {
             "id": "Dennis",
             "name": "Dennis",
             "position": "前端開發工程師",
-            "dialogue": "沒問題，我來處理。"
+            "personality": "馬來西亞好好先生",
+            "dialogue": "沒問題，我來處理。",
+            "introduction": "我是Dennis，前端開發工程師，好好先生。我總是同意別人的意見，保持和諧。"
         },
         {
             "id": "Tom",
             "name": "Tom",
             "position": "Unity工程師",
-            "dialogue": "我們按照計劃一步步來，不要亂改。"
+            "personality": "按部就班不喜歡變化",
+            "dialogue": "我們按照計劃一步步來，不要亂改。",
+            "introduction": "我是Tom，Unity工程師，按部就班。我不喜歡變化，總是遵循既定流程來開發遊戲，確保一切穩定進行。"
         },
         {
             "id": "Jeff",
             "name": "Jeff",
             "position": "MIS",
-            "dialogue": "又是我嗎？好吧，我來處理這個麻煩事。"
+            "personality": "高級背鍋王，大家不願意的都在他身上",
+            "dialogue": "又是我嗎？好吧，我來處理這個麻煩事。",
+            "introduction": "我是Jeff，MIS，高級背鍋王。團隊中所有不願意做的事都落到我身上，但我總是默默承擔，維持系統順暢。"
         }
     ],
     "standingNpcs": [
