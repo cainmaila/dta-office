@@ -3,6 +3,7 @@
     import { fade } from "svelte/transition";
 
     export let onComplete: () => void;
+    export let loadingMessage: string | null = null;
 
     let show = true;
     let text = "靠北DTA";
@@ -45,6 +46,9 @@
                 {displayText}<span class="cursor">_</span>
             </h1>
             <div class="subtitle pixel-text">一起來靠北</div>
+            {#if loadingMessage}
+                <div class="loading-message pixel-text">{loadingMessage}</div>
+            {/if}
         </div>
         <div class="scanlines"></div>
     </div>
@@ -103,6 +107,14 @@
         animation: fadeIn 0.5s ease-in forwards 1.2s;
     }
 
+    .loading-message {
+        font-size: 0.9rem;
+        color: #ffaa00;
+        margin-top: 1rem;
+        opacity: 0;
+        animation: fadeIn 0.5s ease-in forwards 1.5s, pulse-text 1.5s ease-in-out infinite;
+    }
+
     .scanlines {
         position: absolute;
         top: 0;
@@ -150,6 +162,16 @@
         }
     }
 
+    @keyframes pulse-text {
+        0%,
+        100% {
+            opacity: 0.8;
+        }
+        50% {
+            opacity: 0.4;
+        }
+    }
+
     @keyframes scan {
         0% {
             transform: translateY(0);
@@ -187,6 +209,9 @@
         .subtitle {
             font-size: 0.8rem;
         }
+        .loading-message {
+            font-size: 0.7rem;
+        }
     }
 
     @media (max-width: 480px) {
@@ -195,6 +220,9 @@
         }
         .subtitle {
             font-size: 0.7rem;
+        }
+        .loading-message {
+            font-size: 0.6rem;
         }
     }
 </style>

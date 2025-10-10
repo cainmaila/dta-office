@@ -164,6 +164,30 @@ export class TopicDialogueManager {
     }
 
     /**
+     * 顯示 Loading 覆蓋層（公開方法，供外部呼叫）
+     */
+    showLoadingOverlay(message: string = "需求討論中.."): void {
+        this.loadingOverlay.showLoading(message);
+    }
+
+    /**
+     * 隱藏 Loading 覆蓋層（公開方法，供外部呼叫）
+     */
+    hideLoadingOverlay(): void {
+        this.loadingOverlay.hide();
+    }
+
+    /**
+     * 顯示錯誤覆蓋層（公開方法，供外部呼叫）
+     */
+    showErrorOverlay(
+        message: string = "提案失敗",
+        duration: number = 2000
+    ): void {
+        this.loadingOverlay.showError(message, duration);
+    }
+
+    /**
      * 銷毀
      */
     destroy(): void {

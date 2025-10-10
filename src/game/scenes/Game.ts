@@ -147,6 +147,42 @@ export class Game extends Scene {
             }
         );
 
+        // 監聽 API pending 狀態（SplashScreen 完成但 API 還在進行）
+        EventBus.on("set-custom-dialogue-pending", () => {
+            this.topicDialogueManager.showLoadingOverlay("需求討論中..");
+
+            // 等待後續的 success 或 error 事件
+            const handleSuccess = () => {
+                this.topicDialogueManager.hideLoadingOverlay();
+                EventBus.off("set-custom-dialogue", handleSuccess);
+                EventBus.off("set-custom-dialogue-error", handleError);
+            };
+
+            const handleError = () => {
+                EventBus.off("set-custom-dialogue", handleSuccess);
+                EventBus.off("set-custom-dialogue-error", handleError);
+            };
+
+            EventBus.once("set-custom-dialogue", handleSuccess);
+            EventBus.once("set-custom-dialogue-error", handleError);
+        });
+
+        // 監聽 API 錯誤狀態
+        EventBus.on(
+            "set-custom-dialogue-error",
+            (data: { error: string }) => {
+                this.topicDialogueManager.showErrorOverlay(
+                    data.error || "提案失敗",
+                    2000
+                );
+
+                // 2 秒後顯示輸入框，並保持預設對話
+                this.time.delayedCall(2000, () => {
+                    this.topicDialogueManager.showTopicInput();
+                });
+            }
+        );
+
         this.exposeDebugHelpers();
     }
 
@@ -250,6 +286,22 @@ export class Game extends Scene {
             data.characters.forEach((character) => {
                 this.characters.set(character.id, character);
             });
+
+            // 初始化 DialogueManager 的預設對話（從 characters.json）
+            // 將每個角色的單句 dialogue 轉換為 3 則相同的對話
+            const defaultDialogues: DialogueCharacter[] = data.characters.map(
+                (char) => ({
+                    id: char.id,
+                    name: char.name,
+                    position: char.position,
+                    dialogues: [char.dialogue, char.dialogue, char.dialogue] as [
+                        string,
+                        string,
+                        string
+                    ],
+                })
+            );
+            this.dialogueManager.setCharacterDialogues(defaultDialogues);
 
             // 創建圓桌 hotspot NPC
             this.createRoundTableHotspots(data.hotspotNpcs);
