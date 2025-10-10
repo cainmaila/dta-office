@@ -63,11 +63,11 @@
     <SplashScreen onComplete={handleSplashComplete} />
 {/if}
 
-{#if gameReady}
-    <div id="app">
+<div id="app" class:ready={gameReady}>
+    {#if gameReady}
         <PhaserGame bind:phaserRef />
-    </div>
-{/if}
+    {/if}
+</div>
 
 <style>
     #app {
@@ -78,5 +78,11 @@
         justify-content: center;
         align-items: center;
         background-color: #000000;
+        opacity: 0;
+        transition: opacity 0.3s ease-in;
+    }
+
+    #app.ready {
+        opacity: 1;
     }
 </style>
