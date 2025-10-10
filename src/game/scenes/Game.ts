@@ -2,6 +2,7 @@ import Phaser, { Scene, Scenes } from "phaser";
 import { EventBus } from "../EventBus";
 import { DialogueManager } from "../managers/DialogueManager";
 import { NPCManager } from "../managers/NPCManager";
+import { TopicDialogueManager } from "../managers/TopicDialogueManager";
 import type {
     HotspotNPC,
     CharactersData,
@@ -9,11 +10,14 @@ import type {
     HotspotNpcConfig,
 } from "../types/NPCTypes";
 import { gameConfig } from "../config";
+import type { Character as ApiCharacter } from "../../lib/api/teamDialogue";
 
 export class Game extends Scene {
     private dialogueManager!: DialogueManager;
     private npcManager!: NPCManager;
+    private topicDialogueManager!: TopicDialogueManager;
     private characters: Map<string, Character> = new Map(); // 人物資料庫
+    private customCharacters: ApiCharacter[] | null = null; // 自訂對話（來自 API）
     private hotspotDebugEnabled = false;
     private hotspotDebugText?: Phaser.GameObjects.Text;
     private backgroundImage?: Phaser.GameObjects.Image;
@@ -96,6 +100,9 @@ export class Game extends Scene {
         // 初始化對話管理器
         this.dialogueManager = new DialogueManager(this);
 
+        // 初始化主題對話管理器
+        this.topicDialogueManager = new TopicDialogueManager(this);
+
         // 初始化 NPC 管理器並載入所有人物資料
         this.npcManager = new NPCManager(this);
         this.loadCharactersAndNPCs();
@@ -103,6 +110,7 @@ export class Game extends Scene {
         this.events.once(Scenes.Events.SHUTDOWN, () => {
             this.dialogueManager.destroy();
             this.npcManager?.destroy();
+            this.topicDialogueManager?.destroy();
             this.roundTableHotspots.forEach(
                 ({ zone, debugVisual, debugLabel, nameLabel }) => {
                     zone.destroy();
@@ -143,8 +151,42 @@ export class Game extends Scene {
 
         this.setupHotspotDebugger();
 
+        // 監聽對話更新事件
+        this.events.on('update-characters-dialogue', (newCharacters: ApiCharacter[]) => {
+            this.updateCharactersDialogue(newCharacters);
+        });
+
+        // 監聽來自 Svelte 的自訂對話資料
+        EventBus.on('set-custom-dialogue', (data: { characters: ApiCharacter[] | null; topic?: string }) => {
+            this.customCharacters = data.characters;
+            if (data.characters) {
+                this.updateCharactersDialogue(data.characters);
+                if (data.topic) {
+                    this.topicDialogueManager.setCurrentTopic(data.topic);
+                }
+            } else {
+                // 沒有自訂對話，顯示輸入框
+                this.topicDialogueManager.showTopicInput();
+            }
+        });
+
         // 通知場景準備完成
         EventBus.emit("current-scene-ready", this);
+    }
+
+    /**
+     * 更新角色對話（從 API 取得的新對話）
+     */
+    private updateCharactersDialogue(newCharacters: ApiCharacter[]): void {
+        // 更新 characters Map
+        newCharacters.forEach((apiChar) => {
+            const existing = this.characters.get(apiChar.id);
+            if (existing) {
+                existing.dialogue = apiChar.dialogue;
+            }
+        });
+
+        console.log('✅ 對話已更新，共', newCharacters.length, '個角色');
     }
 
     private async loadCharactersAndNPCs(): Promise<void> {
