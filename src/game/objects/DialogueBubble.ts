@@ -9,7 +9,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
     private padding: number = 12;
     private cornerRadius: number = 8;
     private tailSize: number = 12;
-    private bubbleType: 'normal' | 'thought';
+    private bubbleType: "normal" | "thought";
 
     constructor(
         scene: Scene,
@@ -18,7 +18,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         message: string,
         npcX: number,
         npcY: number,
-        type: 'normal' | 'thought' = 'normal'
+        type: "normal" | "thought" = "normal"
     ) {
         super(scene, x, y);
 
@@ -65,7 +65,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.background = this.scene.add.graphics();
 
         // 根據類型選擇背景繪製方式
-        if (this.bubbleType === 'thought') {
+        if (this.bubbleType === "thought") {
             this.drawCloudBackground();
         } else {
             this.drawBubbleBackground();
@@ -73,7 +73,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
 
         // 創建指向尾巴或思考圓圈
         this.tail = this.scene.add.graphics();
-        if (this.bubbleType === 'thought') {
+        if (this.bubbleType === "thought") {
             this.drawThoughtBubbles();
         } else {
             this.drawTail(npcX, npcY);
@@ -87,8 +87,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.background.clear();
 
         // 設置填充和邊框
-        this.background.fillStyle(0xffffff, 1.0); // 白底
-        this.background.lineStyle(2, 0x333333, 1.0); // 黑邊框
+        this.background.fillStyle(0xffffff, 0.9); // 半透明白底
 
         // 計算氣泡位置
         const x = -this.bubbleWidth / 2;
@@ -164,15 +163,13 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
 
         // 填充和描邊
         this.background.fillPath();
-        this.background.strokePath();
     }
 
     private drawCloudBackground(): void {
         this.background.clear();
 
         // 設置填充和邊框
-        this.background.fillStyle(0xffffff, 1.0); // 白底
-        this.background.lineStyle(2, 0x333333, 1.0); // 黑邊框
+        this.background.fillStyle(0xffffff, 0.9); // 半透明白底
 
         // 思考泡泡使用和普通對話框相同的圓角矩形
         // 計算氣泡位置
@@ -235,7 +232,6 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
 
         // 填充和描邊
         this.background.fillPath();
-        this.background.strokePath();
     }
 
     private drawTail(npcX: number, npcY: number): void {
@@ -247,8 +243,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.tail.clear();
 
         // 設置填充和邊框（與主氣泡一致）
-        this.tail.fillStyle(0xffffff, 1.0); // 白底
-        this.tail.lineStyle(2, 0x333333, 1.0); // 黑邊框
+        this.tail.fillStyle(0xffffff, 0.9); // 半透明白底
 
         // 計算起始位置（從氣泡底部中心開始）
         const startX = 0;
@@ -256,17 +251,22 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
 
         // 兩個不重疊的小圓圈，模仿想法往上飄的效果
         const bubbles = [
-            { radius: 8, offsetY: 18 },   // 靠近對話框的圓圈（較大）
-            { radius: 5, offsetY: 32 }    // 遠離對話框的圓圈（較小）
+            { radius: 8, offsetY: 18 }, // 靠近對話框的圓圈（較大）
+            { radius: 5, offsetY: 32 }, // 遠離對話框的圓圈（較小）
         ];
 
         // 繪製每個思考圓圈
-        bubbles.forEach(bubble => {
+        bubbles.forEach((bubble) => {
             this.tail.beginPath();
-            this.tail.arc(startX, startY + bubble.offsetY, bubble.radius, 0, Math.PI * 2);
+            this.tail.arc(
+                startX,
+                startY + bubble.offsetY,
+                bubble.radius,
+                0,
+                Math.PI * 2
+            );
             this.tail.closePath();
             this.tail.fillPath();
-            this.tail.strokePath();
         });
     }
 
@@ -276,7 +276,7 @@ export class DialogueBubble extends Phaser.GameObjects.Container {
         this.setAlpha(0);
 
         // 思考對話框的動畫速度較慢，使用更柔和的緩動函數
-        if (this.bubbleType === 'thought') {
+        if (this.bubbleType === "thought") {
             // 記錄初始 Y 位置
             const originalY = this.y;
             const floatDistance = 30; // 往上飄的距離（像素）

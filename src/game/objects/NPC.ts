@@ -112,8 +112,10 @@ export class NPC extends Phaser.GameObjects.Sprite {
                 this.npcData.name,
                 {
                     fontSize: "14px",
-                    color: "#333333",
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    color: "#0b1f66",
+                    fontFamily: "Arial",
+                    fontStyle: "bold",
+                    backgroundColor: "rgba(255, 255, 255, 0.7)",
                     padding: { x: 6, y: 3 },
                 }
             );

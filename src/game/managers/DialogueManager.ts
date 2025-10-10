@@ -27,12 +27,9 @@ export class DialogueManager {
 
     private setupEventListeners(): void {
         // 監聽 NPC 的對話事件
-        this.scene.events.on(
-            "show-dialogue",
-            (data: DialogueEventPayload) => {
-                this.showDialogue(data);
-            }
-        );
+        this.scene.events.on("show-dialogue", (data: DialogueEventPayload) => {
+            this.showDialogue(data);
+        });
     }
 
     /**
