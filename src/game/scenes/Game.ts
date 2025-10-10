@@ -49,6 +49,11 @@ export class Game extends Scene {
         isHovering: boolean;
         isDialogueActive: boolean;
     }> = [];
+    private handleUpdateCharactersDialogue = (
+        newCharacters: DialogueCharacter[]
+    ): void => {
+        this.updateCharactersDialogue(newCharacters);
+    };
 
     constructor() {
         super("Game");
@@ -97,6 +102,12 @@ export class Game extends Scene {
         // 初始化主題對話管理器
         this.topicDialogueManager = new TopicDialogueManager(this);
 
+        // 監聽主題對話管理器的更新事件
+        this.events.on(
+            "update-characters-dialogue",
+            this.handleUpdateCharactersDialogue
+        );
+
         // 初始化 NPC 管理器並載入所有人物資料
         this.npcManager = new NPCManager(this);
         this.loadCharactersAndNPCs().then(() => {
@@ -108,6 +119,10 @@ export class Game extends Scene {
             this.dialogueManager.destroy();
             this.npcManager?.destroy();
             this.topicDialogueManager?.destroy();
+            this.events.off(
+                "update-characters-dialogue",
+                this.handleUpdateCharactersDialogue
+            );
         });
 
         // 監聽來自 Svelte 的自訂對話資料
