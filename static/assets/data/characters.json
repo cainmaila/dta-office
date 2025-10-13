@@ -102,7 +102,7 @@
             "characterId": "Kevin",
             "x": 355,
             "y": 575,
-            "styleId": "business_male_3",
+            "styleId": "business_male_1",
             "action": "sitting",
             "facing": "left"
         },
@@ -110,9 +110,9 @@
             "characterId": "Jeff",
             "x": 694,
             "y": 610,
-            "styleId": "casual_male_1",
+            "styleId": "business_female_1",
             "action": "sitting",
-            "facing": "left"
+            "facing": "right"
         },
         {
             "characterId": "Max",
