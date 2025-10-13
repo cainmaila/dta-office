@@ -11,7 +11,7 @@
             "frameWidth": 78,
             "frameHeight": 93
         },
-        "npcData": "data/npcStyles.json"
+        "npcData": "data/npcs.json"
     },
     "dialogue": {
         "standing": {
