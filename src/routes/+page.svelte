@@ -5,6 +5,7 @@
     import { EventBus } from "../game/EventBus";
     import {
         fetchTeamDialogue,
+        fetchTeamDialogueList,
         type DialogueCharacter,
     } from "../lib/api/teamDialogue";
     import { SoundManager } from "../game/utils/SoundManager";
@@ -66,6 +67,15 @@
 
     // 使用 $effect 處理組件掛載時的邏輯
     $effect(() => {
+        // 開場載入 - 取得歷史主題列表
+        fetchTeamDialogueList()
+            .then((response) => {
+                console.log("🎯 Team Dialogue List 載入成功:", response);
+            })
+            .catch((error) => {
+                console.error("❌ Team Dialogue List 載入失敗:", error);
+            });
+
         // 檢查 URL query 參數
         const urlParams = new URLSearchParams(window.location.search);
         const topic = urlParams.get("topic");

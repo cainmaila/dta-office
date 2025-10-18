@@ -7,9 +7,11 @@ import { base } from "$app/paths";
 export class ControlButtons {
     private scene: Scene;
     private shareButton: Phaser.GameObjects.DOMElement;
+    private pastTopicsButton: Phaser.GameObjects.DOMElement;
     private retryButton: Phaser.GameObjects.DOMElement;
     private currentTopic: string = "";
     private onRetryCallback?: () => void;
+    private onPastTopicsCallback?: () => void;
 
     constructor(scene: Scene) {
         this.scene = scene;
@@ -25,10 +27,24 @@ export class ControlButtons {
             true
         );
 
-        // 建立重新輸入按鈕（左上角，初始隱藏）
+        // 建立過去議題按鈕（左上角，初始隱藏）
+        this.pastTopicsButton = this.createButton(
+            "過去議題",
+            16,
+            16,
+            () => {
+                if (this.onPastTopicsCallback) {
+                    this.onPastTopicsCallback();
+                }
+            },
+            false
+        );
+        this.pastTopicsButton.setVisible(false);
+
+        // 建立重新討論按鈕（左上角，初始隱藏）
         this.retryButton = this.createButton(
             "重新討論",
-            16,
+            140,
             16,
             () => {
                 if (this.onRetryCallback) {
@@ -53,10 +69,11 @@ export class ControlButtons {
         onClick: () => void,
         rightAlign: boolean = false
     ): Phaser.GameObjects.DOMElement {
+        const isPast = text.includes("過去");
         const isShare = text.includes("分享");
-        const icon = isShare ? "📤" : "🔄";
-        const bgColor = isShare ? "#2196F3" : "#4CAF50";
-        const hoverColor = isShare ? "#1976D2" : "#45a049";
+        const icon = isShare ? "📤" : isPast ? "📜" : "🔄";
+        const bgColor = isShare ? "#2196F3" : isPast ? "#FF9800" : "#4CAF50";
+        const hoverColor = isShare ? "#1976D2" : isPast ? "#F57C00" : "#45a049";
 
         const buttonHtml = `
             <button style="
@@ -113,7 +130,7 @@ export class ControlButtons {
     private handleResize(gameSize: Phaser.Structs.Size): void {
         // 更新分享按鈕位置（右上角）
         this.shareButton.setPosition(gameSize.width - 16, 16);
-        // 重新輸入按鈕保持在左上角，不需要更新
+        // 左上角按鈕保持固定位置
     }
 
     /**
@@ -174,11 +191,13 @@ export class ControlButtons {
     setCurrentTopic(topic: string): void {
         this.currentTopic = topic;
 
-        // 有主題時顯示重新輸入按鈕
+        // 有主題時顯示重新輸入和過去議題按鈕
         if (topic) {
             this.retryButton.setVisible(true);
+            this.pastTopicsButton.setVisible(true);
         } else {
             this.retryButton.setVisible(false);
+            this.pastTopicsButton.setVisible(false);
         }
     }
 
@@ -190,11 +209,19 @@ export class ControlButtons {
     }
 
     /**
+     * 設定過去議題回調
+     */
+    onPastTopics(callback: () => void): void {
+        this.onPastTopicsCallback = callback;
+    }
+
+    /**
      * 銷毀
      */
     destroy(): void {
         this.scene.scale.off("resize", this.handleResize, this);
         this.shareButton.destroy();
         this.retryButton.destroy();
+        this.pastTopicsButton.destroy();
     }
 }
