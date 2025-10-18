@@ -49,9 +49,9 @@ export class TopicDialogueManager {
             await this.handleTopicSubmit(topic);
         });
 
-        // 重新輸入按鈕
+        // 重新輸入按鈕（切換輸入框顯示/隱藏）
         this.controlButtons.onRetry(() => {
-            this.showTopicInput();
+            this.topicInputUI.toggle();
         });
 
         // 過去議題按鈕
@@ -99,11 +99,7 @@ export class TopicDialogueManager {
         } catch (error) {
             console.error("API 呼叫失敗:", error);
             this.loadingOverlay.showError("提案失敗", 2000);
-
-            // 2 秒後重新顯示輸入框
-            this.scene.time.delayedCall(2000, () => {
-                this.showTopicInput();
-            });
+            // 不再自動顯示輸入框，由「重新討論」按鈕控制
         }
     }
 
@@ -162,12 +158,7 @@ export class TopicDialogueManager {
         } catch (error) {
             console.error("API 呼叫失敗:", error);
             this.loadingOverlay.showError("提案失敗", 2000);
-
-            // 失敗後顯示輸入框
-            this.scene.time.delayedCall(2000, () => {
-                this.showTopicInput();
-            });
-
+            // 不再自動顯示輸入框，由「重新討論」按鈕控制
             return null;
         }
     }

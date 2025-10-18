@@ -201,6 +201,24 @@ export class TopicInputUI {
     }
 
     /**
+     * 檢查是否可見
+     */
+    isVisible(): boolean {
+        return this.domElement.visible;
+    }
+
+    /**
+     * 切換顯示/隱藏
+     */
+    toggle(): void {
+        if (this.isVisible()) {
+            this.hide();
+        } else {
+            this.show();
+        }
+    }
+
+    /**
      * 處理視窗大小改變
      */
     private handleResize(gameSize: Phaser.Structs.Size): void {

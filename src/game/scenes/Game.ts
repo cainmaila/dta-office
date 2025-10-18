@@ -134,16 +134,13 @@ export class Game extends Scene {
             }) => {
                 this.customCharacters = data.characters;
                 if (data.characters) {
-                    // 有主題對話，更新對話並確保輸入框隱藏
+                    // 有主題對話，更新對話
                     this.updateCharactersDialogue(data.characters);
-                    this.topicDialogueManager.hideTopicInput();
                     if (data.topic) {
                         this.topicDialogueManager.setCurrentTopic(data.topic);
                     }
-                } else {
-                    // 沒有自訂對話，顯示輸入框
-                    this.topicDialogueManager.showTopicInput();
                 }
+                // 不再自動顯示/隱藏輸入框，由「重新討論」按鈕控制
             }
         );
 
@@ -175,11 +172,7 @@ export class Game extends Scene {
                     data.error || "提案失敗",
                     2000
                 );
-
-                // 2 秒後顯示輸入框，並保持預設對話
-                this.time.delayedCall(2000, () => {
-                    this.topicDialogueManager.showTopicInput();
-                });
+                // 不再自動顯示輸入框，由「重新討論」按鈕控制
             }
         );
 

@@ -12,6 +12,7 @@ export class ControlButtons {
     private currentTopic: string = "";
     private onRetryCallback?: () => void;
     private onPastTopicsCallback?: () => void;
+    private inputVisible: boolean = false;
 
     constructor(scene: Scene) {
         this.scene = scene;
@@ -46,9 +47,7 @@ export class ControlButtons {
             140,
             16,
             () => {
-                if (this.onRetryCallback) {
-                    this.onRetryCallback();
-                }
+                this.toggleInput();
             },
             false
         );
@@ -184,6 +183,32 @@ export class ControlButtons {
     }
 
     /**
+     * 切換輸入框顯示/隱藏
+     */
+    private toggleInput(): void {
+        // 觸發切換的回調
+        if (this.onRetryCallback) {
+            this.onRetryCallback();
+        }
+
+        // 切換狀態
+        this.inputVisible = !this.inputVisible;
+
+        // 更新按鈕文字
+        const btnElement = this.retryButton.node.querySelector(
+            "button"
+        ) as HTMLButtonElement;
+
+        if (btnElement) {
+            if (this.inputVisible) {
+                btnElement.innerHTML = "⬆️ 收起";
+            } else {
+                btnElement.innerHTML = "🔄 重新討論";
+            }
+        }
+    }
+
+    /**
      * 設定當前主題
      */
     setCurrentTopic(topic: string): void {
@@ -191,7 +216,7 @@ export class ControlButtons {
     }
 
     /**
-     * 設定重新輸入回調
+     * 設定重新輸入回調（用於切換輸入框顯示/隱藏）
      */
     onRetry(callback: () => void): void {
         this.onRetryCallback = callback;
