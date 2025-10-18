@@ -1,9 +1,14 @@
 import { Scene } from "phaser";
-import { fetchTeamDialogue, type Character } from "../../lib/api/teamDialogue";
+import {
+    fetchTeamDialogue,
+    fetchTeamDialogueList,
+    type DialogueCharacter,
+} from "../../lib/api/teamDialogue";
 import { LoadingOverlay } from "../ui/LoadingOverlay";
 import { TopicInputUI } from "../ui/TopicInputUI";
 import { TopicTitleUI } from "../ui/TopicTitleUI";
 import { ControlButtons } from "../ui/ControlButtons";
+import { TopicListUI } from "../ui/TopicListUI";
 import type { CharactersData } from "../types/NPCTypes";
 import { SoundManager } from "../utils/SoundManager";
 
@@ -17,6 +22,7 @@ export class TopicDialogueManager {
     private topicInputUI: TopicInputUI;
     private topicTitleUI: TopicTitleUI;
     private controlButtons: ControlButtons;
+    private topicListUI: TopicListUI;
     private currentTopic: string = "";
     private originalCharacters: DialogueCharacter[] = [];
 
@@ -28,6 +34,7 @@ export class TopicDialogueManager {
         this.topicInputUI = new TopicInputUI(scene);
         this.topicTitleUI = new TopicTitleUI(scene);
         this.controlButtons = new ControlButtons(scene);
+        this.topicListUI = new TopicListUI(scene);
 
         // 設定事件
         this.setupEvents();
@@ -45,6 +52,22 @@ export class TopicDialogueManager {
         // 重新輸入按鈕
         this.controlButtons.onRetry(() => {
             this.showTopicInput();
+        });
+
+        // 過去議題按鈕
+        this.controlButtons.onPastTopics(() => {
+            // 切換顯示/隱藏議題列表
+            if (this.topicListUI.isVisible()) {
+                this.topicListUI.hide();
+            } else {
+                this.loadAndShowPastTopics();
+            }
+        });
+
+        // 議題選擇
+        this.topicListUI.onTopicSelect((topic: string) => {
+            this.topicListUI.hide();
+            this.handleTopicSubmit(topic);
         });
     }
 
@@ -119,7 +142,9 @@ export class TopicDialogueManager {
     /**
      * 載入主題對話（從 URL 或外部呼叫）
      */
-    async loadTopicDialogue(topic: string): Promise<Character[] | null> {
+    async loadTopicDialogue(
+        topic: string
+    ): Promise<DialogueCharacter[] | null> {
         this.loadingOverlay.showLoading("需求討論中..");
 
         try {
@@ -188,6 +213,20 @@ export class TopicDialogueManager {
     }
 
     /**
+     * 載入並顯示過去議題
+     */
+    private async loadAndShowPastTopics(): Promise<void> {
+        try {
+            const response = await fetchTeamDialogueList(10000);
+            this.topicListUI.updateTopics(response.topics);
+            this.topicListUI.show();
+        } catch (error) {
+            console.error("載入議題列表失敗:", error);
+            this.loadingOverlay.showError("無法載入過去議題", 2000);
+        }
+    }
+
+    /**
      * 銷毀
      */
     destroy(): void {
@@ -195,5 +234,6 @@ export class TopicDialogueManager {
         this.topicInputUI.destroy();
         this.topicTitleUI.destroy();
         this.controlButtons.destroy();
+        this.topicListUI.destroy();
     }
 }
