@@ -549,18 +549,21 @@ export class Game extends Scene {
     }
 
     /**
-     * 暴露除錯輔助方法
+     * 暴露除錯輔助方法（僅在開發環境）
      */
     private exposeDebugHelpers(): void {
-        (window as any).gameScene = this;
-        (window as any).getDialogueManager = () => this.dialogueManager;
-        (window as any).getNPCManager = () => this.npcManager;
-        (window as any).getClickCount = (npcId: string) => {
-            return this.dialogueManager.getClickCount(npcId);
-        };
-        (window as any).resetClickCounts = () => {
-            this.dialogueManager.resetAllClickCounts();
-        };
+        // 只在開發環境暴露 debug 方法
+        if (import.meta.env.DEV) {
+            (window as any).gameScene = this;
+            (window as any).getDialogueManager = () => this.dialogueManager;
+            (window as any).getNPCManager = () => this.npcManager;
+            (window as any).getClickCount = (npcId: string) => {
+                return this.dialogueManager.getClickCount(npcId);
+            };
+            (window as any).resetClickCounts = () => {
+                this.dialogueManager.resetAllClickCounts();
+            };
+        }
     }
 
     update() {

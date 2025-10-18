@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import type { Scene } from "phaser";
     import PhaserGame, { type TPhaserRef } from "../PhaserGame.svelte";
     import SplashScreen from "../components/SplashScreen.svelte";
@@ -74,7 +74,10 @@
 
                     // 如果遊戲已經準備好，立即發送資料
                     if (gameReady) {
-                        EventBus.emit("set-custom-dialogue", initialDialogueData);
+                        EventBus.emit(
+                            "set-custom-dialogue",
+                            initialDialogueData,
+                        );
                     }
                 })
                 .catch((error) => {
@@ -92,6 +95,14 @@
                     }
                 });
         }
+    });
+
+    // 清理事件監聽器，防止記憶體洩漏
+    onDestroy(() => {
+        EventBus.off("set-custom-dialogue");
+        EventBus.off("set-custom-dialogue-error");
+        EventBus.off("set-custom-dialogue-pending");
+        EventBus.off("current-scene-ready");
     });
 </script>
 

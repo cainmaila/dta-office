@@ -64,12 +64,9 @@ export class DialogueManager {
         // 檢查是否切換了不同的 NPC
         const isSwitchingNPC = this.currentNpcId && this.currentNpcId !== npcId;
 
-        // 如果切換了 NPC，重置所有 NPC 的計數為 0（只有連續點擊同一人才能累積）
-        if (isSwitchingNPC) {
-            // 重置所有 NPC 的計數
-            this.clickCounts.forEach((count, id) => {
-                this.clickCounts.set(id, 0);
-            });
+        // 如果切換了 NPC，只重置上一個 NPC 的計數（優化效能）
+        if (isSwitchingNPC && this.currentNpcId) {
+            this.clickCounts.set(this.currentNpcId, 0);
         }
 
         // 獲取當前 NPC 的點擊次數（在重置之後才取得）

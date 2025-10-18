@@ -4,7 +4,12 @@
       "Bash(pnpm run:*)",
       "Read(//var/folders/q_/k92qhycx0dn1mxjc138pgn400000gn/T/chrome-devtools-mcp-CoRWpB/**)",
       "Read(//var/folders/q_/k92qhycx0dn1mxjc138pgn400000gn/T/chrome-devtools-mcp-5IJiCd/**)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm list:*)",
+      "Bash(find:*)",
+      "Bash(pnpm build)",
+      "Bash(pnpm dev:list)",
+      "Bash(node test-optimizations.js)"
     ],
     "deny": [],
     "ask": []

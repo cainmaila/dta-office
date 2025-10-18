@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { fade } from "svelte/transition";
+    import { SoundManager } from "../game/utils/SoundManager";
 
     export let onComplete: () => void;
     export let loadingMessage: string | null = null;
@@ -11,10 +12,8 @@
     let currentIndex = 0;
 
     onMount(() => {
-        // 播放開場音效
-        const audio = new Audio("/sound/start.mp3");
-        audio.volume = 0.5;
-        audio.play().catch(() => {
+        // 使用 SoundManager 播放開場音效（帶緩存）
+        SoundManager.playSound("/sound/start.mp3", 0.5).catch(() => {
             // 如果自動播放被阻擋，靜默處理
         });
 
