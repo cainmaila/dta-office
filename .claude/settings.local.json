@@ -1,4 +1,9 @@
 {
+  "env": {
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "8000",
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1",
+    "DISABLE_COST_WARNINGS": "1"
+  },
   "permissions": {
     "allow": [
       "Bash(pnpm run:*)",
@@ -9,7 +14,11 @@
       "Bash(find:*)",
       "Bash(pnpm build)",
       "Bash(pnpm dev:list)",
-      "Bash(node test-optimizations.js)"
+      "Bash(node test-optimizations.js)",
+      "Bash(pkill -f \"chrome-devtools-mcp\")",
+      "Bash(curl -s \"https://line-boot-git-main-cain-chu.vercel.app/api/team-dialogue-list\")",
+      "Bash(node test-api.js)",
+      "Bash(open -a \"Google Chrome\" \"http://localhost:8080/dta-office\")"
     ],
     "deny": [],
     "ask": []
