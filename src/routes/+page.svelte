@@ -20,6 +20,7 @@
     } | null>(null);
     let showSplash = $state(true);
     let gameReady = $state(false);
+    let phaserLoaded = $state(false);
     let apiStatus = $state<ApiStatus>("idle");
     let apiError = $state<Error | null>(null);
     let loadingMessage = $state<string | null>(null);
@@ -40,12 +41,20 @@
         }
     });
 
-    function handleSplashComplete() {
-        showSplash = false;
-        gameReady = true;
+    let splashAnimationComplete = $state(false);
 
-        // SplashScreen 完成後，根據 gameState 決定下一步
-        EventBus.once("current-scene-ready", () => {
+    function handleSplashComplete() {
+        splashAnimationComplete = true;
+        // 只有在 Phaser 也載入完成時才真正結束
+        checkReadyToShow();
+    }
+
+    function checkReadyToShow() {
+        if (splashAnimationComplete && phaserLoaded) {
+            showSplash = false;
+            gameReady = true;
+
+            // 根據 gameState 決定下一步
             switch (gameState.type) {
                 case "ready":
                     EventBus.emit("set-custom-dialogue", gameState.data);
@@ -62,11 +71,18 @@
                     EventBus.emit("set-custom-dialogue", { characters: null });
                     break;
             }
-        });
+        }
     }
 
     // 使用 $effect 處理組件掛載時的邏輯
     $effect(() => {
+        // 監聽 Phaser 場景準備完成
+        const handleSceneReady = () => {
+            phaserLoaded = true;
+            checkReadyToShow();
+        };
+        EventBus.on("current-scene-ready", handleSceneReady);
+
         // 開場載入 - 取得歷史主題列表
         fetchTeamDialogueList()
             .then((response) => {
@@ -122,10 +138,10 @@
 
         // 清理函數：清理事件監聽器，防止記憶體洩漏
         return () => {
+            EventBus.off("current-scene-ready", handleSceneReady);
             EventBus.off("set-custom-dialogue");
             EventBus.off("set-custom-dialogue-error");
             EventBus.off("set-custom-dialogue-pending");
-            EventBus.off("current-scene-ready");
         };
     });
 </script>
@@ -135,9 +151,8 @@
 {/if}
 
 <div id="app" class:ready={gameReady}>
-    {#if gameReady}
-        <PhaserGame bind:phaserRef />
-    {/if}
+    <!-- PhaserGame 一開始就載入，但透過 opacity 隱藏 -->
+    <PhaserGame bind:phaserRef />
 </div>
 
 <style>
