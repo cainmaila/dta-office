@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import type { Game, Scene } from "phaser";
 
     export type TPhaserRef = {
@@ -8,28 +8,47 @@
 </script>
 
 <script lang="ts">
-    import { onMount } from "svelte";
     import StartGame from "./game/main";
     import { EventBus } from "./game/EventBus";
 
-    export let phaserRef: TPhaserRef = {
-        game: null,
-        scene: null,
-    };
+    let {
+        phaserRef = $bindable({ game: null, scene: null }),
+        currentActiveScene = undefined,
+    }: {
+        phaserRef?: TPhaserRef;
+        currentActiveScene?: ((scene: Scene) => void) | undefined;
+    } = $props();
 
-    export let currentActiveScene: ((scene: Scene) => void) | undefined =
-        undefined;
+    $effect(() => {
+        // 初始化 Phaser 遊戲
+        try {
+            phaserRef.game = StartGame("game-container");
+        } catch (error) {
+            console.error("Phaser game initialization failed:", error);
+            return;
+        }
 
-    onMount(() => {
-        phaserRef.game = StartGame("game-container");
-
-        EventBus.on("current-scene-ready", (scene_instance: Scene) => {
+        // 監聽場景準備事件
+        const sceneReadyHandler = (scene_instance: Scene) => {
             phaserRef.scene = scene_instance;
 
             if (currentActiveScene) {
                 currentActiveScene(scene_instance);
             }
-        });
+        };
+
+        EventBus.on("current-scene-ready", sceneReadyHandler);
+
+        // 清理函數
+        return () => {
+            EventBus.off("current-scene-ready", sceneReadyHandler);
+            // 在元件銷毀時清理遊戲實例
+            if (phaserRef.game) {
+                phaserRef.game.destroy(true);
+                phaserRef.game = null;
+                phaserRef.scene = null;
+            }
+        };
     });
 </script>
 
