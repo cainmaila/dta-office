@@ -18,8 +18,20 @@ export interface TeamDialogueError {
     error: string;
 }
 
+export interface TopicItem {
+    hash: string;
+    topic: string;
+    timestamp: number;
+}
+
+export interface TeamDialogueListResponse {
+    topics: TopicItem[];
+    total: number;
+}
+
 // 統一使用生產環境 API（已部署）
 const API_ENDPOINT = "https://line-boot.vercel.app/api/team-dialogue-v2";
+const API_LIST_ENDPOINT = "https://line-boot-git-main-cain-chu.vercel.app/api/team-dialogue-list";
 
 /**
  * 取得當前環境的 API endpoint
@@ -60,6 +72,47 @@ export async function fetchTeamDialogue(
         }
 
         const data: TeamDialogueResponse = await response.json();
+        return data;
+    } catch (error) {
+        clearTimeout(timeoutId);
+
+        if (error instanceof Error) {
+            if (error.name === "AbortError") {
+                throw new Error("請求超時");
+            }
+            throw error;
+        }
+
+        throw new Error("未知錯誤");
+    }
+}
+
+/**
+ * 呼叫 Team Dialogue List API 取得歷史主題列表
+ * @param timeoutMs 超時時間（毫秒），預設 10000ms (10秒)
+ * @returns Promise<TeamDialogueListResponse>
+ * @throws Error 當 API 失敗或超時
+ */
+export async function fetchTeamDialogueList(
+    timeoutMs: number = 10000
+): Promise<TeamDialogueListResponse> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+        const response = await fetch(API_LIST_ENDPOINT, {
+            method: "GET",
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            const errorData: TeamDialogueError = await response.json();
+            throw new Error(errorData.error || `API 錯誤: ${response.status}`);
+        }
+
+        const data: TeamDialogueListResponse = await response.json();
         return data;
     } catch (error) {
         clearTimeout(timeoutId);
