@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>靠北DTA v2.3</title>
+    <title>靠北DTA v2.4</title>
     <meta
         name="description"
         content="DTA 辦公室互動遊戲 - 與團隊成員進行有趣的對話互動"
