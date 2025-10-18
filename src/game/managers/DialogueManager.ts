@@ -61,12 +61,18 @@ export class DialogueManager {
             return;
         }
 
-        // 檢查是否切換了不同的 NPC
+        // 檢查是否切換了不同的 NPC (在更新 currentNpcId 之前檢查)
         const isSwitchingNPC = this.currentNpcId && this.currentNpcId !== npcId;
 
-        // 如果切換了 NPC，只重置上一個 NPC 的計數（優化效能）
-        if (isSwitchingNPC && this.currentNpcId) {
-            this.clickCounts.set(this.currentNpcId, 0);
+        // 如果已有對話氣泡，先移除
+        this.hideCurrentBubble();
+
+        // 記錄當前對話的 NPC ID (在檢查切換之後立即更新)
+        this.currentNpcId = npcId;
+
+        // 如果切換了 NPC，重置所有 NPC 的計數器
+        if (isSwitchingNPC) {
+            this.resetAllClickCounts();
         }
 
         // 獲取當前 NPC 的點擊次數（在重置之後才取得）
@@ -88,12 +94,6 @@ export class DialogueManager {
         if (currentCount < 2) {
             this.clickCounts.set(npcId, currentCount + 1);
         }
-
-        // 如果已有對話氣泡，先移除
-        this.hideCurrentBubble();
-
-        // 記錄當前對話的 NPC ID
-        this.currentNpcId = npcId;
 
         // 通知對話開始
         this.scene.events.emit("dialogue-shown", npcId);
