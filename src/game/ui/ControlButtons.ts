@@ -27,7 +27,7 @@ export class ControlButtons {
             true
         );
 
-        // 建立過去議題按鈕（左上角，初始隱藏）
+        // 建立過去議題按鈕（左上角，永遠顯示）
         this.pastTopicsButton = this.createButton(
             "過去議題",
             16,
@@ -39,9 +39,8 @@ export class ControlButtons {
             },
             false
         );
-        this.pastTopicsButton.setVisible(false);
 
-        // 建立重新討論按鈕（左上角，初始隱藏）
+        // 建立重新討論按鈕（左上角，永遠顯示）
         this.retryButton = this.createButton(
             "重新討論",
             140,
@@ -53,7 +52,6 @@ export class ControlButtons {
             },
             false
         );
-        this.retryButton.setVisible(false);
 
         // 監聽視窗大小改變
         this.scene.scale.on("resize", this.handleResize, this);
@@ -190,15 +188,6 @@ export class ControlButtons {
      */
     setCurrentTopic(topic: string): void {
         this.currentTopic = topic;
-
-        // 有主題時顯示重新輸入和過去議題按鈕
-        if (topic) {
-            this.retryButton.setVisible(true);
-            this.pastTopicsButton.setVisible(true);
-        } else {
-            this.retryButton.setVisible(false);
-            this.pastTopicsButton.setVisible(false);
-        }
     }
 
     /**
