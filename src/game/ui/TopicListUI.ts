@@ -42,12 +42,23 @@ export class TopicListUI {
     private renderList(): void {
         if (this.topics.length === 0) {
             this.domElement.setHTML(
-                `<div style="
-                    color: #999;
-                    text-align: center;
-                    padding: 16px;
-                    font-size: 14px;
-                ">無過去議題</div>`
+                `<div class="topic-list-container" style="
+                    background: linear-gradient(135deg, rgba(26, 26, 26, 0.92) 0%, rgba(13, 13, 13, 0.92) 100%);
+                    padding: 24px;
+                    border-radius: 16px;
+                    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 165, 0, 0.25);
+                    backdrop-filter: blur(16px);
+                    min-width: 320px;
+                    border: 1px solid rgba(255, 165, 0, 0.15);
+                ">
+                    <div style="
+                        color: #999;
+                        text-align: center;
+                        padding: 16px;
+                        font-size: 14px;
+                        font-family: 'Arial', sans-serif;
+                    ">📭 無過去議題</div>
+                </div>`
             );
             return;
         }
@@ -56,73 +67,229 @@ export class TopicListUI {
         const itemsHTML = this.topics
             .map(
                 (topic, index) => `
-            <button class="topic-item" data-index="${index}" style="
-                display: block;
-                width: 100%;
-                padding: 12px 16px;
-                text-align: left;
-                background: transparent;
-                border: 1px solid rgba(255, 165, 0, 0.3);
-                border-radius: 4px;
-                color: #fff;
-                font-size: 14px;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                margin-bottom: 8px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                font-family: 'Arial', sans-serif;
-            ">
-                <span style="color: #FF9800;">📌</span> ${this.escapeHtml(
-                    topic.topic
-                )}
-                <span style="
-                    display: block;
-                    font-size: 12px;
-                    color: #999;
-                    margin-top: 4px;
-                ">${this.formatDate(topic.timestamp)}</span>
+            <button class="topic-item" data-index="${index}">
+                <div class="topic-icon">📌</div>
+                <div class="topic-content">
+                    <div class="topic-title">${this.escapeHtml(topic.topic)}</div>
+                    <div class="topic-time">${this.formatDate(topic.timestamp)}</div>
+                </div>
+                <div class="topic-arrow">→</div>
             </button>
         `
             )
             .join("");
 
         const containerHTML = `
-            <div style="
-                background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(13, 13, 13, 0.95) 100%);
-                padding: 16px;
-                border-radius: 12px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 165, 0, 0.2);
-                backdrop-filter: blur(10px);
-                max-width: 400px;
-                max-height: 320px;
-                overflow-y: auto;
-                border: 1px solid rgba(255, 165, 0, 0.2);
-            ">
-                ${itemsHTML}
+            <div class="topic-list-container">
+                <div class="topic-list-header">
+                    <span class="header-icon">📜</span>
+                    <span class="header-text">過去議題</span>
+                    <span class="header-count">${this.topics.length}</span>
+                </div>
+                <div class="topic-list-items">
+                    ${itemsHTML}
+                </div>
                 <style>
+                    @keyframes fadeInUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(10px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    @keyframes slideInRight {
+                        from {
+                            opacity: 0;
+                            transform: translateX(-8px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateX(0);
+                        }
+                    }
+
+                    .topic-list-container {
+                        background: linear-gradient(135deg, rgba(26, 26, 26, 0.92) 0%, rgba(13, 13, 13, 0.92) 100%);
+                        padding: 0;
+                        border-radius: 16px;
+                        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7),
+                                    0 0 0 1px rgba(255, 165, 0, 0.25),
+                                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                        backdrop-filter: blur(16px);
+                        -webkit-backdrop-filter: blur(16px);
+                        min-width: 360px;
+                        max-width: 420px;
+                        border: 1px solid rgba(255, 165, 0, 0.15);
+                        overflow: hidden;
+                        animation: fadeInUp 0.3s ease-out;
+                    }
+
+                    .topic-list-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 16px 20px;
+                        background: linear-gradient(135deg, rgba(255, 165, 0, 0.12) 0%, rgba(255, 165, 0, 0.06) 100%);
+                        border-bottom: 1px solid rgba(255, 165, 0, 0.2);
+                    }
+
+                    .header-icon {
+                        font-size: 18px;
+                    }
+
+                    .header-text {
+                        flex: 1;
+                        color: #FF9800;
+                        font-size: 15px;
+                        font-weight: bold;
+                        font-family: 'Arial', sans-serif;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .header-count {
+                        background: rgba(255, 165, 0, 0.2);
+                        color: #FFB74D;
+                        font-size: 12px;
+                        font-weight: bold;
+                        padding: 3px 10px;
+                        border-radius: 12px;
+                        border: 1px solid rgba(255, 165, 0, 0.3);
+                    }
+
+                    .topic-list-items {
+                        max-height: 400px;
+                        overflow-y: auto;
+                        padding: 12px;
+                    }
+
+                    .topic-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        width: 100%;
+                        padding: 14px 16px;
+                        text-align: left;
+                        background: rgba(255, 255, 255, 0.02);
+                        border: 1px solid rgba(255, 165, 0, 0.15);
+                        border-radius: 10px;
+                        color: #fff;
+                        cursor: pointer;
+                        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                        margin-bottom: 8px;
+                        font-family: 'Arial', sans-serif;
+                        position: relative;
+                        overflow: hidden;
+                        animation: slideInRight 0.3s ease-out backwards;
+                    }
+
+                    .topic-item:nth-child(1) { animation-delay: 0.05s; }
+                    .topic-item:nth-child(2) { animation-delay: 0.1s; }
+                    .topic-item:nth-child(3) { animation-delay: 0.15s; }
+                    .topic-item:nth-child(4) { animation-delay: 0.2s; }
+                    .topic-item:nth-child(5) { animation-delay: 0.25s; }
+
+                    .topic-item::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: linear-gradient(135deg, rgba(255, 165, 0, 0.08) 0%, rgba(255, 165, 0, 0.03) 100%);
+                        opacity: 0;
+                        transition: opacity 0.25s ease;
+                    }
+
                     .topic-item:hover {
-                        background: rgba(255, 165, 0, 0.1);
-                        border-color: rgba(255, 165, 0, 0.6);
+                        background: rgba(255, 165, 0, 0.08);
+                        border-color: rgba(255, 165, 0, 0.4);
+                        transform: translateX(6px) scale(1.01);
+                        box-shadow: 0 4px 16px rgba(255, 165, 0, 0.2),
+                                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                    }
+
+                    .topic-item:hover::before {
+                        opacity: 1;
+                    }
+
+                    .topic-item:active {
+                        transform: translateX(4px) scale(0.99);
+                        background: rgba(255, 165, 0, 0.12);
+                    }
+
+                    .topic-icon {
+                        font-size: 20px;
+                        flex-shrink: 0;
+                        transition: transform 0.25s ease;
+                    }
+
+                    .topic-item:hover .topic-icon {
+                        transform: scale(1.15) rotate(-5deg);
+                    }
+
+                    .topic-content {
+                        flex: 1;
+                        min-width: 0;
+                    }
+
+                    .topic-title {
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: #fff;
+                        margin-bottom: 4px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                    }
+
+                    .topic-time {
+                        font-size: 11px;
+                        color: #999;
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                    }
+
+                    .topic-time::before {
+                        content: '🕐';
+                        font-size: 10px;
+                    }
+
+                    .topic-arrow {
+                        font-size: 16px;
+                        color: rgba(255, 165, 0, 0.4);
+                        flex-shrink: 0;
+                        transition: all 0.25s ease;
+                    }
+
+                    .topic-item:hover .topic-arrow {
+                        color: #FF9800;
                         transform: translateX(4px);
                     }
-                    .topic-item:active {
-                        background: rgba(255, 165, 0, 0.2);
+
+                    .topic-list-items::-webkit-scrollbar {
+                        width: 8px;
                     }
-                    div::-webkit-scrollbar {
-                        width: 6px;
+
+                    .topic-list-items::-webkit-scrollbar-track {
+                        background: rgba(255, 165, 0, 0.05);
+                        border-radius: 4px;
+                        margin: 8px 0;
                     }
-                    div::-webkit-scrollbar-track {
-                        background: rgba(255, 165, 0, 0.1);
-                        border-radius: 3px;
+
+                    .topic-list-items::-webkit-scrollbar-thumb {
+                        background: linear-gradient(180deg, rgba(255, 165, 0, 0.4) 0%, rgba(255, 165, 0, 0.25) 100%);
+                        border-radius: 4px;
+                        border: 2px solid rgba(26, 26, 26, 0.5);
                     }
-                    div::-webkit-scrollbar-thumb {
-                        background: rgba(255, 165, 0, 0.3);
-                        border-radius: 3px;
-                    }
-                    div::-webkit-scrollbar-thumb:hover {
-                        background: rgba(255, 165, 0, 0.5);
+
+                    .topic-list-items::-webkit-scrollbar-thumb:hover {
+                        background: linear-gradient(180deg, rgba(255, 165, 0, 0.6) 0%, rgba(255, 165, 0, 0.4) 100%);
                     }
                 </style>
             </div>
