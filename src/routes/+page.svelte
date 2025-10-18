@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onMount, onDestroy } from "svelte";
     import type { Scene } from "phaser";
     import PhaserGame, { type TPhaserRef } from "../PhaserGame.svelte";
     import SplashScreen from "../components/SplashScreen.svelte";
@@ -13,42 +12,60 @@
     type ApiStatus = "idle" | "loading" | "success" | "error";
 
     //  References to the PhaserGame component (game and scene are exposed)
-    let phaserRef: TPhaserRef = { game: null, scene: null };
-    let initialDialogueData: {
+    let phaserRef = $state<TPhaserRef>({ game: null, scene: null });
+    let initialDialogueData = $state<{
         characters: DialogueCharacter[] | null;
         topic?: string;
-    } | null = null;
-    let showSplash = true;
-    let gameReady = false;
-    let apiStatus: ApiStatus = "idle";
-    let apiError: Error | null = null;
-    let loadingMessage: string | null = null;
+    } | null>(null);
+    let showSplash = $state(true);
+    let gameReady = $state(false);
+    let apiStatus = $state<ApiStatus>("idle");
+    let apiError = $state<Error | null>(null);
+    let loadingMessage = $state<string | null>(null);
+
+    // 使用 $derived 來計算當前遊戲狀態，簡化邏輯
+    let gameState = $derived.by(() => {
+        if (apiStatus === "success" && initialDialogueData) {
+            return { type: "ready" as const, data: initialDialogueData };
+        } else if (apiStatus === "error") {
+            return {
+                type: "error" as const,
+                error: apiError?.message || "提案失敗",
+            };
+        } else if (apiStatus === "loading") {
+            return { type: "loading" as const };
+        } else {
+            return { type: "idle" as const };
+        }
+    });
 
     function handleSplashComplete() {
         showSplash = false;
         gameReady = true;
 
-        // SplashScreen 完成後，根據 API 狀態決定下一步
+        // SplashScreen 完成後，根據 gameState 決定下一步
         EventBus.once("current-scene-ready", () => {
-            if (apiStatus === "success" && initialDialogueData) {
-                // API 已成功，直接設定對話
-                EventBus.emit("set-custom-dialogue", initialDialogueData);
-            } else if (apiStatus === "error") {
-                // API 失敗，通知遊戲顯示錯誤並顯示輸入框
-                EventBus.emit("set-custom-dialogue-error", {
-                    error: apiError?.message || "提案失敗",
-                });
-            } else if (apiStatus === "loading") {
-                // API 還在進行中，通知遊戲繼續等待
-                EventBus.emit("set-custom-dialogue-pending");
-            } else {
-                // 沒有 API 呼叫（無 query），顯示輸入框
-                EventBus.emit("set-custom-dialogue", { characters: null });
+            switch (gameState.type) {
+                case "ready":
+                    EventBus.emit("set-custom-dialogue", gameState.data);
+                    break;
+                case "error":
+                    EventBus.emit("set-custom-dialogue-error", {
+                        error: gameState.error,
+                    });
+                    break;
+                case "loading":
+                    EventBus.emit("set-custom-dialogue-pending");
+                    break;
+                case "idle":
+                    EventBus.emit("set-custom-dialogue", { characters: null });
+                    break;
             }
         });
     }
 
-    onMount(async () => {
+    // 使用 $effect 處理組件掛載時的邏輯
+    $effect(() => {
         // 檢查 URL query 參數
         const urlParams = new URLSearchParams(window.location.search);
         const topic = urlParams.get("topic");
@@ -73,11 +90,8 @@
                     };
 
                     // 如果遊戲已經準備好，立即發送資料
-                    if (gameReady) {
-                        EventBus.emit(
-                            "set-custom-dialogue",
-                            initialDialogueData,
-                        );
+                    if (gameReady && gameState.type === "ready") {
+                        EventBus.emit("set-custom-dialogue", gameState.data);
                     }
                 })
                 .catch((error) => {
@@ -88,21 +102,21 @@
                     loadingMessage = null;
 
                     // 如果遊戲已經準備好，立即通知錯誤
-                    if (gameReady) {
+                    if (gameReady && gameState.type === "error") {
                         EventBus.emit("set-custom-dialogue-error", {
-                            error: error.message || "提案失敗",
+                            error: gameState.error,
                         });
                     }
                 });
         }
-    });
 
-    // 清理事件監聽器，防止記憶體洩漏
-    onDestroy(() => {
-        EventBus.off("set-custom-dialogue");
-        EventBus.off("set-custom-dialogue-error");
-        EventBus.off("set-custom-dialogue-pending");
-        EventBus.off("current-scene-ready");
+        // 清理函數：清理事件監聽器，防止記憶體洩漏
+        return () => {
+            EventBus.off("set-custom-dialogue");
+            EventBus.off("set-custom-dialogue-error");
+            EventBus.off("set-custom-dialogue-pending");
+            EventBus.off("current-scene-ready");
+        };
     });
 </script>
 
