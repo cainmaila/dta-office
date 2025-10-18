@@ -59,6 +59,9 @@ export class TopicTitleUI {
 
         // 顯示
         this.container.setVisible(true);
+
+        // 添加掉落動畫
+        this.playDropAnimation();
     }
 
     /**
@@ -140,6 +143,39 @@ export class TopicTitleUI {
         const x = this.scene.scale.width / 2;
         const y = 100; // 調整到 100，避免標題過長時擋到上方按鈕
         this.container.setPosition(x, y);
+    }
+
+    /**
+     * 播放掉落動畫
+     */
+    private playDropAnimation(): void {
+        const finalX = this.scene.scale.width / 2;
+        const finalY = 100;
+        const startY = -100; // 從螢幕上方外開始
+
+        // 設定初始位置（上方外）
+        this.container.setPosition(finalX, startY);
+        this.container.setAlpha(0);
+
+        // 使用 Phaser Tween 創建掉落動畫
+        this.scene.tweens.add({
+            targets: this.container,
+            y: finalY,
+            alpha: 1,
+            duration: 600,
+            ease: "Back.easeOut", // 使用彈性緩動效果
+            onComplete: () => {
+                // 添加輕微的彈跳效果
+                this.scene.tweens.add({
+                    targets: this.container,
+                    scaleX: 1.05,
+                    scaleY: 1.05,
+                    duration: 100,
+                    yoyo: true,
+                    ease: "Sine.easeInOut",
+                });
+            },
+        });
     }
 
     /**
