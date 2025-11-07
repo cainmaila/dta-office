@@ -47,14 +47,14 @@ function getApiEndpoint(): string {
 }
 
 /**
- * 呼叫 Team Dialogue API（使用 POST 方法）
+ * 創建 Team Dialogue（使用 POST 方法，支援 story）
  * @param topic 對話主題
  * @param story 故事背景（選填，最多 300 字）
  * @param timeoutMs 超時時間（毫秒），預設 60000ms (60秒)
  * @returns Promise<TeamDialogueResponse>
  * @throws Error 當 API 失敗或超時
  */
-export async function fetchTeamDialogue(
+export async function createTeamDialogue(
     topic: string,
     story?: string,
     timeoutMs: number = 60000
@@ -75,6 +75,53 @@ export async function fetchTeamDialogue(
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(requestBody),
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            const errorData: TeamDialogueError = await response.json();
+            throw new Error(errorData.error || `API 錯誤: ${response.status}`);
+        }
+
+        const data: TeamDialogueResponse = await response.json();
+        return data;
+    } catch (error) {
+        clearTimeout(timeoutId);
+
+        if (error instanceof Error) {
+            if (error.name === "AbortError") {
+                throw new Error("請求超時");
+            }
+            throw error;
+        }
+
+        throw new Error("未知錯誤");
+    }
+}
+
+/**
+ * 載入 Team Dialogue（使用 GET 方法，只傳遞 topic）
+ * @param topic 對話主題
+ * @param timeoutMs 超時時間（毫秒），預設 60000ms (60秒)
+ * @returns Promise<TeamDialogueResponse>
+ * @throws Error 當 API 失敗或超時
+ */
+export async function fetchTeamDialogue(
+    topic: string,
+    timeoutMs: number = 60000
+): Promise<TeamDialogueResponse> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+        // 使用 URLSearchParams 進行 URL 編碼
+        const params = new URLSearchParams({ topic });
+        const url = `${getApiEndpoint()}?${params}`;
+
+        const response = await fetch(url, {
+            method: "GET",
             signal: controller.signal,
         });
 

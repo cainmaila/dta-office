@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import {
+    createTeamDialogue,
     fetchTeamDialogue,
     fetchTeamDialogueList,
     type DialogueCharacter,
@@ -64,22 +65,22 @@ export class TopicDialogueManager {
             }
         });
 
-        // 議題選擇
-        this.topicListUI.onTopicSelect((topic: string) => {
+        // 議題選擇（使用 GET 載入）
+        this.topicListUI.onTopicSelect(async (topic: string) => {
             this.topicListUI.hide();
-            this.handleTopicSubmit(topic);
+            await this.handleTopicLoad(topic);
         });
     }
 
     /**
-     * 處理主題送出
+     * 處理主題送出（表單創建，使用 POST）
      */
     private async handleTopicSubmit(topic: string, story?: string): Promise<void> {
         this.topicInputUI.hide();
         this.loadingOverlay.showLoading("需求討論中..");
 
         try {
-            const response = await fetchTeamDialogue(topic, story, 60000);
+            const response = await createTeamDialogue(topic, story, 60000);
 
             // 播放 API 回應音效
             SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
@@ -100,6 +101,36 @@ export class TopicDialogueManager {
             console.error("API 呼叫失敗:", error);
             this.loadingOverlay.showError("提案失敗", 2000);
             // 不再自動顯示輸入框，由「重新討論」按鈕控制
+        }
+    }
+
+    /**
+     * 處理主題載入（歷史記錄，使用 GET）
+     */
+    private async handleTopicLoad(topic: string): Promise<void> {
+        this.loadingOverlay.showLoading("需求討論中..");
+
+        try {
+            const response = await fetchTeamDialogue(topic, 60000);
+
+            // 播放 API 回應音效
+            SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
+
+            // 更新對話
+            this.updateCharactersDialogue(response.characters);
+
+            // 更新當前主題
+            this.currentTopic = topic;
+            this.controlButtons.setCurrentTopic(topic);
+            this.topicTitleUI.setTopic(topic);
+
+            // 更新 URL
+            this.updateUrlWithTopic(topic);
+
+            this.loadingOverlay.hide();
+        } catch (error) {
+            console.error("API 呼叫失敗:", error);
+            this.loadingOverlay.showError("載入失敗", 2000);
         }
     }
 
@@ -136,16 +167,15 @@ export class TopicDialogueManager {
     }
 
     /**
-     * 載入主題對話（從 URL 或外部呼叫）
+     * 載入主題對話（從 URL 或外部呼叫，使用 GET）
      */
     async loadTopicDialogue(
-        topic: string,
-        story?: string
+        topic: string
     ): Promise<DialogueCharacter[] | null> {
         this.loadingOverlay.showLoading("需求討論中..");
 
         try {
-            const response = await fetchTeamDialogue(topic, story, 60000);
+            const response = await fetchTeamDialogue(topic, 60000);
 
             // 播放 API 回應音效
             SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
