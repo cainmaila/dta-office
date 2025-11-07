@@ -101,7 +101,7 @@
             apiStatus = "loading";
             loadingMessage = "需求討論中..";
 
-            fetchTeamDialogue(topic, 60000)
+            fetchTeamDialogue(topic, undefined, 60000)
                 .then((response) => {
                     // API 成功
                     apiStatus = "success";
