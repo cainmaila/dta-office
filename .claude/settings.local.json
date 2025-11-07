@@ -18,7 +18,8 @@
       "Bash(pkill -f \"chrome-devtools-mcp\")",
       "Bash(curl -s \"https://line-boot-git-main-cain-chu.vercel.app/api/team-dialogue-list\")",
       "Bash(node test-api.js)",
-      "Bash(open -a \"Google Chrome\" \"http://localhost:8080/dta-office\")"
+      "Bash(open -a \"Google Chrome\" \"http://localhost:8080/dta-office\")",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
