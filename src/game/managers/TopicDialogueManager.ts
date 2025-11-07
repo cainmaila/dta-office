@@ -45,8 +45,8 @@ export class TopicDialogueManager {
      */
     private setupEvents(): void {
         // 主題輸入送出
-        this.topicInputUI.onSubmit(async (topic: string) => {
-            await this.handleTopicSubmit(topic);
+        this.topicInputUI.onSubmit(async (topic: string, story?: string) => {
+            await this.handleTopicSubmit(topic, story);
         });
 
         // 重新輸入按鈕（切換輸入框顯示/隱藏）
@@ -74,12 +74,12 @@ export class TopicDialogueManager {
     /**
      * 處理主題送出
      */
-    private async handleTopicSubmit(topic: string): Promise<void> {
+    private async handleTopicSubmit(topic: string, story?: string): Promise<void> {
         this.topicInputUI.hide();
         this.loadingOverlay.showLoading("需求討論中..");
 
         try {
-            const response = await fetchTeamDialogue(topic, 60000);
+            const response = await fetchTeamDialogue(topic, story, 60000);
 
             // 播放 API 回應音效
             SoundManager.playSound("/sound/quiz-start.mp3", 0.5);
@@ -139,12 +139,13 @@ export class TopicDialogueManager {
      * 載入主題對話（從 URL 或外部呼叫）
      */
     async loadTopicDialogue(
-        topic: string
+        topic: string,
+        story?: string
     ): Promise<DialogueCharacter[] | null> {
         this.loadingOverlay.showLoading("需求討論中..");
 
         try {
-            const response = await fetchTeamDialogue(topic, 60000);
+            const response = await fetchTeamDialogue(topic, story, 60000);
 
             // 播放 API 回應音效
             SoundManager.playSound("/sound/quiz-start.mp3", 0.5);

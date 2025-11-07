@@ -10,6 +10,11 @@ export interface DialogueCharacter {
     dialogues: [string, string, string]; // 固定 3 則對話
 }
 
+export interface TeamDialogueRequest {
+    topic: string;
+    story?: string; // 選填，最多 300 字
+}
+
 export interface TeamDialogueResponse {
     characters: DialogueCharacter[];
 }
@@ -31,7 +36,8 @@ export interface TeamDialogueListResponse {
 
 // 統一使用生產環境 API（已部署）
 const API_ENDPOINT = "https://line-boot.vercel.app/api/team-dialogue-v2";
-const API_LIST_ENDPOINT = "https://line-boot-git-main-cain-chu.vercel.app/api/team-dialogue-list";
+const API_LIST_ENDPOINT =
+    "https://line-boot-git-main-cain-chu.vercel.app/api/team-dialogue-list";
 
 /**
  * 取得當前環境的 API endpoint
@@ -41,26 +47,34 @@ function getApiEndpoint(): string {
 }
 
 /**
- * 呼叫 Team Dialogue API
+ * 呼叫 Team Dialogue API（使用 POST 方法）
  * @param topic 對話主題
+ * @param story 故事背景（選填，最多 300 字）
  * @param timeoutMs 超時時間（毫秒），預設 60000ms (60秒)
  * @returns Promise<TeamDialogueResponse>
  * @throws Error 當 API 失敗或超時
  */
 export async function fetchTeamDialogue(
     topic: string,
+    story?: string,
     timeoutMs: number = 60000
 ): Promise<TeamDialogueResponse> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     try {
-        // 使用 URLSearchParams 進行 URL 編碼
-        const params = new URLSearchParams({ topic });
-        const url = `${getApiEndpoint()}?${params}`;
+        // 構建請求 body
+        const requestBody: TeamDialogueRequest = { topic };
+        if (story && story.trim()) {
+            requestBody.story = story.trim();
+        }
 
-        const response = await fetch(url, {
-            method: "GET",
+        const response = await fetch(getApiEndpoint(), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
             signal: controller.signal,
         });
 
