@@ -1,3 +1,21 @@
+<script>
+    import { onMount } from 'svelte';
+    import { base } from '$app/paths';
+
+    onMount(() => {
+        // 註冊 Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register(`${base}/sw.js`, {
+                scope: `${base}/`
+            }).then((registration) => {
+                console.log('Service Worker registered:', registration);
+            }).catch((error) => {
+                console.log('Service Worker registration failed:', error);
+            });
+        }
+    });
+</script>
+
 <svelte:head>
     <title>靠北DTA v2.5</title>
     <meta

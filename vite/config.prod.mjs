@@ -21,6 +21,12 @@ export default defineConfig({
         sveltekit(),
         SvelteKitPWA({
             strategies: "generateSW",
+            registerType: "autoUpdate",
+            injectRegister: "auto",
+            includeAssets: ["favicon.png", "icon/*.png", "logo.png"],
+            devOptions: {
+                enabled: false
+            },
             workbox: {
                 // Runtime Caching 策略
                 runtimeCaching: [
