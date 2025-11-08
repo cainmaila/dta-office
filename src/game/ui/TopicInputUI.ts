@@ -64,15 +64,16 @@ export class TopicInputUI {
                 />
 
                 <!-- Story 輸入框（初始隱藏） -->
-                <input
+                <textarea
                     id="story-input"
-                    type="text"
                     placeholder="故事背景（選填，最多 300 字）"
                     maxlength="300"
+                    rows="4"
                     style="
                         width: 380px;
                         padding: 14px 18px;
-                        font-size: 16px;
+                        font-size: 15px;
+                        line-height: 1.6;
                         border: 2px solid rgba(76, 175, 80, 0.3);
                         border-radius: 8px;
                         background-color: rgba(255, 255, 255, 0.95);
@@ -81,6 +82,8 @@ export class TopicInputUI {
                         font-family: 'Arial', sans-serif;
                         transition: all 0.3s ease;
                         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                        resize: vertical;
+                        min-height: 0;
                         max-height: 0;
                         overflow: hidden;
                         opacity: 0;
@@ -88,7 +91,7 @@ export class TopicInputUI {
                         margin: 0;
                         border-width: 0;
                     "
-                />
+                ></textarea>
 
                 <button
                     id="topic-submit"
@@ -127,11 +130,13 @@ export class TopicInputUI {
                         box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3);
                     }
                     #story-input.show {
-                        max-height: 100px !important;
+                        min-height: 110px !important;
+                        max-height: 200px !important;
                         opacity: 1 !important;
                         padding: 14px 18px !important;
                         margin: 0 !important;
                         border-width: 2px !important;
+                        overflow-y: auto !important;
                     }
                     #topic-submit:hover {
                         transform: translateY(-2px);
@@ -177,7 +182,7 @@ export class TopicInputUI {
         ) as HTMLInputElement;
         const storyInput = this.domElement.getChildByID(
             "story-input"
-        ) as HTMLInputElement;
+        ) as HTMLTextAreaElement;
         const advancedToggle = this.domElement.getChildByID(
             "advanced-toggle"
         ) as HTMLButtonElement;
@@ -258,7 +263,7 @@ export class TopicInputUI {
 
         const storyInput = this.domElement.getChildByID(
             "story-input"
-        ) as HTMLInputElement;
+        ) as HTMLTextAreaElement;
         const advancedToggle = this.domElement.getChildByID(
             "advanced-toggle"
         ) as HTMLButtonElement;
@@ -268,11 +273,29 @@ export class TopicInputUI {
                 storyInput.classList.add("show");
                 advancedToggle.classList.add("active");
                 advancedToggle.textContent = "✅ 進階模式";
+
+                // 上推表單，避免遮擋
+                const targetY = this.scene.scale.height - 250;
+                this.scene.tweens.add({
+                    targets: this.domElement,
+                    y: targetY,
+                    duration: 300,
+                    ease: 'Sine.easeInOut'
+                });
             } else {
                 storyInput.classList.remove("show");
                 advancedToggle.classList.remove("active");
                 advancedToggle.textContent = "📝 進階模式";
                 storyInput.value = ""; // 清空 story 輸入
+
+                // 恢復原始位置
+                const targetY = this.scene.scale.height - 120;
+                this.scene.tweens.add({
+                    targets: this.domElement,
+                    y: targetY,
+                    duration: 300,
+                    ease: 'Sine.easeInOut'
+                });
             }
         }
     }
@@ -293,7 +316,7 @@ export class TopicInputUI {
         ) as HTMLInputElement;
         const storyInput = this.domElement.getChildByID(
             "story-input"
-        ) as HTMLInputElement;
+        ) as HTMLTextAreaElement;
 
         if (input) {
             input.value = "";
@@ -324,6 +347,25 @@ export class TopicInputUI {
     hide(): void {
         this.domElement.setVisible(false);
         this.clearInput();
+
+        // 重置進階模式並恢復位置
+        if (this.isAdvancedMode) {
+            this.isAdvancedMode = false;
+            const storyInput = this.domElement.getChildByID("story-input") as HTMLTextAreaElement;
+            const advancedToggle = this.domElement.getChildByID("advanced-toggle") as HTMLButtonElement;
+
+            if (storyInput && advancedToggle) {
+                storyInput.classList.remove("show");
+                advancedToggle.classList.remove("active");
+                advancedToggle.textContent = "📝 進階模式";
+            }
+
+            // 恢復原始位置
+            this.domElement.setPosition(
+                this.scene.scale.width / 2,
+                this.scene.scale.height - 120
+            );
+        }
     }
 
     /**
@@ -348,7 +390,8 @@ export class TopicInputUI {
      * 處理視窗大小改變
      */
     private handleResize(gameSize: Phaser.Structs.Size): void {
-        this.domElement.setPosition(gameSize.width / 2, gameSize.height - 120);
+        const yOffset = this.isAdvancedMode ? 250 : 120;
+        this.domElement.setPosition(gameSize.width / 2, gameSize.height - yOffset);
     }
 
     /**
