@@ -10,8 +10,7 @@
             "file": "tilesets/npc.png",
             "frameWidth": 78,
             "frameHeight": 93
-        },
-        "npcData": "data/npcs.json"
+        }
     },
     "dialogue": {
         "standing": {
